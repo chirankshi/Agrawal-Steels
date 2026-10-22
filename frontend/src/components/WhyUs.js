@@ -1,69 +1,78 @@
+import { IconShieldCheck, IconZap, IconGlobe, IconLayers, IconAward, IconCheck } from './Icons';
+
 export default function WhyUs() {
-  const reasons = [
+  const differentiators = [
     {
       id: 'whyQuality',
-      icon: '🏗️',
-      title: 'Quality Team In-House',
-      desc: 'Skilled professionals ensuring superior quality in every single product batch — from sourcing to dispatch.',
+      icon: <IconShieldCheck size={24} />,
+      title: 'In-House Quality Inspection',
+      desc: 'Dedicated metallurgical and dimension testing on incoming and outgoing consignments with mill test certificates.',
     },
     {
       id: 'whyDispatch',
-      icon: '⚡',
-      title: '24-Hour Fast Dispatch',
-      desc: 'MS material dispatched within 24 hours for timely project support. Never let your project halt.',
+      icon: <IconZap size={24} />,
+      title: '24-Hour Expedited Dispatch',
+      desc: 'Strategic ready-stock inventory in Faridabad and regional hubs ensures project timelines never face downtime.',
     },
     {
       id: 'whyIndia',
-      icon: '🌍',
-      title: 'All India Presence',
-      desc: 'Reliable supply across PAN India, reaching Faridabad, Bhiwadi, Raipur, Nagpur, Rourkela, Pune & Mumbai.',
+      icon: <IconGlobe size={24} />,
+      title: 'Multi-City Logistics Fleet',
+      desc: 'Seamless transit access across Faridabad, Bhiwadi, Raipur, Nagpur, Rourkela, Pune, and Mumbai.',
     },
     {
       id: 'whyProducts',
-      icon: '📦',
-      title: 'Wide Product Range',
-      desc: 'Complete range — TMT Bars, Plates, Angles, Channels, Beams, CR/HR/GP Coils, SS Sheets, and more.',
+      icon: <IconLayers size={24} />,
+      title: 'Complete Structural Spectrum',
+      desc: 'One-stop procurement spanning TMT rebars, heavy structural sections, flat coils, hollow pipes, and SS sheets.',
     },
     {
       id: 'whyExperience',
-      icon: '📅',
-      title: 'Long-Term Experience',
-      desc: 'Years of expertise serving construction and industrial sectors with trust, consistency and competitive pricing.',
+      icon: <IconAward size={24} />,
+      title: '30+ Years Industry Legacy',
+      desc: 'Three decades of transparent pricing, ethical commercial practices, and deep tier-1 steel mill relationships.',
     },
     {
       id: 'whyIsi',
-      icon: '✅',
-      title: 'ISI Certified Materials',
-      desc: 'All products conform to BIS/ISI standards. Mill test certificates provided on request for every order.',
+      icon: <IconCheck size={24} />,
+      title: '100% BIS & ISI Standard',
+      desc: 'All supplies strictly conform to Bureau of Indian Standards (BIS) specifications with guaranteed chemical traceability.',
     },
   ];
 
   return (
-    <section className="why-section section" id="why-us">
+    <section className="section why-modern-section" id="why-us">
       <div className="container">
-        <div className="section-header section-header-light">
-          <div className="section-label label-gold">Why Choose Us</div>
-          <h2 className="section-title text-white">Built on <span className="text-accent">Trust</span> &amp; Quality</h2>
+        <div className="section-header">
+          <div className="section-label label-cyan">
+            <IconShieldCheck size={15} /> COMPETITIVE ADVANTAGE
+          </div>
+          <h2 className="section-title text-white">
+            Why Contractors &amp; Industries <span className="text-gradient">Choose Us</span>
+          </h2>
           <p className="section-desc text-gray">
-            Three decades of serving India's construction and industrial sector with integrity, quality, and competitive pricing.
+            Built on engineering excellence, guaranteed authenticity, and clockwork delivery precision since 1990.
           </p>
         </div>
 
-        <div className="why-grid" id="whyGrid">
-          {reasons.map(r => (
-            <div className="why-card" id={r.id} key={r.id}>
-              <div className="why-icon">{r.icon}</div>
-              <h3>{r.title}</h3>
-              <p>{r.desc}</p>
+        <div className="why-modern-grid" id="whyGrid">
+          {differentiators.map(d => (
+            <div className="why-modern-card" id={d.id} key={d.id}>
+              <div className="why-icon-box">{d.icon}</div>
+              <h3 className="why-card-title">{d.title}</h3>
+              <p className="why-card-desc">{d.desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="quote-banner" id="quoteBanner">
-          <div className="qb-icon">"</div>
-          <p className="qb-text">
-            Iron is the backbone of modern construction — strong, durable, and essential for building infrastructure that lasts generations.
-          </p>
+        {/* Industrial Principle Banner */}
+        <div className="principle-banner">
+          <div className="principle-content">
+            <span className="principle-tag">INDUSTRY BENCHMARK</span>
+            <p className="principle-quote">
+              "Structural steel is the unseen skeleton of the nation's progress — we treat every beam and plate with the uncompromising standard it demands."
+            </p>
+          </div>
         </div>
       </div>
     </section>

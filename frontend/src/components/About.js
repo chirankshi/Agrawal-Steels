@@ -1,58 +1,93 @@
+import { IconShieldCheck, IconAward, IconZap, IconGlobe, IconTarget, IconCompass, IconArrowRight } from './Icons';
+
 export default function About() {
+  const values = [
+    { title: 'Quality Integrity', desc: '100% prime tested material', icon: <IconShieldCheck size={18} /> },
+    { title: 'Operational Speed', desc: '24-hour rapid dispatch', icon: <IconZap size={18} /> },
+    { title: 'National Scale', desc: 'PAN India logistics network', icon: <IconGlobe size={18} /> },
+    { title: 'Client Trust', desc: '3+ decades of client partnership', icon: <IconAward size={18} /> },
+  ];
+
   return (
-    <section className="about-section section" id="about">
+    <section className="section about-modern-section" id="about">
       <div className="container">
-        <div className="about-grid">
-          <div className="about-content" id="aboutContent">
-            <div className="section-label">About Us</div>
-            <h2 className="section-title">
-              Strong Foundations,<br />
-              <span className="text-accent">Stronger Relations</span>
-            </h2>
-            <p className="about-text">
-              Since its inception, <strong>Aggarwal Steels</strong> has been dedicated to providing superior iron and steel products — including TMT Bars, Plates, Angles, Channels, Beams, and more — to meet the dynamic needs of the construction and industrial sectors.
-            </p>
-            <p className="about-text">
-              With a strong <strong>PAN India presence</strong>, our advanced infrastructure, modern processing units, and skilled teams ensure every product reflects precision, durability, and consistency.
-            </p>
-            <div className="about-values" id="aboutValues">
-              <div className="value-pill">🏆 Integrity</div>
-              <div className="value-pill">⭐ Excellence</div>
-              <div className="value-pill">💡 Innovation</div>
-              <div className="value-pill">🤝 Empowerment</div>
+        <div className="about-modern-grid">
+          {/* Left Column: Narrative */}
+          <div className="about-modern-content">
+            <div className="section-label label-amber">
+              <IconAward size={15} /> CORPORATE BACKGROUND
             </div>
-            <a href="#contact" className="btn-primary" id="btnAboutContact">Connect With Us →</a>
+            <h2 className="section-title text-white">
+              Strong Foundations.<br />
+              <span className="text-gradient">Enduring Relationships.</span>
+            </h2>
+            <p className="about-lead">
+              Founded in 1990 in Faridabad, Haryana, <strong>Aggarwal Steels</strong> has established itself as one of Northern India's foremost independent steel distributors, stockists, and structural fabricators.
+            </p>
+            <p className="about-sub">
+              By combining wholesale primary steel sourcing (SAIL, Tata, JSPL) with in-house processing capabilities via sister concern <strong>Majestic AR Technology</strong>, we deliver an integrated steel supply chain — from raw plates and coils to finished storage racking and structural frames.
+            </p>
+
+            {/* Core Values Bento Grid */}
+            <div className="about-values-grid">
+              {values.map((v, i) => (
+                <div className="value-modern-card" key={i}>
+                  <div className="value-icon-box">{v.icon}</div>
+                  <div>
+                    <h4 className="value-title">{v.title}</h4>
+                    <span className="value-desc">{v.desc}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="about-actions-row">
+              <a href="#contact" className="btn-modern-primary">
+                <span>Partner With Us</span>
+                <IconArrowRight size={18} />
+              </a>
+            </div>
           </div>
 
-          <div className="about-visual" id="aboutVisual">
-            <div className="founder-card" id="founderCard">
-              <div className="founder-avatar">
-                <div className="avatar-placeholder" id="avatarPlaceholder">
-                  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="40" cy="30" r="18" stroke="#f59e0b" strokeWidth="2.5" fill="rgba(245,158,11,0.1)"/>
-                    <path d="M10 72 Q40 54 70 72" stroke="#f59e0b" strokeWidth="2.5" fill="none"/>
-                  </svg>
+          {/* Right Column: Founder Quote & Strategic Pillars */}
+          <div className="about-modern-cards">
+            {/* Leadership Statement Card */}
+            <div className="founder-modern-card">
+              <div className="founder-header">
+                <div className="founder-initials">AG</div>
+                <div>
+                  <h3 className="founder-name">Mr. Aakash Goyal</h3>
+                  <span className="founder-role">Founder &amp; Managing Director</span>
                 </div>
               </div>
-              <div className="founder-info">
-                <h3 className="founder-name" id="founderName">Mr. Aakash Goyal</h3>
-                <span className="founder-title">Founder &amp; CEO</span>
-                <blockquote className="founder-quote">
-                  "Steel is not just a product — it is the strength that builds foundations and the trust that builds relationships."
-                </blockquote>
+              <blockquote className="founder-quote-text">
+                "Steel is the bedrock of industrial civilization. For us, every ton of steel delivered is a contract of trust with the engineers and builders constructing India's tomorrow."
+              </blockquote>
+              <div className="founder-meta">
+                <span>ESTABLISHED 1990 &bull; FARIDABAD, HARYANA</span>
               </div>
             </div>
 
-            <div className="mission-vision-grid" id="mvGrid">
-              <div className="mv-card" id="missionCard">
-                <div className="mv-icon">🎯</div>
-                <h4>Our Mission</h4>
-                <p>Deliver strength with purpose — providing high-quality steel products that empower builders and infrastructure projects with reliability.</p>
+            {/* Mission & Vision Split */}
+            <div className="mission-vision-modern-grid">
+              <div className="mv-modern-card">
+                <div className="mv-icon-wrap">
+                  <IconTarget size={20} />
+                </div>
+                <h4 className="mv-heading">Our Mission</h4>
+                <p className="mv-text">
+                  To eliminate industrial procurement friction by providing authentic, certified steel and precision processing within 24 hours anywhere in India.
+                </p>
               </div>
-              <div className="mv-card" id="visionCard">
-                <div className="mv-icon">🔭</div>
-                <h4>Our Vision</h4>
-                <p>Become a globally recognized brand in iron and steel, setting new benchmarks in strength, sustainability, and innovation.</p>
+
+              <div className="mv-modern-card">
+                <div className="mv-icon-wrap">
+                  <IconCompass size={20} />
+                </div>
+                <h4 className="mv-heading">Our Vision</h4>
+                <p className="mv-text">
+                  To emerge as India's most agile and tech-integrated iron &amp; steel infrastructure partner, upholding world-class reliability and sustainability.
+                </p>
               </div>
             </div>
           </div>

@@ -1,30 +1,42 @@
+import { IconMapPin, IconGlobe } from './Icons';
+
 export default function Presence() {
-  const cities = [
-    { id: 'presenceFbd', name: 'Faridabad', state: 'Haryana — Head Office', icon: '🏭' },
-    { id: 'presenceBhiwadi', name: 'Bhiwadi', state: 'Rajasthan', icon: '📦' },
-    { id: 'presenceRaipur', name: 'Raipur', state: 'Chhattisgarh', icon: '📦' },
-    { id: 'presenceNagpur', name: 'Nagpur', state: 'Maharashtra', icon: '📦' },
-    { id: 'presenceRourkela', name: 'Rourkela', state: 'Odisha', icon: '📦' },
-    { id: 'presencePune', name: 'Pune', state: 'Maharashtra', icon: '📦' },
-    { id: 'presenceMumbai', name: 'Mumbai', state: 'Maharashtra', icon: '📦' },
+  const hubs = [
+    { id: 'presenceFbd', city: 'Faridabad', state: 'Haryana', type: 'Central Corporate Office & Stockyard' },
+    { id: 'presenceBhiwadi', city: 'Bhiwadi', state: 'Rajasthan', type: 'Industrial Processing & Sourcing Hub' },
+    { id: 'presenceRaipur', city: 'Raipur', state: 'Chhattisgarh', type: 'Primary Steel Sourcing Channel' },
+    { id: 'presenceNagpur', city: 'Nagpur', state: 'Maharashtra', type: 'Central India Transit Depot' },
+    { id: 'presenceRourkela', city: 'Rourkela', state: 'Odisha', type: 'Eastern Steel Belt Depot' },
+    { id: 'presencePune', city: 'Pune', state: 'Maharashtra', type: 'Western Manufacturing Hub' },
+    { id: 'presenceMumbai', city: 'Mumbai', state: 'Maharashtra', type: 'Financial & Port Logistics Depot' },
   ];
 
   return (
-    <section className="presence-section section" id="presence">
+    <section className="section presence-modern-section" id="presence">
       <div className="container">
-        <div className="section-header section-header-light">
-          <div className="section-label label-gold">Our Presence</div>
-          <h2 className="section-title text-white">PAN India <span className="text-accent">Network</span></h2>
+        <div className="section-header">
+          <div className="section-label label-cyan">
+            <IconGlobe size={15} /> DISTRIBUTION INFRASTRUCTURE
+          </div>
+          <h2 className="section-title text-white">
+            Strategic <span className="text-gradient">PAN India Network</span>
+          </h2>
           <p className="section-desc text-gray">
-            Aggarwal Steels' PAN India presence reflects our commitment to quality, consistency, and customer trust across the nation.
+            Direct access to major steel production clusters and industrial consumption corridors guarantees consistent availability and optimal freight costs.
           </p>
         </div>
-        <div className="presence-grid" id="presenceGrid">
-          {cities.map(c => (
-            <div className="presence-card" id={c.id} key={c.id}>
-              <div className="presence-icon">{c.icon}</div>
-              <h4>{c.name}</h4>
-              <span>{c.state}</span>
+
+        <div className="presence-modern-grid" id="presenceGrid">
+          {hubs.map((hub) => (
+            <div className="hub-modern-card" id={hub.id} key={hub.id}>
+              <div className="hub-icon-wrap">
+                <IconMapPin size={22} />
+              </div>
+              <div className="hub-info">
+                <h4 className="hub-city">{hub.city}</h4>
+                <span className="hub-state">{hub.state}</span>
+                <p className="hub-type">{hub.type}</p>
+              </div>
             </div>
           ))}
         </div>

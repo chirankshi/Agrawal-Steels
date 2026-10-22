@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import TickerStrip from '../components/TickerStrip';
 import Products from '../components/Products';
+import Manufacturing from '../components/Manufacturing';
 import PartnersStrip from '../components/PartnersStrip';
 import About from '../components/About';
 import WhyUs from '../components/WhyUs';
@@ -26,6 +27,7 @@ export default function Home() {
         <Hero />
         <TickerStrip />
         <Products onSelectProduct={(prod) => setSelectedProduct(prod)} />
+        <Manufacturing />
         <PartnersStrip />
         <About />
         <WhyUs />

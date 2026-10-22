@@ -1,19 +1,20 @@
 'use client';
 import { useState } from 'react';
+import { IconMapPin, IconPhone, IconMail, IconClock, IconMessageSquare, IconCheck, IconShieldCheck, IconArrowRight } from './Icons';
 
 const PRODUCTS_LIST = [
-  'MS TMT Bars',
-  'HR Plates & Coils',
-  'MS Angles',
-  'MS Channel',
-  'MS Beam (I & H)',
-  'MS Square & Round Pipes',
-  'CR Coils & Slit Coils',
-  'GP Coils & Sheets',
-  'SS Sheets (202 & 304)',
-  'Chequered Plate',
-  'Rail Lines (New & Old)',
-  'Multiple Products',
+  'MS TMT Bars (Fe 500D / 550D)',
+  'HR Plates & Coils (IS 2062)',
+  'MS Structural Angles',
+  'MS Channels (ISMC)',
+  'MS Beams (ISMB / Joists)',
+  'Hollow Sections & MS Pipes',
+  'CR Coils & Precision Slit',
+  'GP Coils & Galvanized Sheets',
+  'Stainless Steel Sheets (304 / 202)',
+  'Custom CNC Bending & Fabrication',
+  'Heavy-Duty Storage Racking',
+  'Multiple Steel Categories',
 ];
 
 export default function ContactSection({ selectedProduct }) {
@@ -39,74 +40,73 @@ export default function ContactSection({ selectedProduct }) {
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-      // Reset form after delay or leave success
     }, 600);
   };
 
   return (
-    <section className="contact-section section" id="contact">
+    <section className="section contact-modern-section" id="contact">
       <div className="container">
-        <div className="section-header section-header-light">
-          <div className="section-label label-gold">Get In Touch</div>
-          <h2 className="section-title text-white">Request a <span className="text-accent">Quote</span></h2>
+        <div className="section-header">
+          <div className="section-label label-amber">
+            <IconMessageSquare size={15} /> DIRECT ENQUIRY
+          </div>
+          <h2 className="section-title text-white">
+            Request an <span className="text-gradient">Instant Quotation</span>
+          </h2>
           <p className="section-desc text-gray">
-            Send us your requirements and we'll get back to you within 24 hours with the best pricing.
+            Share your requirements and receiving site details. Our technical sales desk will furnish a formal quotation within 24 business hours.
           </p>
         </div>
 
-        <div className="contact-grid" id="contactGrid">
-          <div className="contact-form-wrap" id="contactFormWrap">
+        <div className="contact-modern-grid" id="contactGrid">
+          {/* Left Column: Interactive Form */}
+          <div className="contact-form-container" id="contactFormWrap">
             {submitted ? (
-              <div
-                style={{
-                  background: 'rgba(34, 197, 94, 0.15)',
-                  border: '1px solid rgba(34, 197, 94, 0.4)',
-                  padding: '2.5rem',
-                  borderRadius: '16px',
-                  textAlign: 'center',
-                  color: '#86efac',
-                }}
-              >
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🎉</div>
-                <h3 style={{ color: '#fff', fontSize: '1.4rem', marginBottom: '0.5rem' }}>Enquiry Received!</h3>
-                <p style={{ color: '#cbd5e1', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
-                  Thank you, <strong>{formData.name || 'Valued Customer'}</strong>! Our team is reviewing your requirement for{' '}
-                  <strong>{formData.product || 'Steel Products'}</strong> and will call you back within 24 hours at{' '}
-                  <strong>{formData.phone}</strong>.
+              <div className="contact-success-box">
+                <div className="success-icon-wrap">
+                  <IconCheck size={36} />
+                </div>
+                <h3 className="success-title">Enquiry Successfully Logged</h3>
+                <p className="success-message">
+                  Thank you, <strong>{formData.name || 'Valued Client'}</strong>! Your procurement request for{' '}
+                  <strong>{formData.product || 'Steel Products'}</strong> has been assigned to our Faridabad sales desk. Our executive will call you shortly at{' '}
+                  <strong>{formData.phone}</strong> with pricing and delivery terms.
                 </p>
                 <button
                   type="button"
-                  className="btn-primary"
+                  className="btn-modern-primary"
                   onClick={() => {
                     setSubmitted(false);
                     setFormData({ name: '', phone: '', email: '', product: '', message: '' });
                   }}
                 >
-                  Send Another Enquiry
+                  <span>Submit Another Requirement</span>
+                  <IconArrowRight size={16} />
                 </button>
               </div>
             ) : (
-              <form className="contact-form" id="contactForm" onSubmit={handleSubmit}>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="contactName">Full Name *</label>
+              <form className="contact-modern-form" id="contactForm" onSubmit={handleSubmit}>
+                <div className="form-fields-grid">
+                  <div className="modern-field">
+                    <label htmlFor="contactName">Full Name / Company Name *</label>
                     <input
                       type="text"
                       id="contactName"
                       name="name"
-                      placeholder="Your full name"
+                      placeholder="e.g. Ramesh Kumar / Infra Corp"
                       required
                       value={formData.name}
                       onChange={handleChange}
                     />
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="contactPhone">Phone Number *</label>
+
+                  <div className="modern-field">
+                    <label htmlFor="contactPhone">Phone / WhatsApp Number *</label>
                     <input
                       type="tel"
                       id="contactPhone"
                       name="phone"
-                      placeholder="+91 XXXXX XXXXX"
+                      placeholder="+91 98765 43210"
                       required
                       value={formData.phone}
                       onChange={handleChange}
@@ -114,20 +114,20 @@ export default function ContactSection({ selectedProduct }) {
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="contactEmail">Email Address</label>
+                <div className="modern-field">
+                  <label htmlFor="contactEmail">Work Email Address</label>
                   <input
                     type="email"
                     id="contactEmail"
                     name="email"
-                    placeholder="your@email.com"
+                    placeholder="procurement@company.com"
                     value={formData.email}
                     onChange={handleChange}
                   />
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="contactProduct">Product Required *</label>
+                <div className="modern-field">
+                  <label htmlFor="contactProduct">Primary Steel Product *</label>
                   <select
                     id="contactProduct"
                     name="product"
@@ -135,83 +135,106 @@ export default function ContactSection({ selectedProduct }) {
                     value={formData.product || selectedProduct || ''}
                     onChange={handleChange}
                   >
-                    <option value="">Select a product...</option>
+                    <option value="">Select product category...</option>
                     {PRODUCTS_LIST.map((prod) => (
                       <option key={prod} value={prod}>{prod}</option>
                     ))}
                   </select>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="contactMessage">Requirements / Quantity</label>
+                <div className="modern-field">
+                  <label htmlFor="contactMessage">Quantity, Size Specifications &amp; Delivery Destination</label>
                   <textarea
                     id="contactMessage"
                     name="message"
                     rows="4"
-                    placeholder="Describe your requirements — size, grade, quantity, delivery location..."
+                    placeholder="Specify tonnage, size, grade (e.g. 50 MT Fe 550D TMT, 16mm & 20mm to Greater Noida site)..."
                     value={formData.message}
                     onChange={handleChange}
                   ></textarea>
                 </div>
 
-                <button type="submit" className="btn-primary btn-full" id="btnSubmitForm" disabled={loading}>
-                  {loading ? 'Submitting...' : 'Send Enquiry →'}
+                <button
+                  type="submit"
+                  className="btn-submit-modern"
+                  id="btnSubmitForm"
+                  disabled={loading}
+                >
+                  <span>{loading ? 'Processing...' : 'Send Quotation Request'}</span>
+                  <IconArrowRight size={18} />
                 </button>
               </form>
             )}
           </div>
 
-          <div className="contact-info-wrap" id="contactInfoWrap">
-            <div className="contact-info-card" id="contactInfoCard">
-              <h3>Contact Details</h3>
-              <div className="contact-item" id="contactAddress">
-                <div className="contact-item-icon">📍</div>
+          {/* Right Column: Corporate Contacts */}
+          <div className="contact-sidebar" id="contactInfoWrap">
+            <div className="corporate-details-card" id="contactInfoCard">
+              <h3 className="sidebar-heading">Corporate Office</h3>
+
+              <div className="detail-entry">
+                <div className="detail-icon">
+                  <IconMapPin size={18} />
+                </div>
                 <div>
-                  <strong>Head Office</strong>
-                  <p>Plot No. 680, Sector 59,<br />Faridabad, Haryana – 121004</p>
+                  <strong>Registered Address &amp; Stockyard</strong>
+                  <p>Plot No. 680, Sector 59, Faridabad, Haryana – 121004, India</p>
                 </div>
               </div>
-              <div className="contact-item" id="contactPhone2">
-                <div className="contact-item-icon">📞</div>
+
+              <div className="detail-entry">
+                <div className="detail-icon">
+                  <IconPhone size={18} />
+                </div>
                 <div>
-                  <strong>Phone</strong>
+                  <strong>Sales Desk &amp; Direct Enquiries</strong>
                   <p><a href="tel:+918800885185">+91 8800885185</a></p>
                 </div>
               </div>
-              <div className="contact-item" id="contactEmailInfo">
-                <div className="contact-item-icon">✉️</div>
+
+              <div className="detail-entry">
+                <div className="detail-icon">
+                  <IconMail size={18} />
+                </div>
                 <div>
-                  <strong>Email</strong>
+                  <strong>Official Correspondence</strong>
                   <p><a href="mailto:info@aggarwalsteels.com">info@aggarwalsteels.com</a></p>
                 </div>
               </div>
-              <div className="contact-item" id="contactHours">
-                <div className="contact-item-icon">🕐</div>
+
+              <div className="detail-entry">
+                <div className="detail-icon">
+                  <IconClock size={18} />
+                </div>
                 <div>
-                  <strong>Business Hours</strong>
-                  <p>Mon – Sat: 9:00 AM – 6:00 PM</p>
+                  <strong>Commercial Working Hours</strong>
+                  <p>Monday – Saturday: 09:00 AM – 06:00 PM IST</p>
                 </div>
               </div>
-              <div className="gst-info" id="gstInfo">
-                <span className="gst-badge">GST Reg.</span>
-                <code>06AAFPA0415LI2G</code>
+
+              <div className="gst-compliance-badge">
+                <IconShieldCheck size={16} />
+                <span>GST REGISTRATION: <code>06AAFPA0415LI2G</code></span>
               </div>
             </div>
 
-            <div className="whatsapp-card" id="whatsappCard">
-              <div className="wa-icon">💬</div>
-              <div>
-                <strong>WhatsApp Us</strong>
-                <p>Quick enquiries &amp; quotes on WhatsApp</p>
+            {/* Direct WhatsApp Chat Action */}
+            <div className="whatsapp-action-card" id="whatsappCard">
+              <div className="wa-icon-box">
+                <IconMessageSquare size={24} />
+              </div>
+              <div className="wa-meta">
+                <strong>Instant WhatsApp Desk</strong>
+                <p>Chat directly with technical sales for real-time mill rates</p>
               </div>
               <a
-                href="https://wa.me/918800885185?text=Hello%20Aggarwal%20Steels,%20I%20would%20like%20to%20get%20a%20quote%20for%20steel%20products"
+                href="https://wa.me/918800885185?text=Hello%20Aggarwal%20Steels,%20I%20would%20like%20to%20enquire%20about%20steel%20products"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="wa-btn"
+                className="wa-action-btn"
                 id="btnWhatsapp"
               >
-                Chat Now
+                <span>Chat Now</span>
               </a>
             </div>
           </div>

@@ -1,88 +1,109 @@
 'use client';
 import { useState } from 'react';
+import { IconArrowRight, IconShieldCheck, IconFileText } from './Icons';
 
 const PRODUCTS = [
   {
     id: 'productTmt',
     name: 'MS TMT Bars',
     category: 'TMT & Rebars',
-    desc: 'High-strength Thermo-Mechanically Treated bars for RCC construction. Fe-415, Fe-500, Fe-550 grades available.',
+    grade: 'Fe-415 / Fe-500D / Fe-550D',
+    desc: 'High-yield thermo-mechanically treated rebars engineered for critical RCC seismic structural designs.',
     img: '/images/product_tmt_bars.jpg',
-    tags: ['SAIL', 'Tata', 'JSPL'],
-    badge: 'Best Seller',
+    tags: ['SAIL', 'Tata Tiscon', 'JSPL'],
+    badge: 'High Demand',
+    specs: 'Sizes 8mm to 32mm | IS 1786',
   },
   {
     id: 'productHr',
     name: 'HR Plates & Coils',
     category: 'Plates & Coils',
-    desc: 'Hot Rolled plates and coils in various thicknesses for heavy engineering, fabrication and structural use.',
+    grade: 'IS 2062 E250 / E350',
+    desc: 'Heavy-gauge hot rolled plates and master coils for structural fabrication, pressure vessels, and PEB frames.',
     img: '/images/product_hr_plates.jpg',
-    tags: ['SAIL', 'Essar/AMNS'],
+    tags: ['SAIL', 'AMNS India'],
+    badge: 'Heavy Gauge',
+    specs: 'Thickness 2mm to 63mm',
   },
   {
     id: 'productAngles',
-    name: 'MS Angles',
+    name: 'MS Structural Angles',
     category: 'Structural Steel',
-    desc: 'Mild Steel L-shaped structural angles for towers, trusses and general fabrication. Equal & unequal sizes available.',
+    grade: 'Equal & Unequal Legs',
+    desc: 'Precision L-profile structural angles for telecommunication towers, trusses, and industrial machinery bases.',
     img: '/images/product_ms_angles.jpg',
     tags: ['SAIL', 'JSPL'],
+    specs: '25x25mm to 200x200mm | IS 2062',
   },
   {
     id: 'productChannel',
-    name: 'MS Channel',
+    name: 'MS Channels (ISMC)',
     category: 'Structural Steel',
-    desc: 'C-shaped mild steel channels (ISMC) for structural framing, columns and load-bearing applications.',
+    grade: 'ISMC Standard Profiles',
+    desc: 'Standard C-shaped hot rolled channels for architectural framing, bridge decks, and column reinforcements.',
     img: '/images/product_ms_channel.jpg',
-    tags: ['SAIL', 'Tata'],
+    tags: ['SAIL', 'Tata Steel'],
+    specs: 'ISMC 75 to ISMC 400',
   },
   {
     id: 'productBeam',
-    name: 'MS Beam (I & H)',
+    name: 'MS Beams (I & H Joists)',
     category: 'Structural Steel',
-    desc: 'I-Section and H-Section beams for bridges, buildings, and heavy structural applications. All ISSC grades.',
+    grade: 'ISMB / NPB / WPB',
+    desc: 'High section-modulus structural beams for wide-span industrial sheds, multi-story buildings, and heavy cranes.',
     img: '/images/product_ms_beam.jpg',
-    tags: ['SAIL', 'JSPL'],
+    tags: ['SAIL', 'JSPL Universal'],
+    specs: 'ISMB 100 to ISMB 600',
   },
   {
     id: 'productPipe',
-    name: 'MS Square & Round Pipes',
+    name: 'Hollow Sections & Pipes',
     category: 'Pipes & Tubes',
-    desc: 'Hollow steel sections – square, rectangular, and round pipes for fencing, furniture, and industrial use.',
+    grade: 'Square, Rectangular, Round',
+    desc: 'High-strength structural hollow sections (SHS/RHS) and MS pipes for architectural facades and trusses.',
     img: '/images/product_ms_pipe.jpg',
-    tags: ['Jindal Pipes', 'Apollo'],
+    tags: ['APL Apollo', 'Jindal'],
+    specs: 'IS 4923 & IS 1161 Certified',
   },
   {
     id: 'productCr',
-    name: 'CR Coils & Slit Coils',
+    name: 'CR Coils & Precision Slit',
     category: 'Plates & Coils',
-    desc: 'Cold Rolled coils and precision slit coils for automotive, appliances and precision component manufacturing.',
+    grade: 'CR1 / CR2 / CR3 Deep Draw',
+    desc: 'Cold rolled steel coils and slit strips with ultra-fine surface finish for automotive stamping and electronics.',
     img: '/images/product_cr_coils.jpg',
-    tags: ['SAIL', 'Tata'],
+    tags: ['SAIL', 'Tata Steelium'],
+    specs: '0.4mm to 3.0mm Thickness',
   },
   {
     id: 'productGp',
-    name: 'GP Coils & Sheets',
+    name: 'GP Coils & Galvanized Sheets',
     category: 'Plates & Coils',
-    desc: 'Galvanized Plain steel coils and sheets with zinc coating for corrosion resistance. Roofing, cladding & more.',
+    grade: 'Zinc Coating 120-275 GSM',
+    desc: 'Galvanized plain steel coils with high corrosion resistance for ducting, roofing, and outdoor enclosures.',
     img: '/images/product_gp_coils.jpg',
-    tags: ['SAIL', 'Essar'],
+    tags: ['SAIL', 'AMNS'],
+    specs: 'Zero Spangle / Regular Spangle',
   },
   {
     id: 'productSs',
-    name: 'SS Sheets (202 & 304)',
+    name: 'Stainless Steel Sheets',
     category: 'Stainless Steel',
-    desc: 'Stainless steel sheets in grades SS 202 & SS 304 for kitchen equipment, architectural and decorative use.',
+    grade: 'SS 304 / SS 202 / SS 316',
+    desc: 'Austenitic stainless steel sheets and plates in 2B and No.4 finishes for pharmaceutical and kitchen equipment.',
     img: '/images/product_ss_sheets.jpg',
-    tags: ['Grade 202', 'Grade 304'],
+    tags: ['Jindal Stainless'],
+    badge: 'Corrosion Free',
+    specs: 'Sheets, Coils & Custom Cut',
   },
 ];
 
-const CATEGORIES = ['All', 'Structural Steel', 'Plates & Coils', 'TMT & Rebars', 'Pipes & Tubes', 'Stainless Steel'];
+const CATEGORIES = ['All Products', 'Structural Steel', 'Plates & Coils', 'TMT & Rebars', 'Pipes & Tubes', 'Stainless Steel'];
 
 export default function Products({ onSelectProduct }) {
-  const [selectedCat, setSelectedCat] = useState('All');
+  const [selectedCat, setSelectedCat] = useState('All Products');
 
-  const filtered = selectedCat === 'All'
+  const filtered = selectedCat === 'All Products'
     ? PRODUCTS
     : PRODUCTS.filter(p => p.category === selectedCat);
 
@@ -97,32 +118,26 @@ export default function Products({ onSelectProduct }) {
   };
 
   return (
-    <section className="products-section section" id="products">
+    <section className="section products-modern-section" id="products">
       <div className="container">
         <div className="section-header">
-          <div className="section-label">Our Products</div>
-          <h2 className="section-title">Browse by <span className="text-accent">Category</span></h2>
-          <p className="section-desc">
-            Complete range of premium iron &amp; steel products for construction and industrial applications. Sourced directly from SAIL, Tata Steel, JSPL &amp; more.
+          <div className="section-label label-amber">
+            <IconFileText size={15} /> PRODUCT PORTFOLIO
+          </div>
+          <h2 className="section-title text-white">
+            Certified Structural &amp; <span className="text-gradient">Flat Steel</span>
+          </h2>
+          <p className="section-desc text-gray">
+            Direct mill distribution and custom sizing with full mill test certificates (MTC) and traceable chemical &amp; physical compliance.
           </p>
 
           {/* Interactive Category Filter Pills */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center', marginTop: '1.5rem' }}>
+          <div className="product-category-tabs">
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
                 onClick={() => setSelectedCat(cat)}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: '20px',
-                  fontSize: '0.85rem',
-                  fontWeight: 600,
-                  transition: 'all 0.2s ease',
-                  background: selectedCat === cat ? 'var(--accent)' : 'var(--gray-100)',
-                  color: selectedCat === cat ? 'var(--primary)' : 'var(--gray-700)',
-                  border: selectedCat === cat ? '1px solid var(--accent)' : '1px solid var(--gray-200)',
-                  boxShadow: selectedCat === cat ? '0 2px 8px rgba(245, 158, 11, 0.3)' : 'none',
-                }}
+                className={`category-tab-btn ${selectedCat === cat ? 'category-tab-btn--active' : ''}`}
               >
                 {cat}
               </button>
@@ -130,32 +145,50 @@ export default function Products({ onSelectProduct }) {
           </div>
         </div>
 
-        <div className="products-grid" id="productsGrid">
+        {/* Product Cards Grid with Modern Dark Cards */}
+        <div className="products-modern-grid" id="productsGrid">
           {filtered.map(p => (
-            <div className="product-card" id={p.id} key={p.id}>
-              <div className="product-img-wrap">
-                <img src={p.img} alt={p.name} className="product-img" loading="lazy" />
-                <div className="product-overlay">
-                  <a
-                    href="#contact"
-                    className="product-cta"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleQuoteClick(p.name);
-                    }}
+            <div className="product-modern-card" id={p.id} key={p.id}>
+              <div className="pm-img-wrap">
+                <img src={p.img} alt={p.name} className="pm-img" loading="lazy" />
+                <div className="pm-overlay">
+                  <button
+                    type="button"
+                    className="pm-overlay-btn"
+                    onClick={() => handleQuoteClick(p.name)}
                   >
-                    Get Quote →
-                  </a>
+                    <span>Instant Quotation</span>
+                    <IconArrowRight size={16} />
+                  </button>
                 </div>
-                {p.badge && <div className="product-badge">{p.badge}</div>}
+                {p.badge && <span className="pm-badge">{p.badge}</span>}
               </div>
-              <div className="product-info">
-                <h3 className="product-name">{p.name}</h3>
-                <p className="product-desc">{p.desc}</p>
-                <div className="product-tags">
-                  {p.tags.map(t => (
-                    <span className="tag" key={t}>{t}</span>
-                  ))}
+
+              <div className="pm-body">
+                <div className="pm-category">{p.category}</div>
+                <h3 className="pm-title">{p.name}</h3>
+                <div className="pm-grade">{p.grade}</div>
+                <p className="pm-desc">{p.desc}</p>
+
+                <div className="pm-spec-strip">
+                  <IconShieldCheck size={14} className="text-accent" />
+                  <span>{p.specs}</span>
+                </div>
+
+                <div className="pm-footer">
+                  <div className="pm-tags">
+                    {p.tags.map(t => (
+                      <span className="pm-tag" key={t}>{t}</span>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    className="pm-btn-link"
+                    onClick={() => handleQuoteClick(p.name)}
+                  >
+                    <span>Enquire</span>
+                    <IconArrowRight size={14} />
+                  </button>
                 </div>
               </div>
             </div>
