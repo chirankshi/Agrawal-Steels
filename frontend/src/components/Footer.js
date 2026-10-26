@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { IconShieldCheck, IconPhone, IconMail, IconMapPin, IconClock, IconFileText } from './Icons';
 
 export default function Footer() {
@@ -12,14 +13,10 @@ export default function Footer() {
                 <img
                   src="/images/brand/aggarwal_logo_circle.png"
                   alt="Aggarwal Steels Logo"
-                  width={48}
-                  height={48}
+                  width={60}
+                  height={60}
                   className="footer-logo-img"
                 />
-                <div className="logo-text">
-                  <span className="logo-brand">AGGARWAL STEELS</span>
-                  <span className="logo-tagline">&bull; MAJESTIC AR TECHNOLOGY PVT. LTD. &bull;</span>
-                </div>
               </div>
               <p className="footer-description">
                 Building Stronger Industries Together. Integrated primary steel distribution (SAIL, TATA, JSPL, AMNS) and specialized warehouse storage racking, robotic powder coating, and precision fabrication across PAN India.
@@ -52,14 +49,12 @@ export default function Footer() {
             <div className="footer-col-nav" id="footerProducts">
               <h4 className="footer-heading">Steel Supply (Trading)</h4>
               <ul className="footer-nav-list">
-                <li><a href="#products">MS TMT Bars (Fe 415/500D/550D)</a></li>
-                <li><a href="#products">Hot Rolled Plates &amp; Coils (IS 2062)</a></li>
-                <li><a href="#products">MS Structural Angles &amp; Channels</a></li>
-                <li><a href="#products">MS Beams &amp; Joists (ISMB / NPB)</a></li>
-                <li><a href="#products">Chequered Plates &amp; Flooring Sheets</a></li>
-                <li><a href="#products">Hollow Sections &amp; Pipes (IS 4923)</a></li>
-                <li><a href="#products">CR Coils &amp; GP Galvanized Sheets</a></li>
-                <li><a href="#products">Stainless Steel Sheets (304 / 202)</a></li>
+                <li><Link href="/products#hr-plates">Hot Rolled (HR) Plates &amp; Coils</Link></li>
+                <li><Link href="/products#cr-sheets">Cold Rolled (CR) Precision Sheets</Link></li>
+                <li><Link href="/products#chequered-plates">MS Chequered Anti-Skid Plates</Link></li>
+                <li><Link href="/products#structural-steel">MS Structural Beams, Channels &amp; Angles</Link></li>
+                <li><Link href="/products#ms-pipes">Hollow Sections (SHS/RHS) &amp; Pipes</Link></li>
+                <li><Link href="/products">View All Certified Products &rarr;</Link></li>
               </ul>
             </div>
 
@@ -67,14 +62,13 @@ export default function Footer() {
             <div className="footer-col-nav" id="footerMfg">
               <h4 className="footer-heading">In-House Manufacturing</h4>
               <ul className="footer-nav-list">
-                <li><a href="#capabilities">Majestic AR Technology Pvt. Ltd.</a></li>
-                <li><a href="#capabilities">Heavy-Duty Pallet Racking Systems</a></li>
-                <li><a href="#capabilities">Multi-Tier Mezzanine Floors (2 &amp; 3 Tier)</a></li>
-                <li><a href="#capabilities">520ft Robotic Powder Coating Plant</a></li>
-                <li><a href="#capabilities">3 kW Prime Fiber Laser Cutting</a></li>
-                <li><a href="#capabilities">HACO / Energy Mission CNC Bending</a></li>
-                <li><a href="#capabilities">SS Commercial Kitchen Equipment</a></li>
-                <li><a href="#capabilities">Electrical &amp; Control Panel Cabinets</a></li>
+                <li><Link href="/manufacturing">520ft Automated Powder Coating Line</Link></li>
+                <li><Link href="/products#heavy-duty-pallet-racks">Heavy-Duty Pallet Racking Systems</Link></li>
+                <li><Link href="/products#mezzanine-floors">Multi-Tier Mezzanine Floors (2 &amp; 3 Tier)</Link></li>
+                <li><Link href="/products#cantilever-racks">Heavy Cantilever Storage Systems</Link></li>
+                <li><Link href="/manufacturing">CNC Multi-Axis Hydraulic Press Brakes</Link></li>
+                <li><Link href="/products#ss-commercial-kitchen">Commercial Stainless Steel Fabrication</Link></li>
+                <li><Link href="/clients">Enterprise Clients &amp; Projects &rarr;</Link></li>
               </ul>
             </div>
 

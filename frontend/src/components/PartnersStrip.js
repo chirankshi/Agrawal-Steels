@@ -23,7 +23,9 @@ export default function PartnersStrip() {
   ];
 
   return (
-    <div className="partners-modern-strip" id="partnersStrip">
+    <div className="partners-modern-strip" id="clients">
+      <span id="partners" style={{ position: 'relative', top: '-90px', visibility: 'hidden' }}></span>
+      <span id="partnersStrip" style={{ position: 'relative', top: '-90px', visibility: 'hidden' }}></span>
       <div className="container">
         {/* Steel Mills Primary Partners */}
         <div className="partners-header">

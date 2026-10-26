@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { IconShieldCheck, IconZap, IconTruck, IconGlobe, IconArrowRight, IconCheck, IconAward } from './Icons';
+import CountUp from './CountUp';
 
 export default function Hero() {
   const [selectedCategory, setSelectedCategory] = useState('Primary Steel Supply');
@@ -76,34 +77,34 @@ export default function Hero() {
               </div>
 
               <div className="telemetry-stats-grid">
-                <div className="telemetry-stat-box">
+                <div className="telemetry-stat-box stagger-stat-1">
                   <span className="stat-label-modern">Annual Turnover</span>
                   <div className="stat-value-modern">
-                    ₹200<span className="stat-unit">Cr+</span>
+                    <CountUp target={200} prefix="₹" suffix="Cr+" duration={2000} />
                   </div>
                   <span className="stat-note-modern">Consistent 40%+ YoY Surge</span>
                 </div>
 
-                <div className="telemetry-stat-box">
+                <div className="telemetry-stat-box stagger-stat-2">
                   <span className="stat-label-modern">Workforce</span>
                   <div className="stat-value-modern">
-                    250<span className="stat-unit">+</span>
+                    <CountUp target={250} suffix="+" duration={2200} />
                   </div>
                   <span className="stat-note-modern">Engineers, Technicians &amp; Staff</span>
                 </div>
 
-                <div className="telemetry-stat-box">
+                <div className="telemetry-stat-box stagger-stat-3">
                   <span className="stat-label-modern">Trading Experience</span>
                   <div className="stat-value-modern">
-                    11<span className="stat-unit">+ Yrs</span>
+                    <CountUp target={11} suffix="+ Yrs" duration={1800} />
                   </div>
                   <span className="stat-note-modern">4+ Yrs In-House Manufacturing</span>
                 </div>
 
-                <div className="telemetry-stat-box">
+                <div className="telemetry-stat-box stagger-stat-4">
                   <span className="stat-label-modern">Operating Units</span>
                   <div className="stat-value-modern">
-                    5<span className="stat-unit">Units</span>
+                    <CountUp target={5} suffix="Units" duration={1600} />
                   </div>
                   <span className="stat-note-modern">2 Mfg Plants &bull; 3 Trading Hubs</span>
                 </div>

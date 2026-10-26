@@ -63,7 +63,8 @@ export default function Manufacturing() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section className="section capabilities-section" id="capabilities">
+    <section className="section capabilities-section" id="manufacturing">
+      <span id="capabilities" style={{ position: 'relative', top: '-90px', visibility: 'hidden' }}></span>
       <div className="container">
         <div className="section-header">
           <div className="section-label label-cyan">

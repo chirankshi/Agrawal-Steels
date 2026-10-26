@@ -15,12 +15,14 @@ import OrderProcess from '../components/OrderProcess';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
+import ScrollAnimations from '../components/ScrollAnimations';
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState('');
 
   return (
     <>
+      <ScrollAnimations />
       <AnnouncementBar />
       <Navbar />
       <main>
