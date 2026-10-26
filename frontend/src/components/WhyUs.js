@@ -5,38 +5,38 @@ export default function WhyUs() {
     {
       id: 'whyQuality',
       icon: <IconShieldCheck size={24} />,
-      title: 'In-House Quality Inspection',
-      desc: 'Dedicated metallurgical and dimension testing on incoming and outgoing consignments with mill test certificates.',
+      title: 'In-House Quality Team',
+      desc: 'Skilled metallurgists and technicians ensuring superior quality in every batch with verified Mill Test Certificates (MTC).',
     },
     {
       id: 'whyDispatch',
       icon: <IconZap size={24} />,
-      title: '24-Hour Expedited Dispatch',
-      desc: 'Strategic ready-stock inventory in Faridabad and regional hubs ensures project timelines never face downtime.',
+      title: 'Fast 24-Hour Dispatch',
+      desc: 'MS materials and prime stock dispatched within 24 hours for zero project downtime across PAN India.',
     },
     {
       id: 'whyIndia',
       icon: <IconGlobe size={24} />,
-      title: 'Multi-City Logistics Fleet',
-      desc: 'Seamless transit access across Faridabad, Bhiwadi, Raipur, Nagpur, Rourkela, Pune, and Mumbai.',
+      title: 'PAN India Supply Network',
+      desc: 'Reliable supply reach spanning Bhiwadi, Manesar, Bawal, Faridabad, Mumbai, Pune, Nagpur, Raipur, and Rourkela.',
     },
     {
       id: 'whyProducts',
       icon: <IconLayers size={24} />,
-      title: 'Complete Structural Spectrum',
-      desc: 'One-stop procurement spanning TMT rebars, heavy structural sections, flat coils, hollow pipes, and SS sheets.',
+      title: 'Comprehensive Product Spectrum',
+      desc: 'Complete one-stop range of TMT bars, plates, structural angles, channels, beams, hollow pipes, and SS sheets.',
     },
     {
       id: 'whyExperience',
       icon: <IconAward size={24} />,
-      title: '30+ Years Industry Legacy',
-      desc: 'Three decades of transparent pricing, ethical commercial practices, and deep tier-1 steel mill relationships.',
+      title: '11+ Years Sourcing Mastery',
+      desc: 'Over a decade of deep expertise sourcing directly from SAIL, TATA Steel, JSPL, AMNS India, and Apollo Pipes.',
     },
     {
       id: 'whyIsi',
       icon: <IconCheck size={24} />,
-      title: '100% BIS & ISI Standard',
-      desc: 'All supplies strictly conform to Bureau of Indian Standards (BIS) specifications with guaranteed chemical traceability.',
+      title: 'In-House Advanced Manufacturing',
+      desc: 'Sister arm Majestic AR Technology operating 2 manufacturing plants with 3kW CNC Laser, 4 Bending machines & 520ft powder coating.',
     },
   ];
 
@@ -45,13 +45,13 @@ export default function WhyUs() {
       <div className="container">
         <div className="section-header">
           <div className="section-label label-cyan">
-            <IconShieldCheck size={15} /> COMPETITIVE ADVANTAGE
+            <IconShieldCheck size={15} /> WHY CHOOSE AGGARWAL STEELS
           </div>
           <h2 className="section-title text-white">
-            Why Contractors &amp; Industries <span className="text-gradient">Choose Us</span>
+            Proven Strength: <span className="text-gradient">Why Industry Leaders Choose Us</span>
           </h2>
           <p className="section-desc text-gray">
-            Built on engineering excellence, guaranteed authenticity, and clockwork delivery precision since 1990.
+            Delivering quality, speed, and trusted long-term partnerships across construction, warehousing, and infrastructure since 2015.
           </p>
         </div>
 
@@ -68,9 +68,9 @@ export default function WhyUs() {
         {/* Industrial Principle Banner */}
         <div className="principle-banner">
           <div className="principle-content">
-            <span className="principle-tag">INDUSTRY BENCHMARK</span>
+            <span className="principle-tag">OUR CORE PHILOSOPHY</span>
             <p className="principle-quote">
-              "Structural steel is the unseen skeleton of the nation's progress — we treat every beam and plate with the uncompromising standard it demands."
+              &ldquo;Iron is the backbone of modern construction – strong, durable, and essential for building infrastructure that lasts generations.&rdquo;
             </p>
           </div>
         </div>

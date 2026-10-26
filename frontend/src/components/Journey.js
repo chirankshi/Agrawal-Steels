@@ -5,18 +5,20 @@ import { IconAward, IconGlobe, IconLayers, IconTruck, IconArrowRight, IconShield
 export default function Journey() {
   const [activeYear, setActiveYear] = useState('2024-25');
 
+  // Exact figures from Document Page 4 ("Our Journey...")
   const timeline = [
-    { year: '2021-22', revenue: '₹52 Cr.', height: '35%', desc: 'Expansion into regional flat products distribution' },
-    { year: '2022-23', revenue: '₹68 Cr.', height: '46%', desc: 'Incorporation of Majestic AR Technology racking division' },
-    { year: '2023-24', revenue: '₹98 Cr.', height: '66%', desc: 'Multi-hub logistics expansion into Western & Central India' },
-    { year: '2024-25', revenue: '₹148 Cr.', height: '100%', desc: 'Record turnover milestone with full-stack fabrication', isLatest: true },
+    { year: '2021-22', revenue: '₹52 Cr.', height: '35%', desc: 'Expanding national flat & long primary steel distribution network' },
+    { year: '2022-23', revenue: '₹68 Cr.', height: '46%', desc: 'Setting up Majestic AR Technology Pvt. Ltd. racking & manufacturing' },
+    { year: '2023-24', revenue: '₹98 Cr.', height: '66%', desc: 'Commissioning automated 520ft robotic powder coating line & CNC machines' },
+    { year: '2024-25', revenue: '₹148 Cr.', height: '80%', desc: 'Record audited annual milestone across steel supply & warehousing systems' },
+    { year: '2025-26', revenue: '₹200+ Cr.', height: '100%', desc: 'Current group run-rate with 2 manufacturing plants & 3 trading units', isLatest: true },
   ];
 
   const milestones = [
-    { label: 'Founded In', value: '1990', icon: <IconAward size={20} /> },
-    { label: 'Strategic Hubs', value: '7+ Cities', icon: <IconGlobe size={20} /> },
-    { label: 'Commercial Divisions', value: '2 Wings', icon: <IconLayers size={20} /> },
-    { label: 'Stock Dispatch', value: '< 24 Hours', icon: <IconTruck size={20} /> },
+    { label: 'Year Established', value: '2015', icon: <IconAward size={20} /> },
+    { label: 'Group Turnover', value: '₹200+ Cr', icon: <IconTruck size={20} /> },
+    { label: 'Workforce', value: '250+ Team', icon: <IconLayers size={20} /> },
+    { label: 'Trading Experience', value: '11+ Years', icon: <IconGlobe size={20} /> },
   ];
 
   return (
@@ -24,13 +26,13 @@ export default function Journey() {
       <div className="container">
         <div className="section-header">
           <div className="section-label label-amber">
-            <IconAward size={15} /> GROWTH TRAJECTORY
+            <IconAward size={15} /> OUR JOURNEY &bull; VERIFIED FINANCIALS
           </div>
           <h2 className="section-title text-white">
-            Scaling Through <span className="text-gradient">Performance &amp; Scale</span>
+            A Journey Built on <span className="text-gradient">Trust &amp; Continuous Growth</span>
           </h2>
           <p className="section-desc text-gray">
-            Year-over-year revenue expansion driven by customer trust, broader product lines, and seamless logistics.
+            Step by step, with innovation and trust, Aggarwal Steels has grown into an enduring symbol of strength and reliability.
           </p>
         </div>
 
@@ -38,12 +40,12 @@ export default function Journey() {
         <div className="growth-chart-wrap">
           <div className="growth-chart-header">
             <div>
-              <span className="growth-chart-label">ANNUAL REVENUE RUN-RATE</span>
-              <div className="growth-current-revenue">₹148 Crore <span className="growth-badge">+51% YoY</span></div>
+              <span className="growth-chart-label">CONSOLIDATED GROUP TURNOVER TRAJECTORY</span>
+              <div className="growth-current-revenue">₹200+ Crore <span className="growth-badge">Run-Rate Milestone</span></div>
             </div>
             <div className="growth-legend">
               <span className="legend-dot"></span>
-              <span>Audited Consolidated Revenue</span>
+              <span>Audited Financial Progression</span>
             </div>
           </div>
 
@@ -84,15 +86,15 @@ export default function Journey() {
         {/* Subsidiary Integration Banner */}
         <div className="subsidiary-modern-banner">
           <div className="sub-left">
-            <span className="sub-tag">SISTER CONCERN &bull; IN-HOUSE MANUFACTURING</span>
+            <span className="sub-tag">IN-HOUSE MANUFACTURING &bull; RACKING &amp; FABRICATION</span>
             <h3 className="sub-title">Majestic AR Technology Pvt. Ltd.</h3>
             <p className="sub-desc">
-              Specialized manufacturing of Heavy-Duty Storage Racks, Multi-Tier Mezzanine Floors, Structural PEB Assemblies, and Food-Grade SS Kitchen Systems.
+              Where Innovation Meets Precision. Operating 2 manufacturing units in Bhiwadi &amp; Manesar, producing Heavy-Duty Storage Racks, Mezzanine Floors, SS Commercial Kitchens, and Custom Cabinets.
             </p>
           </div>
           <div className="sub-right">
             <a href="#capabilities" className="btn-modern-outline">
-              <span>View Racking &amp; Fabrication</span>
+              <span>View In-House Machinery</span>
               <IconArrowRight size={16} />
             </a>
           </div>

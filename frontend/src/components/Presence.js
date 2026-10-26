@@ -1,14 +1,45 @@
-import { IconMapPin, IconGlobe } from './Icons';
+import { IconMapPin, IconGlobe, IconShieldCheck } from './Icons';
 
 export default function Presence() {
-  const hubs = [
-    { id: 'presenceFbd', city: 'Faridabad', state: 'Haryana', type: 'Central Corporate Office & Stockyard' },
-    { id: 'presenceBhiwadi', city: 'Bhiwadi', state: 'Rajasthan', type: 'Industrial Processing & Sourcing Hub' },
-    { id: 'presenceRaipur', city: 'Raipur', state: 'Chhattisgarh', type: 'Primary Steel Sourcing Channel' },
-    { id: 'presenceNagpur', city: 'Nagpur', state: 'Maharashtra', type: 'Central India Transit Depot' },
-    { id: 'presenceRourkela', city: 'Rourkela', state: 'Odisha', type: 'Eastern Steel Belt Depot' },
-    { id: 'presencePune', city: 'Pune', state: 'Maharashtra', type: 'Western Manufacturing Hub' },
-    { id: 'presenceMumbai', city: 'Mumbai', state: 'Maharashtra', type: 'Financial & Port Logistics Depot' },
+  const units = [
+    {
+      title: 'Head Office & Manufacturing',
+      location: 'Bhiwadi, Rajasthan',
+      address: 'Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan',
+      badge: 'Corporate HQ & Plant',
+    },
+    {
+      title: 'Manufacturing Unit 01',
+      location: 'IMT Manesar, Gurugram',
+      address: '89, Sector 3, IMT Manesar, Gurugram, Haryana',
+      badge: 'Production Unit 01',
+    },
+    {
+      title: 'Manufacturing Unit 02',
+      location: 'RIICO Bhiwadi, Rajasthan',
+      address: 'G1-385, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan',
+      badge: 'Production Unit 02',
+    },
+    {
+      title: 'Manufacturing Unit 03',
+      location: 'Bawal, Haryana',
+      address: '81, Phase IV, Sector 15, Bawal, Haryana',
+      badge: 'Production Unit 03',
+    },
+    {
+      title: 'Central Stockyard & Trading Unit',
+      location: 'Faridabad, Haryana',
+      address: 'Plot No. 680, Sector 59, Faridabad, Haryana – 121004',
+      badge: 'Stockyard & Logistics',
+    },
+  ];
+
+  const regionalHubs = [
+    { city: 'Mumbai', state: 'Maharashtra', desc: 'Western Port & Logistics Gateway' },
+    { city: 'Pune', state: 'Maharashtra', desc: 'Auto & Heavy Engineering Hub' },
+    { city: 'Nagpur', state: 'Maharashtra', desc: 'Central India Transit Center' },
+    { city: 'Raipur', state: 'Chhattisgarh', desc: 'Primary Steel Mill Sourcing' },
+    { city: 'Rourkela', state: 'Odisha', desc: 'Eastern Steel Belt Depot' },
   ];
 
   return (
@@ -16,29 +47,50 @@ export default function Presence() {
       <div className="container">
         <div className="section-header">
           <div className="section-label label-cyan">
-            <IconGlobe size={15} /> DISTRIBUTION INFRASTRUCTURE
+            <IconGlobe size={15} /> OPERATIONAL INFRASTRUCTURE &bull; PAN INDIA
           </div>
           <h2 className="section-title text-white">
-            Strategic <span className="text-gradient">PAN India Network</span>
+            Manufacturing Units &amp; <span className="text-gradient">National Network</span>
           </h2>
           <p className="section-desc text-gray">
-            Direct access to major steel production clusters and industrial consumption corridors guarantees consistent availability and optimal freight costs.
+            Operating 2 specialized manufacturing plants, 3 trading units, and distribution stockyards spanning North, West, and Central India.
           </p>
         </div>
 
-        <div className="presence-modern-grid" id="presenceGrid">
-          {hubs.map((hub) => (
-            <div className="hub-modern-card" id={hub.id} key={hub.id}>
+        {/* Major Production Units */}
+        <div className="presence-modern-grid" id="presenceUnitsGrid">
+          {units.map((unit, idx) => (
+            <div className="hub-modern-card" key={idx} style={{ borderLeft: '3px solid #ff9800' }}>
               <div className="hub-icon-wrap">
                 <IconMapPin size={22} />
               </div>
               <div className="hub-info">
-                <h4 className="hub-city">{hub.city}</h4>
-                <span className="hub-state">{hub.state}</span>
-                <p className="hub-type">{hub.type}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h4 className="hub-city">{unit.location}</h4>
+                  <span style={{ fontSize: '0.72rem', background: 'rgba(255, 152, 0, 0.15)', color: '#ffb74d', padding: '2px 8px', borderRadius: '4px' }}>
+                    {unit.badge}
+                  </span>
+                </div>
+                <strong style={{ color: '#ffffff', fontSize: '0.85rem' }}>{unit.title}</strong>
+                <p className="hub-type" style={{ marginTop: '4px', lineHeight: '1.4' }}>{unit.address}</p>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Regional PAN-India Sourcing & Distribution Hubs */}
+        <div style={{ marginTop: '35px' }}>
+          <h4 style={{ color: '#94a3b8', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>
+            Regional Steel Sourcing &amp; Distribution Transit Depots:
+          </h4>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
+            {regionalHubs.map((h, i) => (
+              <div key={i} style={{ background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '8px', padding: '14px' }}>
+                <div style={{ color: '#00e5ff', fontWeight: '600', fontSize: '1rem' }}>{h.city} <span style={{ color: '#64748b', fontSize: '0.8rem' }}>({h.state})</span></div>
+                <div style={{ color: '#94a3b8', fontSize: '0.8rem', marginTop: '4px' }}>{h.desc}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

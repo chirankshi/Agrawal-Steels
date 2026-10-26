@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { IconPhone, IconArrowRight } from './Icons';
+import { IconPhone, IconArrowRight, IconSun, IconMoon, IconFileText } from './Icons';
 
 const LINKS = [
   { href: '#home',         label: 'Home',         id: 'navHome' },
@@ -16,6 +16,21 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
   const [active, setActive]     = useState('home');
+  const [theme, setTheme]       = useState('dark');
+
+  useEffect(() => {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    setTheme(current);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    try {
+      localStorage.setItem('as_theme', nextTheme);
+    } catch (e) {}
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -38,18 +53,18 @@ export default function Navbar() {
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`} id="navbar">
       <div className="nav-container">
-        {/* Brand Logo with Industrial Hex Emblem */}
+        {/* Authentic Brand Logo */}
         <a href="#home" className="nav-logo" id="navLogo" onClick={closeMenu}>
-          <div className="logo-symbol">
-            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-              <path d="M18 2L32 10V26L18 34L4 26V10L18 2Z" stroke="#f59e0b" strokeWidth="2.5" fill="rgba(245, 158, 11, 0.08)"/>
-              <path d="M18 10V26" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round"/>
-              <path d="M11 22L18 26L25 22" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          </div>
+          <img
+            src="/images/brand/aggarwal_logo_circle.png"
+            alt="Aggarwal Steels Official Brand Logo"
+            width={44}
+            height={44}
+            className="brand-logo-img"
+          />
           <div className="logo-text">
-            <span className="logo-brand">AGGARWAL</span>
-            <span className="logo-tagline">STEELS &bull; ESTD 1990</span>
+            <span className="logo-brand">AGGARWAL STEELS</span>
+            <span className="logo-tagline">&bull; MAJESTIC AR TECHNOLOGY &bull;</span>
           </div>
         </a>
 
@@ -68,8 +83,40 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Action Button & Mobile Toggle */}
+        {/* Action Buttons & Theme Toggle */}
         <div className="nav-actions">
+          <a
+            href="/Aggarwal_Steels_Catalogue_2026.pdf"
+            download="Aggarwal_Steels_Catalogue_2026.pdf"
+            className="btn-catalog-nav"
+            id="btnNavCatalog"
+            title="Download Official 2026 Product Catalogue (PDF)"
+          >
+            <IconFileText size={15} />
+            <span className="btn-catalog-text">Catalogue 2026</span>
+          </a>
+
+          <button
+            type="button"
+            className="theme-toggle-btn"
+            id="themeToggleBtn"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+          >
+            {theme === 'dark' ? (
+              <>
+                <IconSun size={17} />
+                <span className="theme-toggle-text">Light</span>
+              </>
+            ) : (
+              <>
+                <IconMoon size={17} />
+                <span className="theme-toggle-text">Dark</span>
+              </>
+            )}
+          </button>
+
           <a href="#contact" className="btn-quote" id="btnCall">
             <IconPhone size={15} />
             <span>Instant Quote</span>

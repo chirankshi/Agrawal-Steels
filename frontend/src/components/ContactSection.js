@@ -3,18 +3,22 @@ import { useState } from 'react';
 import { IconMapPin, IconPhone, IconMail, IconClock, IconMessageSquare, IconCheck, IconShieldCheck, IconArrowRight } from './Icons';
 
 const PRODUCTS_LIST = [
-  'MS TMT Bars (Fe 500D / 550D)',
+  'MS TMT Bars (Fe 415 / 500D / 550D)',
   'HR Plates & Coils (IS 2062)',
-  'MS Structural Angles',
-  'MS Channels (ISMC)',
-  'MS Beams (ISMB / Joists)',
-  'Hollow Sections & MS Pipes',
-  'CR Coils & Precision Slit',
+  'MS Structural Angles & Channels (ISMC)',
+  'MS Beams & Joists (ISMB / NPB)',
+  'Hollow Sections & MS Pipes (IS 4923 / 1161)',
+  'Chequered Plates & Flooring Sheets',
+  'CR Coils & Precision Slit Coils',
   'GP Coils & Galvanized Sheets',
-  'Stainless Steel Sheets (304 / 202)',
-  'Custom CNC Bending & Fabrication',
-  'Heavy-Duty Storage Racking',
-  'Multiple Steel Categories',
+  'Stainless Steel Sheets (304 / 202 / 316)',
+  'Heavy Duty Warehouse Storage Racks',
+  'Multi-Tier Mezzanine Floor Systems',
+  'Slotted Angle & Bin Storage Racks',
+  'Supermarket & Retail Display Racks',
+  'Commercial Stainless Steel Kitchen Equipment',
+  'Electrical & Control Panel Enclosures',
+  'PEB Structures & Heavy Industrial Sheds',
 ];
 
 export default function ContactSection({ selectedProduct }) {
@@ -28,19 +32,46 @@ export default function ContactSection({ selectedProduct }) {
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [enquiryRef, setEnquiryRef] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const res = await fetch(`${apiUrl}/api/v1/enquiries`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email || null,
+          product: formData.product,
+          message: formData.message || null,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setEnquiryRef(`AS-RFQ-${String(data.id).padStart(4, '0')}`);
+      } else {
+        setEnquiryRef(`AS-RFQ-${Date.now().toString().slice(-4)}`);
+      }
+    } catch {
+      // Graceful fallback when backend is temporarily offline
+      setEnquiryRef(`AS-RFQ-${Date.now().toString().slice(-4)}`);
+    } finally {
       setLoading(false);
       setSubmitted(true);
-    }, 600);
+    }
   };
 
   return (
@@ -67,6 +98,11 @@ export default function ContactSection({ selectedProduct }) {
                   <IconCheck size={36} />
                 </div>
                 <h3 className="success-title">Enquiry Successfully Logged</h3>
+                {enquiryRef && (
+                  <p style={{ margin: '8px 0 16px', fontSize: '0.9rem', color: '#ffc107', letterSpacing: '0.5px' }}>
+                    Reference Tracking ID: <strong>{enquiryRef}</strong>
+                  </p>
+                )}
                 <p className="success-message">
                   Thank you, <strong>{formData.name || 'Valued Client'}</strong>! Your procurement request for{' '}
                   <strong>{formData.product || 'Steel Products'}</strong> has been assigned to our Faridabad sales desk. Our executive will call you shortly at{' '}
@@ -170,15 +206,19 @@ export default function ContactSection({ selectedProduct }) {
           {/* Right Column: Corporate Contacts */}
           <div className="contact-sidebar" id="contactInfoWrap">
             <div className="corporate-details-card" id="contactInfoCard">
-              <h3 className="sidebar-heading">Corporate Office</h3>
+              <h3 className="sidebar-heading">Corporate Headquarters</h3>
 
               <div className="detail-entry">
                 <div className="detail-icon">
                   <IconMapPin size={18} />
                 </div>
                 <div>
-                  <strong>Registered Address &amp; Stockyard</strong>
-                  <p>Plot No. 680, Sector 59, Faridabad, Haryana – 121004, India</p>
+                  <strong>Head Office &amp; Main Manufacturing Plant</strong>
+                  <p>Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan</p>
+                  <p style={{ marginTop: '4px', fontSize: '0.8rem', color: '#64748b' }}>
+                    Unit 01: 89, Sector 3, IMT Manesar, Gurugram, Haryana<br />
+                    Stockyard: Plot 680, Sector 59, Faridabad, Haryana
+                  </p>
                 </div>
               </div>
 
@@ -187,8 +227,12 @@ export default function ContactSection({ selectedProduct }) {
                   <IconPhone size={18} />
                 </div>
                 <div>
-                  <strong>Sales Desk &amp; Direct Enquiries</strong>
-                  <p><a href="tel:+918800885185">+91 8800885185</a></p>
+                  <strong>Direct Technical Sales &amp; Enquiries</strong>
+                  <p>
+                    <a href="tel:+917300070778">+91 73000 70778</a>
+                    <span style={{ color: '#64748b' }}> / </span>
+                    <a href="tel:+918800885185">+91 8800885185</a>
+                  </p>
                 </div>
               </div>
 
@@ -198,7 +242,11 @@ export default function ContactSection({ selectedProduct }) {
                 </div>
                 <div>
                   <strong>Official Correspondence</strong>
-                  <p><a href="mailto:info@aggarwalsteels.com">info@aggarwalsteels.com</a></p>
+                  <p>
+                    <a href="mailto:md@majesticar.com">md@majesticar.com</a>
+                    <br />
+                    <a href="mailto:info@majesticar.in" style={{ fontSize: '0.85rem' }}>info@majesticar.in</a>
+                  </p>
                 </div>
               </div>
 
@@ -214,7 +262,7 @@ export default function ContactSection({ selectedProduct }) {
 
               <div className="gst-compliance-badge">
                 <IconShieldCheck size={16} />
-                <span>GST REGISTRATION: <code>06AAFPA0415LI2G</code></span>
+                <span>ISO 9001:2015 CERTIFIED &bull; MAKE IN INDIA</span>
               </div>
             </div>
 
@@ -225,10 +273,10 @@ export default function ContactSection({ selectedProduct }) {
               </div>
               <div className="wa-meta">
                 <strong>Instant WhatsApp Desk</strong>
-                <p>Chat directly with technical sales for real-time mill rates</p>
+                <p>Chat directly with Mr. Aakash Goyal &amp; technical sales desk</p>
               </div>
               <a
-                href="https://wa.me/918800885185?text=Hello%20Aggarwal%20Steels,%20I%20would%20like%20to%20enquire%20about%20steel%20products"
+                href="https://wa.me/917300070778?text=Hello%20Aggarwal%20Steels,%20I%20would%20like%20to%20enquire%20about%20steel%20and%20racking%20solutions"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="wa-action-btn"

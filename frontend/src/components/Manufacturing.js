@@ -1,43 +1,61 @@
 'use client';
 import { useState } from 'react';
-import { IconCpu, IconWrench, IconLayers, IconShieldCheck, IconArrowRight } from './Icons';
+import { IconCpu, IconWrench, IconLayers, IconShieldCheck, IconArrowRight, IconZap } from './Icons';
 
 const CAPABILITIES = [
   {
-    id: 'cnc',
-    title: 'CNC Bending & Precision Sheet Processing',
-    badge: 'In-House Machinery',
-    icon: <IconCpu size={22} />,
-    desc: 'Advanced CNC hydraulic press brake machinery delivering precision bends, custom profiling, and angular accuracy for HR, CR, and Stainless Steel sheets up to 12mm thickness.',
+    id: 'laser',
+    title: 'CNC Laser Cutting Machine (3 kW Prime)',
+    badge: '3 kW Fiber Laser',
+    icon: <IconZap size={22} />,
+    desc: 'Ultra-high precision CNC fiber laser cutting for steel sheets and heavy plates. Clean edges, minimal wastage, and exact tolerance for custom drawings and panels.',
     img: '/images/cnc_bending.jpeg',
-    specs: ['Hydraulic CNC Control', 'Bending up to 12mm', 'Tolerance ±0.2mm', 'Complex Profiles'],
+    specs: ['3 kW High Precision Laser', 'Clean Burr-Free Edges', 'Minimal Heat-Affected Zone', 'Custom CAD / DXF Profiling'],
+  },
+  {
+    id: 'bending',
+    title: 'CNC Bending Machines (HACO & Energy Mission)',
+    badge: '4 CNC Press Brakes',
+    icon: <IconCpu size={22} />,
+    desc: '4 high-performance CNC bending machines (including Tandem setup and HACO units) for complex multi-bend angles, desk panels, heavy shelves, and enclosures.',
+    img: '/images/support_welding.jpeg',
+    specs: ['Energy Mission & HACO Machines', '4-Tandem Bending Setup', 'Up to 12mm Plate Bending', 'Repeat Accuracy ±0.2mm'],
+  },
+  {
+    id: 'powder',
+    title: '520 FT Automatic Powder Coating Plant',
+    badge: 'Automated Robotic Arm',
+    icon: <IconShieldCheck size={22} />,
+    desc: 'Full-fledged 520 ft conveyorized automatic powder coating line with robotic spray arm. Capable of coating up to 12-meter-long structural products in a single continuous stretch with high corrosion resistance.',
+    img: '/images/storage_racking.jpeg',
+    specs: ['520 Ft Conveyorized Line', 'Automated Robotic Arm', '12m Length in Single Stretch', 'Multi-Stage Chemical Pre-Treatment'],
+  },
+  {
+    id: 'rollforming',
+    title: 'Heavy Roll Forming & Power Press (Up to 250 Ton)',
+    badge: 'In-House Profiling',
+    icon: <IconLayers size={22} />,
+    desc: 'Continuous roll forming lines producing Slotted Angles, Racking Uprights, MKM Sections, and Omega Profiles. Backed by mechanical power presses up to 250 Ton capacity.',
+    img: '/images/cnc_bending.jpeg',
+    specs: ['Slotted Angles & Omega Sections', 'Heavy Upright Columns', 'Power Press up to 250 Ton', 'Continuous High-Speed Stamping'],
   },
   {
     id: 'racking',
-    title: 'Heavy-Duty Industrial Storage Racking',
+    title: 'Turnkey Warehouse Storage Systems',
     badge: 'Majestic AR Technology',
     icon: <IconLayers size={22} />,
-    desc: 'Complete warehouse storage engineering through our sister concern Majestic AR Technology Pvt. Ltd. — heavy-duty pallet racks, mezzanine flooring, and cantilever systems.',
+    desc: 'Heavy-Duty Pallet Racking (Selective, Double Deep, Drive-In, Cantilever), Multi-Tier Mezzanine floors, and supermarket display systems engineered for maximum warehouse cubic volume.',
     img: '/images/storage_racking.jpeg',
-    specs: ['Heavy Pallet Racking', 'Multi-Tier Mezzanine', 'High Load Capacity', 'Turnkey Warehouse Fit-outs'],
-  },
-  {
-    id: 'welding',
-    title: 'Structural Support Welding & PEB Fabrication',
-    badge: 'Engineered Strength',
-    icon: <IconWrench size={22} />,
-    desc: 'High-tensile structural welding, column fabrication, truss assemblies, and pre-engineered steel building (PEB) structural components built strictly to industrial load standards.',
-    img: '/images/support_welding.jpeg',
-    specs: ['MIG & TIG Certified', 'Heavy Beam Assembly', 'Base Plate Jointing', 'Load Tested Fabrication'],
+    specs: ['Selective & Drive-In Racks', 'Multi-Tier Mezzanines (2 & 3 Tier)', 'Pallets & Wire Mesh Partitions', 'Complete Turnkey Warehouse Design'],
   },
   {
     id: 'kitchen',
     title: 'Commercial Stainless Steel Kitchen Equipment',
-    badge: 'Food-Grade SS 304',
-    icon: <IconShieldCheck size={22} />,
-    desc: 'Custom hygiene-compliant stainless steel fabrication for commercial hotels, industrial cafeterias, and institutional kitchens — worktables, exhaust hoods, and wash units.',
+    badge: 'SS 304 Hygienic Grade',
+    icon: <IconWrench size={22} />,
+    desc: 'Sanitary stainless steel equipment for hotels, industrial cafeterias, and food processing plants — worktables, prep counters, commercial sinks, and bakery racks with Miller TIG/MIG welding.',
     img: '/images/commercial_kitchen.jpeg',
-    specs: ['SS 304 / 202 Grades', 'Sanitary Finish', 'Custom Workstations', 'Corrosion Proof'],
+    specs: ['SS 304 / 316 Food Grade', 'Miller TIG & MIG Clean Welds', 'Hospital & Commercial Kitchen Units', 'Corrosion-Proof Heavy Gauge'],
   },
 ];
 
@@ -49,13 +67,13 @@ export default function Manufacturing() {
       <div className="container">
         <div className="section-header">
           <div className="section-label label-cyan">
-            <IconWrench size={16} /> Advanced Manufacturing &amp; Engineering
+            <IconWrench size={16} /> IN-HOUSE MACHINERY &bull; MAJESTIC AR TECHNOLOGY
           </div>
           <h2 className="section-title text-white">
-            Beyond Sourcing: <span className="text-gradient">In-House Fabrication</span>
+            Advanced Machinery: <span className="text-gradient">Precision Metalworking</span>
           </h2>
           <p className="section-desc text-gray">
-            Aggarwal Steels &amp; its sister manufacturing arm <strong>Majestic AR Technology</strong> combine primary steel supply with modern CNC metalworking, structural welding, and turn-key racking solutions.
+            Equipped with state-of-the-art CNC lasers, HACO/Energy Mission press brakes, and a 520ft robotic powder coating line for complete in-house fabrication from raw coil to finished installation.
           </p>
         </div>
 
@@ -84,7 +102,7 @@ export default function Manufacturing() {
                   ))}
                 </div>
                 <a href="#contact" className="cap-link">
-                  <span>Enquire Custom Fabrication</span>
+                  <span>Enquire Machine Specs &amp; RFQ</span>
                   <IconArrowRight size={16} />
                 </a>
               </div>

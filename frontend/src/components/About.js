@@ -1,11 +1,11 @@
-import { IconShieldCheck, IconAward, IconZap, IconGlobe, IconTarget, IconCompass, IconArrowRight } from './Icons';
+import { IconShieldCheck, IconAward, IconZap, IconGlobe, IconTarget, IconCompass, IconArrowRight, IconLayers } from './Icons';
 
 export default function About() {
   const values = [
-    { title: 'Quality Integrity', desc: '100% prime tested material', icon: <IconShieldCheck size={18} /> },
-    { title: 'Operational Speed', desc: '24-hour rapid dispatch', icon: <IconZap size={18} /> },
-    { title: 'National Scale', desc: 'PAN India logistics network', icon: <IconGlobe size={18} /> },
-    { title: 'Client Trust', desc: '3+ decades of client partnership', icon: <IconAward size={18} /> },
+    { title: 'Quality Integrity', desc: 'ISO 9001:2015 Certified & BIS Compliant', icon: <IconShieldCheck size={18} /> },
+    { title: '24-Hour Dispatch', desc: 'Fast turnaround across primary steel lines', icon: <IconZap size={18} /> },
+    { title: 'PAN India Supply', desc: '7+ Strategic hubs from Bhiwadi to Rourkela', icon: <IconGlobe size={18} /> },
+    { title: 'Turnkey Manufacturing', desc: '2 Production Units & 3 Trading Units', icon: <IconLayers size={18} /> },
   ];
 
   return (
@@ -15,17 +15,17 @@ export default function About() {
           {/* Left Column: Narrative */}
           <div className="about-modern-content">
             <div className="section-label label-amber">
-              <IconAward size={15} /> CORPORATE BACKGROUND
+              <IconAward size={15} /> CORPORATE OVERVIEW &bull; SINCE 2015
             </div>
             <h2 className="section-title text-white">
               Strong Foundations.<br />
-              <span className="text-gradient">Enduring Relationships.</span>
+              <span className="text-gradient">Stronger Relations.</span>
             </h2>
             <p className="about-lead">
-              Founded in 1990 in Faridabad, Haryana, <strong>Aggarwal Steels</strong> has established itself as one of Northern India's foremost independent steel distributors, stockists, and structural fabricators.
+              Established in <strong>2015</strong>, <strong>Aggarwal Steels</strong> alongside manufacturing sister arm <strong>Majestic AR Technology Pvt. Ltd.</strong> has grown into an integrated steel supply and industrial fabrication powerhouse.
             </p>
             <p className="about-sub">
-              By combining wholesale primary steel sourcing (SAIL, Tata, JSPL) with in-house processing capabilities via sister concern <strong>Majestic AR Technology</strong>, we deliver an integrated steel supply chain — from raw plates and coils to finished storage racking and structural frames.
+              With over <strong>11+ years of trading experience</strong> and <strong>4+ years of advanced manufacturing</strong>, we operate <strong>2 manufacturing plants</strong> and <strong>3 trading units</strong> with a consolidated group turnover exceeding <strong>₹200+ Crore</strong> and a 250+ dedicated workforce. From primary steel distribution (SAIL, TATA, JSPL, AMNS) to heavy warehouse racking and automated powder-coating lines, we power India's mega infrastructure and manufacturing sectors.
             </p>
 
             {/* Core Values Bento Grid */}
@@ -43,7 +43,7 @@ export default function About() {
 
             <div className="about-actions-row">
               <a href="#contact" className="btn-modern-primary">
-                <span>Partner With Us</span>
+                <span>Talk to Technical Sales</span>
                 <IconArrowRight size={18} />
               </a>
             </div>
@@ -54,17 +54,34 @@ export default function About() {
             {/* Leadership Statement Card */}
             <div className="founder-modern-card">
               <div className="founder-header">
-                <div className="founder-initials">AG</div>
+                <div className="founder-photo-wrap">
+                  <img
+                    src="/images/aakash_goyal.jpg"
+                    alt="Mr. Aakash Goyal - Founder & Director, Aggarwal Steels"
+                    className="founder-photo-img"
+                  />
+                  <span className="founder-photo-badge">Director</span>
+                </div>
                 <div>
                   <h3 className="founder-name">Mr. Aakash Goyal</h3>
-                  <span className="founder-role">Founder &amp; Managing Director</span>
+                  <span className="founder-role">Founder &amp; Director &bull; Aggarwal Steels &amp; Majestic AR Technology</span>
+                  <div className="founder-exp-tag">11+ Years Trading &bull; 4+ Years Manufacturing</div>
                 </div>
               </div>
               <blockquote className="founder-quote-text">
-                "Steel is the bedrock of industrial civilization. For us, every ton of steel delivered is a contract of trust with the engineers and builders constructing India's tomorrow."
+                &ldquo;Steel is not just a product – it is the strength that builds foundations and the trust that builds relationships.&rdquo;
               </blockquote>
-              <div className="founder-meta">
-                <span>ESTABLISHED 1990 &bull; FARIDABAD, HARYANA</span>
+              <div className="founder-footer-strip">
+                <img
+                  src="/images/brand/iso_make_in_india.png"
+                  alt="ISO 9001:2015 & Make in India"
+                  className="founder-iso-badge"
+                  width={140}
+                  height={50}
+                />
+                <div className="founder-meta">
+                  <span>ESTABLISHED 2015 &bull; ₹200+ CR RUN-RATE</span>
+                </div>
               </div>
             </div>
 
@@ -76,7 +93,7 @@ export default function About() {
                 </div>
                 <h4 className="mv-heading">Our Mission</h4>
                 <p className="mv-text">
-                  To eliminate industrial procurement friction by providing authentic, certified steel and precision processing within 24 hours anywhere in India.
+                  To deliver strength with purpose: providing high-quality iron, steel, and custom storage solutions that empower builders, industries, and infrastructure projects with cost-effective reliability and timely supply.
                 </p>
               </div>
 
@@ -86,7 +103,7 @@ export default function About() {
                 </div>
                 <h4 className="mv-heading">Our Vision</h4>
                 <p className="mv-text">
-                  To emerge as India's most agile and tech-integrated iron &amp; steel infrastructure partner, upholding world-class reliability and sustainability.
+                  To shape the future of construction and industrial storage by becoming a globally recognized brand in iron and steel — driving mega infrastructure, enabling industries, and delivering value beyond borders.
                 </p>
               </div>
             </div>

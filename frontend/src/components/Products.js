@@ -1,111 +1,233 @@
 'use client';
 import { useState } from 'react';
-import { IconArrowRight, IconShieldCheck, IconFileText } from './Icons';
+import { IconArrowRight, IconShieldCheck, IconFileText, IconLayers, IconCpu } from './Icons';
 
 const PRODUCTS = [
+  // --- PRIMARY STEEL PRODUCTS (TRADING & SUPPLY) ---
   {
     id: 'productTmt',
     name: 'MS TMT Bars',
-    category: 'TMT & Rebars',
-    grade: 'Fe-415 / Fe-500D / Fe-550D',
-    desc: 'High-yield thermo-mechanically treated rebars engineered for critical RCC seismic structural designs.',
+    category: 'Steel Supply',
+    subcat: 'TMT & Rebars',
+    grade: 'Fe 415 / Fe 500D / Fe 550D',
+    desc: 'High-yield thermo-mechanically treated rebars engineered for high-rises, bridges, and critical earthquake seismic zones.',
     img: '/images/product_tmt_bars.jpg',
-    tags: ['SAIL', 'Tata Tiscon', 'JSPL'],
+    tags: ['SAIL', 'TATA Steel', 'JSPL'],
     badge: 'High Demand',
-    specs: 'Sizes 8mm to 32mm | IS 1786',
+    specs: 'Sizes 8mm to 32mm | IS 1786 Certified',
   },
   {
     id: 'productHr',
     name: 'HR Plates & Coils',
-    category: 'Plates & Coils',
+    category: 'Steel Supply',
+    subcat: 'Plates & Coils',
     grade: 'IS 2062 E250 / E350',
-    desc: 'Heavy-gauge hot rolled plates and master coils for structural fabrication, pressure vessels, and PEB frames.',
+    desc: 'Heavy-gauge hot-rolled plates and master coils for structural engineering, heavy fabrication, and PEB building frameworks.',
     img: '/images/product_hr_plates.jpg',
-    tags: ['SAIL', 'AMNS India'],
+    tags: ['SAIL', 'AMNS India', 'TATA'],
     badge: 'Heavy Gauge',
-    specs: 'Thickness 2mm to 63mm',
+    specs: 'Thickness 2mm to 63mm | Width up to 2500mm',
   },
   {
     id: 'productAngles',
     name: 'MS Structural Angles',
-    category: 'Structural Steel',
-    grade: 'Equal & Unequal Legs',
-    desc: 'Precision L-profile structural angles for telecommunication towers, trusses, and industrial machinery bases.',
+    category: 'Steel Supply',
+    subcat: 'Structural Steel',
+    grade: 'Equal & Unequal Profiles (IS 2062)',
+    desc: 'Precision L-profile structural angles for transmission towers, trusses, sheds, and industrial machinery bases.',
     img: '/images/product_ms_angles.jpg',
     tags: ['SAIL', 'JSPL'],
-    specs: '25x25mm to 200x200mm | IS 2062',
+    badge: 'Structural',
+    specs: '25x25mm to 200x200mm | Length 6m / 12m',
   },
   {
     id: 'productChannel',
     name: 'MS Channels (ISMC)',
-    category: 'Structural Steel',
+    category: 'Steel Supply',
+    subcat: 'Structural Steel',
     grade: 'ISMC Standard Profiles',
     desc: 'Standard C-shaped hot rolled channels for architectural framing, bridge decks, and column reinforcements.',
     img: '/images/product_ms_channel.jpg',
-    tags: ['SAIL', 'Tata Steel'],
+    tags: ['SAIL', 'TATA Steel', 'JSPL'],
+    badge: 'Structural',
     specs: 'ISMC 75 to ISMC 400',
   },
   {
     id: 'productBeam',
     name: 'MS Beams (I & H Joists)',
-    category: 'Structural Steel',
+    category: 'Steel Supply',
+    subcat: 'Structural Steel',
     grade: 'ISMB / NPB / WPB',
     desc: 'High section-modulus structural beams for wide-span industrial sheds, multi-story buildings, and heavy cranes.',
     img: '/images/product_ms_beam.jpg',
     tags: ['SAIL', 'JSPL Universal'],
+    badge: 'Heavy Sections',
     specs: 'ISMB 100 to ISMB 600',
   },
   {
+    id: 'productChequered',
+    name: 'MS Chequered Plates',
+    category: 'Steel Supply',
+    subcat: 'Plates & Coils',
+    grade: 'Tear Drop & Diamond Pattern (IS 2062)',
+    desc: 'Anti-skid industrial flooring plates for walkways, ramps, mezzanine stairs, factory gangways, and commercial trailers.',
+    img: '/images/product_hr_plates.jpg',
+    tags: ['SAIL', 'AMNS'],
+    badge: 'Anti-Skid',
+    specs: 'Thickness 3mm to 12mm',
+  },
+  {
     id: 'productPipe',
-    name: 'Hollow Sections & Pipes',
-    category: 'Pipes & Tubes',
-    grade: 'Square, Rectangular, Round',
-    desc: 'High-strength structural hollow sections (SHS/RHS) and MS pipes for architectural facades and trusses.',
+    name: 'Hollow Sections & MS Pipes',
+    category: 'Steel Supply',
+    subcat: 'Pipes & Tubes',
+    grade: 'Square (SHS), Rectangular (RHS) & Round',
+    desc: 'High-strength structural hollow sections and MS pipes for architectural facades, trusses, and PEB columns.',
     img: '/images/product_ms_pipe.jpg',
-    tags: ['APL Apollo', 'Jindal'],
+    tags: ['APL Apollo', 'Jindal Steels Pipes'],
+    badge: 'Certified',
     specs: 'IS 4923 & IS 1161 Certified',
   },
   {
     id: 'productCr',
-    name: 'CR Coils & Precision Slit',
-    category: 'Plates & Coils',
+    name: 'CR Coils & Precision Slit Coils',
+    category: 'Steel Supply',
+    subcat: 'Plates & Coils',
     grade: 'CR1 / CR2 / CR3 Deep Draw',
-    desc: 'Cold rolled steel coils and slit strips with ultra-fine surface finish for automotive stamping and electronics.',
+    desc: 'Cold-rolled steel coils and slit strips with ultra-fine surface finish for automotive stamping and electronics.',
     img: '/images/product_cr_coils.jpg',
-    tags: ['SAIL', 'Tata Steelium'],
+    tags: ['SAIL', 'TATA Steelium'],
+    badge: 'Precision Slit',
     specs: '0.4mm to 3.0mm Thickness',
   },
   {
     id: 'productGp',
     name: 'GP Coils & Galvanized Sheets',
-    category: 'Plates & Coils',
+    category: 'Steel Supply',
+    subcat: 'Plates & Coils',
     grade: 'Zinc Coating 120-275 GSM',
-    desc: 'Galvanized plain steel coils with high corrosion resistance for ducting, roofing, and outdoor enclosures.',
+    desc: 'Galvanized plain steel coils and roofing sheets with high corrosion resistance for ducting and industrial sheds.',
     img: '/images/product_gp_coils.jpg',
     tags: ['SAIL', 'AMNS'],
-    specs: 'Zero Spangle / Regular Spangle',
+    badge: 'Galvanized',
+    specs: 'Zero Spangle & Regular Spangle',
   },
   {
     id: 'productSs',
-    name: 'Stainless Steel Sheets',
-    category: 'Stainless Steel',
+    name: 'Stainless Steel Sheets (304 / 202)',
+    category: 'Steel Supply',
+    subcat: 'Stainless Steel',
     grade: 'SS 304 / SS 202 / SS 316',
-    desc: 'Austenitic stainless steel sheets and plates in 2B and No.4 finishes for pharmaceutical and kitchen equipment.',
+    desc: 'Austenitic stainless steel sheets in 2B and No.4 finishes for pharmaceutical and kitchen equipment.',
     img: '/images/product_ss_sheets.jpg',
     tags: ['Jindal Stainless'],
     badge: 'Corrosion Free',
     specs: 'Sheets, Coils & Custom Cut',
   },
+
+  // --- IN-HOUSE MANUFACTURING & STORAGE SYSTEMS (Majestic AR Technology) ---
+  {
+    id: 'mfgRacks',
+    name: 'Heavy-Duty Warehouse Storage Racks',
+    category: 'Manufactured Systems',
+    subcat: 'Storage Solutions',
+    grade: 'Selective, Double Deep, Drive-In & Cantilever',
+    desc: 'Turnkey industrial pallet storage racking systems engineered for high cubic volume, seismic stability, and heavy pallet loads.',
+    img: '/images/storage_racking.jpeg',
+    tags: ['Majestic AR', 'In-House Plant'],
+    badge: 'Warehouse Grade',
+    specs: 'Up to 4000kg/level | Custom Upright heights up to 12m',
+  },
+  {
+    id: 'mfgMezzanine',
+    name: 'Multi-Tier Mezzanine Floor Systems',
+    category: 'Manufactured Systems',
+    subcat: 'Storage Solutions',
+    grade: '2-Tier & 3-Tier Multi-Level Systems',
+    desc: 'Multiply usable warehouse square footage without expanding building footprint. Includes staircases, railings, and conveyor integration.',
+    img: '/images/storage_racking.jpeg',
+    tags: ['Majestic AR', 'Custom Engineered'],
+    badge: 'Space Optimization',
+    specs: 'Heavy steel deck panels, integrated staircases & safety gates',
+  },
+  {
+    id: 'mfgSlotted',
+    name: 'Slotted Angle & Small Parts Bin Racks',
+    category: 'Manufactured Systems',
+    subcat: 'Storage Solutions',
+    grade: 'Roll-Formed Slotted Profiles',
+    desc: 'Budget-friendly, modular slotted angle storage racks and bin systems for spare parts, hardware, and retail order picking.',
+    img: '/images/cnc_bending.jpeg',
+    tags: ['Majestic AR', 'Roll Formed'],
+    badge: 'Modular Racks',
+    specs: 'Custom shelf heights & plastic bin compatibility',
+  },
+  {
+    id: 'mfgDisplay',
+    name: 'Supermarket & Retail Display Racks',
+    category: 'Manufactured Systems',
+    subcat: 'Retail Racking',
+    grade: 'Gondola, Wall, End & Island Racks',
+    desc: 'Modern powder-coated retail fixtures, fruit/vegetable racks, bakery displays, and checkout counters for hypermarkets.',
+    img: '/images/storage_racking.jpeg',
+    tags: ['Majestic AR', 'Powder Coated'],
+    badge: 'Retail Grade',
+    specs: '520ft Robotic Powder Coated in custom RAL colors',
+  },
+  {
+    id: 'mfgKitchen',
+    name: 'Commercial Stainless Steel Kitchen Equipment',
+    category: 'Manufactured Systems',
+    subcat: 'Custom Fabrication',
+    grade: 'SS 304 Food Grade',
+    desc: 'Industrial stainless steel prep counters, commercial sink units, storage shelves, and exhaust hoods for hotels and cloud kitchens.',
+    img: '/images/commercial_kitchen.jpeg',
+    tags: ['Aggarwal Steels', 'Majestic AR'],
+    badge: 'SS 304 Hygienic',
+    specs: 'Sanitary TIG/MIG welding, custom sizing & drain boards',
+  },
+  {
+    id: 'mfgCabinets',
+    name: 'Electrical & Control Panel Enclosures',
+    category: 'Manufactured Systems',
+    subcat: 'Custom Fabrication',
+    grade: 'CR / GI Powder Coated (IP Rated Enclosures)',
+    desc: 'Precision laser-cut and CNC-bent cabinets for power distribution boards, automation control panels, and telecom server racks.',
+    img: '/images/support_welding.jpeg',
+    tags: ['Majestic AR', '3kW Laser Cut'],
+    badge: 'Precision Fit',
+    specs: 'Cut on 3kW Prime Laser & bent on HACO/Energy Mission press brakes',
+  },
+  {
+    id: 'mfgPeb',
+    name: 'PEB Structures & Heavy Industrial Sheds',
+    category: 'Manufactured Systems',
+    subcat: 'Heavy Fabrication',
+    grade: 'IS 2062 Structural Assemblies',
+    desc: 'Pre-engineered steel building structures, factory warehouse sheds, platform walkways, and pipeline support towers.',
+    img: '/images/hero_steel_background.jpg',
+    tags: ['Aggarwal Steels', 'Heavy Fabrication'],
+    badge: 'Heavy Duty',
+    specs: 'Custom spans, built-up columns & rafters with full MTC',
+  },
 ];
 
-const CATEGORIES = ['All Products', 'Structural Steel', 'Plates & Coils', 'TMT & Rebars', 'Pipes & Tubes', 'Stainless Steel'];
+const CATEGORIES = [
+  'All Products',
+  'Steel Supply',
+  'Manufactured Systems',
+  'Structural Steel',
+  'Plates & Coils',
+  'Storage Solutions',
+  'Custom Fabrication',
+];
 
 export default function Products({ onSelectProduct }) {
   const [selectedCat, setSelectedCat] = useState('All Products');
 
   const filtered = selectedCat === 'All Products'
     ? PRODUCTS
-    : PRODUCTS.filter(p => p.category === selectedCat);
+    : PRODUCTS.filter(p => p.category === selectedCat || p.subcat === selectedCat);
 
   const handleQuoteClick = (productName) => {
     if (onSelectProduct) {
@@ -122,72 +244,68 @@ export default function Products({ onSelectProduct }) {
       <div className="container">
         <div className="section-header">
           <div className="section-label label-amber">
-            <IconFileText size={15} /> PRODUCT PORTFOLIO
+            <IconFileText size={15} /> VERIFIED PRODUCT PORTFOLIO
           </div>
           <h2 className="section-title text-white">
-            Certified Structural &amp; <span className="text-gradient">Flat Steel</span>
+            Primary Steel Supply &amp; <span className="text-gradient">Engineered Systems</span>
           </h2>
           <p className="section-desc text-gray">
-            Direct mill distribution and custom sizing with full mill test certificates (MTC) and traceable chemical &amp; physical compliance.
+            From wholesale raw steel distribution (SAIL, TATA, JSPL, AMNS) to in-house manufactured heavy pallet racking, mezzanine systems, and commercial SS fabrication.
           </p>
-
-          {/* Interactive Category Filter Pills */}
-          <div className="product-category-tabs">
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCat(cat)}
-                className={`category-tab-btn ${selectedCat === cat ? 'category-tab-btn--active' : ''}`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Product Cards Grid with Modern Dark Cards */}
+        {/* Category Filter Pills */}
+        <div className="products-filter-pills" id="productFilterBar">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              className={`filter-pill-btn ${selectedCat === cat ? 'filter-pill-btn--active' : ''}`}
+              onClick={() => setSelectedCat(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Products Grid */}
         <div className="products-modern-grid" id="productsGrid">
-          {filtered.map(p => (
-            <div className="product-modern-card" id={p.id} key={p.id}>
-              <div className="pm-img-wrap">
-                <img src={p.img} alt={p.name} className="pm-img" loading="lazy" />
-                <div className="pm-overlay">
-                  <button
-                    type="button"
-                    className="pm-overlay-btn"
-                    onClick={() => handleQuoteClick(p.name)}
-                  >
-                    <span>Instant Quotation</span>
-                    <IconArrowRight size={16} />
-                  </button>
-                </div>
-                {p.badge && <span className="pm-badge">{p.badge}</span>}
+          {filtered.map((prod) => (
+            <div className="product-modern-card" id={prod.id} key={prod.id}>
+              <div className="product-card-img-wrap">
+                <img src={prod.img} alt={prod.name} className="product-card-img" loading="lazy" />
+                <div className="product-card-overlay"></div>
+                {prod.badge && <span className="product-card-badge">{prod.badge}</span>}
+                <span className="product-card-category">{prod.subcat}</span>
               </div>
 
-              <div className="pm-body">
-                <div className="pm-category">{p.category}</div>
-                <h3 className="pm-title">{p.name}</h3>
-                <div className="pm-grade">{p.grade}</div>
-                <p className="pm-desc">{p.desc}</p>
+              <div className="product-card-body">
+                <h3 className="product-card-title">{prod.name}</h3>
+                <span className="product-card-grade">{prod.grade}</span>
+                <p className="product-card-desc">{prod.desc}</p>
 
-                <div className="pm-spec-strip">
-                  <IconShieldCheck size={14} className="text-accent" />
-                  <span>{p.specs}</span>
-                </div>
+                {prod.specs && (
+                  <div className="product-card-specs">
+                    <span className="specs-chip">
+                      <IconShieldCheck size={13} /> {prod.specs}
+                    </span>
+                  </div>
+                )}
 
-                <div className="pm-footer">
-                  <div className="pm-tags">
-                    {p.tags.map(t => (
-                      <span className="pm-tag" key={t}>{t}</span>
+                <div className="product-card-footer">
+                  <div className="product-tags-row">
+                    {prod.tags.map((t) => (
+                      <span key={t} className="product-brand-tag">{t}</span>
                     ))}
                   </div>
+
                   <button
                     type="button"
-                    className="pm-btn-link"
-                    onClick={() => handleQuoteClick(p.name)}
+                    className="btn-card-quote"
+                    onClick={() => handleQuoteClick(prod.name)}
                   >
-                    <span>Enquire</span>
-                    <IconArrowRight size={14} />
+                    <span>Request Quotation</span>
+                    <IconArrowRight size={15} />
                   </button>
                 </div>
               </div>
