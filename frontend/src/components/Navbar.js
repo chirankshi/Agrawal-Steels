@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IconPhone, IconArrowRight, IconSun, IconMoon, IconFileText } from './Icons';
+import QuoteModal from './QuoteModal';
 
 const LINKS = [
   { href: '/',             label: 'Home',          id: 'navHome' },
@@ -10,13 +11,21 @@ const LINKS = [
   { href: '/manufacturing',label: 'Manufacturing', id: 'navMfg' },
   { href: '/about',        label: 'About Us',      id: 'navAbout' },
   { href: '/clients',      label: 'Clients',       id: 'navClients' },
+  { href: '/contact',      label: 'Contact',       id: 'navContact' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
   const [theme, setTheme]       = useState('dark');
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const handleOpenQuote = () => setQuoteModalOpen(true);
+    window.addEventListener('open-instant-quote', handleOpenQuote);
+    return () => window.removeEventListener('open-instant-quote', handleOpenQuote);
+  }, []);
 
   useEffect(() => {
     const current = document.documentElement.getAttribute('data-theme') || 'dark';
@@ -81,15 +90,30 @@ export default function Navbar() {
               </Link>
             );
           })}
-          {/* Mobile Drawer Contact Link */}
-          <Link
-            href="/contact"
-            id="navMobileContact"
-            className={`nav-link mobile-only-nav ${pathname.startsWith('/contact') ? 'active' : ''}`}
-            onClick={closeMenu}
-          >
-            Contact
-          </Link>
+          {/* Mobile Drawer Action Buttons */}
+          <div className="mobile-drawer-actions">
+            <a
+              href="/Aggarwal_Steels_Catalogue_2026.pdf"
+              download="Aggarwal_Steels_Catalogue_2026.pdf"
+              className="btn-modern-primary"
+              style={{ width: '100%', justifyContent: 'center', marginBottom: '8px' }}
+            >
+              <IconFileText size={16} />
+              <span>Download 2026 Catalogue (PDF)</span>
+            </a>
+            <button
+              type="button"
+              className="btn-modern-outline"
+              style={{ width: '100%', justifyContent: 'center' }}
+              onClick={() => {
+                closeMenu();
+                setQuoteModalOpen(true);
+              }}
+            >
+              <IconPhone size={16} />
+              <span>Get Instant Quotation</span>
+            </button>
+          </div>
         </nav>
 
         {/* Action Buttons & Theme Toggle */}
@@ -117,26 +141,20 @@ export default function Navbar() {
             {theme === 'dark' ? <IconSun size={18} /> : <IconMoon size={18} />}
           </button>
 
-          {/* Contact Button — Pill Shape */}
-          <Link
-            href="/contact"
-            className={`btn-contact-pill ${pathname.startsWith('/contact') ? 'active' : ''}`}
-            id="btnNavContact"
-            onClick={closeMenu}
-          >
-            <span>Contact</span>
-          </Link>
 
-          {/* Instant Quote Button — Pill Shape */}
-          <Link
-            href="/contact"
+          {/* Instant Quote Button — Triggers Dedicated Quote Modal */}
+          <button
+            type="button"
             className="btn-quote"
             id="btnCall"
-            onClick={closeMenu}
+            onClick={() => {
+              closeMenu();
+              setQuoteModalOpen(true);
+            }}
           >
             <IconPhone size={15} />
             <span>Instant Quote</span>
-          </Link>
+          </button>
 
           <button
             className={`hamburger ${open ? 'open' : ''}`}
@@ -150,6 +168,12 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+
+      {/* Dedicated Instant Quote Modal */}
+      <QuoteModal
+        isOpen={quoteModalOpen}
+        onClose={() => setQuoteModalOpen(false)}
+      />
     </header>
   );
 }

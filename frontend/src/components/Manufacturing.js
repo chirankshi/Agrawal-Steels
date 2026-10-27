@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import { IconCpu, IconWrench, IconLayers, IconShieldCheck, IconArrowRight, IconZap } from './Icons';
 
 const CAPABILITIES = [
@@ -59,8 +60,9 @@ const CAPABILITIES = [
   },
 ];
 
-export default function Manufacturing() {
+export default function Manufacturing({ isHome = true }) {
   const [activeTab, setActiveTab] = useState(0);
+  const displayedCapabilities = isHome ? CAPABILITIES.slice(0, 3) : CAPABILITIES;
 
   return (
     <section className="section capabilities-section" id="manufacturing">
@@ -80,7 +82,7 @@ export default function Manufacturing() {
 
         {/* Dynamic Bento-Style Capability Showcase */}
         <div className="capabilities-bento">
-          {CAPABILITIES.map((cap, idx) => (
+          {displayedCapabilities.map((cap, idx) => (
             <div
               key={cap.id}
               className={`cap-card ${activeTab === idx ? 'cap-card--active' : ''}`}
@@ -110,6 +112,15 @@ export default function Manufacturing() {
             </div>
           ))}
         </div>
+
+        {isHome && (
+          <div className="section-cta-wrap">
+            <Link href="/manufacturing" className="btn-modern-outline" id="btnViewAllMachinery">
+              <span>View All Machinery &amp; Technical Specs (All 6 Units)</span>
+              <IconArrowRight size={16} />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -55,6 +55,7 @@ export default function Journey() {
                 key={item.year}
                 className={`growth-bar-col ${activeYear === item.year ? 'growth-bar-col--active' : ''}`}
                 onMouseEnter={() => setActiveYear(item.year)}
+                onClick={() => setActiveYear(item.year)}
               >
                 <div className="growth-bar-val">{item.revenue}</div>
                 <div className="growth-bar-track">
@@ -69,6 +70,14 @@ export default function Journey() {
                 {item.isLatest && <span className="growth-latest-pill">Current FY</span>}
               </div>
             ))}
+          </div>
+
+          {/* Active year milestone detail highlight */}
+          <div className="growth-active-detail">
+            <span className="growth-detail-year">{activeYear}:</span>
+            <span className="growth-detail-desc">
+              {timeline.find((t) => t.year === activeYear)?.desc}
+            </span>
           </div>
         </div>
 

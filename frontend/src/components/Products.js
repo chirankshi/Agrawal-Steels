@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useState } from 'react';
 import { IconArrowRight, IconShieldCheck, IconFileText, IconLayers, IconCpu } from './Icons';
 
@@ -222,12 +223,24 @@ const CATEGORIES = [
   'Custom Fabrication',
 ];
 
-export default function Products({ onSelectProduct }) {
+export default function Products({ onSelectProduct, isHome = true }) {
   const [selectedCat, setSelectedCat] = useState('All Products');
 
-  const filtered = selectedCat === 'All Products'
-    ? PRODUCTS
-    : PRODUCTS.filter(p => p.category === selectedCat || p.subcat === selectedCat);
+  const HOME_BEST_SELLERS = [
+    'productTmt',
+    'productHr',
+    'productBeam',
+    'productPipe',
+    'mfgRacks',
+    'mfgMezzanine',
+  ];
+
+  let filtered = PRODUCTS;
+  if (selectedCat !== 'All Products') {
+    filtered = PRODUCTS.filter(p => p.category === selectedCat || p.subcat === selectedCat);
+  } else if (isHome) {
+    filtered = PRODUCTS.filter(p => HOME_BEST_SELLERS.includes(p.id));
+  }
 
   const handleQuoteClick = (productName) => {
     if (onSelectProduct) {
@@ -312,6 +325,15 @@ export default function Products({ onSelectProduct }) {
             </div>
           ))}
         </div>
+
+        {isHome && (
+          <div className="section-cta-wrap">
+            <Link href="/products" className="btn-modern-primary" id="btnViewAllProducts">
+              <span>View All Certified Products (All 17 Lines)</span>
+              <IconArrowRight size={18} />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

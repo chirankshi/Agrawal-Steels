@@ -35,7 +35,7 @@ export default function Hero() {
             </h1>
 
             <p className="hero-lead">
-              Integrated primary steel distribution and precision industrial storage manufacturing. Partnered with <strong>SAIL, TATA Steel, JSPL, AMNS &amp; Apollo Pipes</strong>, delivering turnkey steel solutions, heavy warehouse racking, and automated powder coating across India.
+              Primary steel distribution &amp; heavy industrial storage manufacturing. Partnered with <strong>SAIL, TATA Steel, JSPL, AMNS &amp; Apollo</strong> — delivering turnkey steel supply, warehouse racking, and automated powder coating across India.
             </p>
 
             <div className="hero-cta-group">
@@ -52,7 +52,7 @@ export default function Hero() {
             <div className="hero-grades-row">
               <span className="grades-label">Core Divisions:</span>
               <div className="grades-chips">
-                {['Primary Steel Supply', 'Industrial Storage Racks', 'Mezzanine Floors', 'SS Kitchen Equipment', 'CNC Sheet Bending'].map((cat) => (
+                {['Primary Steel Supply', 'Industrial Storage Racks', 'Mezzanine Floors', 'Commercial SS Kitchen', 'CNC Sheet Bending'].map((cat) => (
                   <span
                     key={cat}
                     className={`grade-chip ${selectedCategory === cat ? 'grade-chip--active' : ''}`}

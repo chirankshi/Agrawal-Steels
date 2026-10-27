@@ -1,9 +1,17 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IconTruck, IconShieldCheck, IconZap } from './Icons';
 
 export default function AnnouncementBar() {
   const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--announcement-height', visible ? '38px' : '0px');
+    return () => {
+      document.documentElement.style.setProperty('--announcement-height', '0px');
+    };
+  }, [visible]);
+
   if (!visible) return null;
 
   return (

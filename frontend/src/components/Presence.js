@@ -1,4 +1,5 @@
-import { IconMapPin, IconGlobe, IconShieldCheck } from './Icons';
+import Link from 'next/link';
+import { IconMapPin, IconGlobe, IconShieldCheck, IconArrowRight } from './Icons';
 
 export default function Presence() {
   const units = [
@@ -79,18 +80,25 @@ export default function Presence() {
         </div>
 
         {/* Regional PAN-India Sourcing & Distribution Hubs */}
-        <div style={{ marginTop: '35px' }}>
-          <h4 style={{ color: '#94a3b8', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>
+        <div style={{ marginTop: '1.75rem' }}>
+          <h4 style={{ color: '#94a3b8', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '14px' }}>
             Regional Steel Sourcing &amp; Distribution Transit Depots:
           </h4>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
             {regionalHubs.map((h, i) => (
-              <div key={i} style={{ background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '8px', padding: '14px' }}>
-                <div style={{ color: '#00e5ff', fontWeight: '600', fontSize: '1rem' }}>{h.city} <span style={{ color: '#64748b', fontSize: '0.8rem' }}>({h.state})</span></div>
-                <div style={{ color: '#94a3b8', fontSize: '0.8rem', marginTop: '4px' }}>{h.desc}</div>
+              <div key={i} style={{ background: 'rgba(15, 23, 42, 0.6)', border: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: '8px', padding: '10px 14px' }}>
+                <div style={{ color: '#00e5ff', fontWeight: '600', fontSize: '0.95rem' }}>{h.city} <span style={{ color: '#64748b', fontSize: '0.78rem' }}>({h.state})</span></div>
+                <div style={{ color: '#94a3b8', fontSize: '0.78rem', marginTop: '3px' }}>{h.desc}</div>
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="section-cta-wrap">
+          <Link href="/about" className="btn-modern-outline" id="btnViewAllLocations">
+            <span>View All Locations &amp; Corporate Infrastructure</span>
+            <IconArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </section>

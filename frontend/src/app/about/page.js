@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
 import CountUp from '../../components/CountUp';
+import Certificates from '../../components/Certificates';
 import {
   IconAward,
   IconShieldCheck,
@@ -188,6 +189,9 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* Accredited ISO Certifications */}
+        <Certificates />
 
         {/* Mission, Vision & Core Values */}
         <section className="about-values-section">

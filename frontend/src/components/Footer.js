@@ -13,10 +13,14 @@ export default function Footer() {
                 <img
                   src="/images/brand/aggarwal_logo_circle.png"
                   alt="Aggarwal Steels Logo"
-                  width={60}
-                  height={60}
+                  width={52}
+                  height={52}
                   className="footer-logo-img"
                 />
+                <div className="footer-brand-text">
+                  <span className="footer-company-name">AGGARWAL STEELS</span>
+                  <span className="footer-subsidiary-name">&amp; Majestic AR Technology</span>
+                </div>
               </div>
               <p className="footer-description">
                 Building Stronger Industries Together. Integrated primary steel distribution (SAIL, TATA, JSPL, AMNS) and specialized warehouse storage racking, robotic powder coating, and precision fabrication across PAN India.
@@ -27,8 +31,8 @@ export default function Footer() {
                   src="/images/brand/iso_make_in_india.png"
                   alt="ISO 9001:2015 & Make in India Certified"
                   className="footer-cert-badge-img"
-                  width={180}
-                  height={64}
+                  width={170}
+                  height={44}
                 />
               </div>
 
@@ -55,6 +59,7 @@ export default function Footer() {
                 <li><Link href="/products#structural-steel">MS Structural Beams, Channels &amp; Angles</Link></li>
                 <li><Link href="/products#ms-pipes">Hollow Sections (SHS/RHS) &amp; Pipes</Link></li>
                 <li><Link href="/products">View All Certified Products &rarr;</Link></li>
+                <li><Link href="/about#certifications">Accredited ISO Certifications &rarr;</Link></li>
               </ul>
             </div>
 
@@ -87,9 +92,7 @@ export default function Footer() {
                 <li>
                   <IconMail size={15} />
                   <div>
-                    <a href="mailto:md@majesticar.com">md@majesticar.com</a>
-                    <br />
-                    <a href="mailto:info@majesticar.in" style={{ fontSize: '0.82rem' }}>info@majesticar.in</a>
+                    <a href="mailto:info@majesticar.in">info@majesticar.in</a>
                   </div>
                 </li>
                 <li>

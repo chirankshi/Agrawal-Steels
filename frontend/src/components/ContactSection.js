@@ -5,10 +5,11 @@ import { IconMapPin, IconPhone, IconMail, IconClock, IconMessageSquare, IconChec
 const PRODUCTS_LIST = [
   'MS TMT Bars (Fe 415 / 500D / 550D)',
   'HR Plates & Coils (IS 2062)',
-  'MS Structural Angles & Channels (ISMC)',
-  'MS Beams & Joists (ISMB / NPB)',
+  'MS Structural Angles (Equal & Unequal)',
+  'MS Channels (ISMC 75 to 400)',
+  'MS Beams & Joists (ISMB / NPB / WPB)',
+  'MS Chequered Plates & Flooring Sheets',
   'Hollow Sections & MS Pipes (IS 4923 / 1161)',
-  'Chequered Plates & Flooring Sheets',
   'CR Coils & Precision Slit Coils',
   'GP Coils & Galvanized Sheets',
   'Stainless Steel Sheets (304 / 202 / 316)',
@@ -243,9 +244,7 @@ export default function ContactSection({ selectedProduct }) {
                 <div>
                   <strong>Official Correspondence</strong>
                   <p>
-                    <a href="mailto:md@majesticar.com">md@majesticar.com</a>
-                    <br />
-                    <a href="mailto:info@majesticar.in" style={{ fontSize: '0.85rem' }}>info@majesticar.in</a>
+                    <a href="mailto:info@majesticar.in">info@majesticar.in</a>
                   </p>
                 </div>
               </div>

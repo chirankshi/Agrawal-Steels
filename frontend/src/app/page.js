@@ -8,6 +8,7 @@ import Products from '../components/Products';
 import Manufacturing from '../components/Manufacturing';
 import PartnersStrip from '../components/PartnersStrip';
 import About from '../components/About';
+import Certificates from '../components/Certificates';
 import WhyUs from '../components/WhyUs';
 import Journey from '../components/Journey';
 import Presence from '../components/Presence';
@@ -32,6 +33,7 @@ export default function Home() {
         <Manufacturing />
         <PartnersStrip />
         <About />
+        <Certificates />
         <WhyUs />
         <Journey />
         <Presence />

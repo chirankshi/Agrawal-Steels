@@ -1,4 +1,7 @@
-export default function PartnersStrip() {
+import Link from 'next/link';
+import { IconArrowRight } from './Icons';
+
+export default function PartnersStrip({ isHome = true }) {
   const primaryMills = [
     { id: 'partnerSail', name: 'SAIL', title: 'Steel Authority of India Ltd.', badge: 'MTC Certified' },
     { id: 'partnerTata', name: 'TATA STEEL', title: 'Tata Steel Limited', badge: 'Primary Partner' },
@@ -43,13 +46,13 @@ export default function PartnersStrip() {
         </div>
 
         {/* Real Trusted Corporate Clients with Genuine Logos */}
-        <div className="partners-header" style={{ marginTop: '50px' }}>
+        <div className="partners-header" style={{ marginTop: '1.75rem' }}>
           <span className="partners-tag partners-tag--clients">OUR VALUED CLIENTS &bull; VERIFIED INDUSTRIAL TRACK RECORD</span>
           <p className="partners-sub">Partnering with Fortune 500 enterprises, national EPC leaders, and automotive manufacturing titans</p>
         </div>
         
         <div className="client-logos-grid" id="clientLogosGrid">
-          {trustedClients.map((c, i) => (
+          {(isHome ? trustedClients.slice(0, 6) : trustedClients).map((c, i) => (
             <div className="client-logo-card" key={i} title={`${c.name} - ${c.category}`}>
               <div className="client-logo-img-wrap">
                 <img
@@ -66,6 +69,15 @@ export default function PartnersStrip() {
             </div>
           ))}
         </div>
+
+        {isHome && (
+          <div className="section-cta-wrap">
+            <Link href="/clients" className="btn-modern-outline" id="btnViewAllClients">
+              <span>View All Client Partners &amp; Project Track Record (11+ Enterprises)</span>
+              <IconArrowRight size={16} />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

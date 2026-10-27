@@ -81,7 +81,7 @@ export default function CountUp({
     <span ref={containerRef} className={`counter-number ${className}`}>
       {prefix}
       <span ref={numberRef} className="counter-val">
-        0
+        {target}
       </span>
       {suffix && <span className={unitClassName}>{suffix}</span>}
     </span>

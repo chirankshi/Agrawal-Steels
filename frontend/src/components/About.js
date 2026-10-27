@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { IconShieldCheck, IconAward, IconZap, IconGlobe, IconTarget, IconCompass, IconArrowRight, IconLayers } from './Icons';
 
 export default function About() {
@@ -41,10 +42,13 @@ export default function About() {
               ))}
             </div>
 
-            <div className="about-actions-row">
-              <a href="#contact" className="btn-modern-primary">
-                <span>Talk to Technical Sales</span>
+            <div className="about-actions-row" style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+              <Link href="/about" className="btn-modern-primary" id="btnReadOurStory">
+                <span>Read Our Story</span>
                 <IconArrowRight size={18} />
+              </Link>
+              <a href="#contact" className="btn-modern-outline" id="btnTalkTechnicalSales">
+                <span>Talk to Technical Sales</span>
               </a>
             </div>
           </div>
