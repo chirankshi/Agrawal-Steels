@@ -4557,6 +4557,16 @@ ul {
   font-weight: 600;
 }
 
+.section-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-amber);
+  margin-bottom: 0.5rem;
+}
+
 .quality-card-banner {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(7, 11, 20, 0.98) 100%);
   border: 1px solid rgba(245, 158, 11, 0.3);
@@ -4599,6 +4609,7 @@ ul {
   align-items: center;
   gap: 8px;
   background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 8px 14px;
   border-radius: var(--radius-sm);
   font-size: 0.8rem;
@@ -4656,7 +4667,7 @@ ul {
 .founder-card-tag h4 {
   font-family: var(--font-display);
   font-size: 1.25rem;
-  color: var(--text-white);
+  color: #ffffff;
   margin: 0;
 }
 
@@ -5271,6 +5282,75 @@ ul {
 
 [data-theme="light"] .reach-val {
   color: #0f172a;
+}
+
+/* Light Theme Overrides for Quality Lab Banner & Secondary Actions */
+[data-theme="light"] .quality-card-banner {
+  background: #ffffff;
+  border-color: rgba(217, 119, 6, 0.35);
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] .quality-text-col h2 {
+  color: #0f172a;
+}
+
+[data-theme="light"] .quality-text-col p {
+  color: #334155;
+}
+
+[data-theme="light"] .quality-text-col p strong {
+  color: #0f172a;
+}
+
+[data-theme="light"] .q-badge {
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+[data-theme="light"] .section-tag {
+  color: #b45309;
+}
+
+[data-theme="light"] .btn-secondary {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.18);
+  color: #0f172a;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: #f8fafc;
+  border-color: #d97706;
+  color: #d97706;
+}
+
+[data-theme="light"] .cert-pill {
+  background: #f8fafc;
+  border-color: rgba(15, 23, 42, 0.1);
+  color: #0f172a;
+}
+
+[data-theme="light"] .founder-stat-card {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .mfg-feature-list li {
+  color: #334155;
+}
+
+[data-theme="light"] .machinery-spec-card p {
+  color: #475569;
+}
+
+[data-theme="light"] .machinery-metric-row {
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .metric-label {
+  color: #64748b;
 }
 
 /* =====================================================================
