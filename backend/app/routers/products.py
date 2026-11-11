@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.product import Product
-from app.schemas.product import ProductCreate, ProductResponse
+from app.schemas.product import ProductCreate, ProductUpdate, ProductResponse
 
 router = APIRouter(prefix="/products", tags=["Product Catalog"])
 
@@ -32,12 +32,12 @@ def format_product_response(product: Product) -> ProductResponse:
 def get_products(
     category: Optional[str] = Query(None, description="Filter by category (e.g. 'Structural Steel', 'Plates & Coils')"),
     search: Optional[str] = Query(None, description="Search by product name, grade, or specs"),
-    only_active: bool = Query(True, description="Filter active products"),
+    only_active: bool = Query(False, description="Filter only active products (set True for public site, False for admin)"),
     skip: int = Query(0, ge=0),
-    limit: int = Query(50, ge=1, le=100),
+    limit: int = Query(100, ge=1, le=500),
     db: Session = Depends(get_db),
 ):
-    """Retrieve catalog of steel products with optional category and search filters."""
+    """Retrieve catalog of steel products with optional category, search, and active filters."""
     query = db.query(Product)
     if only_active:
         query = query.filter(Product.is_active.is_(True))
@@ -59,7 +59,7 @@ def get_products(
 @router.get("/categories", response_model=List[str])
 def get_categories(db: Session = Depends(get_db)):
     """Get list of distinct steel categories in stock."""
-    categories = db.query(Product.category).distinct().filter(Product.is_active.is_(True)).all()
+    categories = db.query(Product.category).distinct().all()
     return [c[0] for c in categories if c[0]]
 
 
@@ -102,3 +102,52 @@ def create_product(product_in: ProductCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(product)
     return format_product_response(product)
+
+
+@router.put("/{product_id}", response_model=ProductResponse)
+def update_product(
+    product_id: int,
+    product_in: ProductUpdate,
+    db: Session = Depends(get_db),
+):
+    """Update an existing steel product specification."""
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    update_data = product_in.model_dump(exclude_unset=True)
+    if "tags" in update_data and update_data["tags"] is not None:
+        product.tags = ",".join(update_data["tags"])
+        del update_data["tags"]
+
+    for field, value in update_data.items():
+        setattr(product, field, value)
+
+    db.commit()
+    db.refresh(product)
+    return format_product_response(product)
+
+
+@router.patch("/{product_id}/toggle-active", response_model=ProductResponse)
+def toggle_product_active(product_id: int, db: Session = Depends(get_db)):
+    """Toggle whether a product is currently active in the public catalog."""
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    product.is_active = not product.is_active
+    db.commit()
+    db.refresh(product)
+    return format_product_response(product)
+
+
+@router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_product(product_id: int, db: Session = Depends(get_db)):
+    """Delete a product from the database."""
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    db.delete(product)
+    db.commit()
+    return None

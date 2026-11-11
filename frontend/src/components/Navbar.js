@@ -7,8 +7,8 @@ import QuoteModal from './QuoteModal';
 
 const LINKS = [
   { href: '/',             label: 'Home',          id: 'navHome' },
+  { href: '/manufacturing',label: 'Machinery & Plant',id: 'navMfg' },
   { href: '/products',     label: 'Products',      id: 'navProducts' },
-  { href: '/manufacturing',label: 'Manufacturing', id: 'navMfg' },
   { href: '/about',        label: 'About Us',      id: 'navAbout' },
   { href: '/clients',      label: 'Clients',       id: 'navClients' },
   { href: '/contact',      label: 'Contact',       id: 'navContact' },

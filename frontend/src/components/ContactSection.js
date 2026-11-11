@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { supabase } from '../lib/supabase';
 import { IconMapPin, IconPhone, IconMail, IconClock, IconMessageSquare, IconCheck, IconShieldCheck, IconArrowRight } from './Icons';
 
 const PRODUCTS_LIST = [
@@ -217,8 +218,7 @@ export default function ContactSection({ selectedProduct }) {
                   <strong>Head Office &amp; Main Manufacturing Plant</strong>
                   <p>Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan</p>
                   <p style={{ marginTop: '4px', fontSize: '0.8rem', color: '#64748b' }}>
-                    Unit 01: 89, Sector 3, IMT Manesar, Gurugram, Haryana<br />
-                    Stockyard: Plot 680, Sector 59, Faridabad, Haryana
+                    Unit 02: G1-385, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan
                   </p>
                 </div>
               </div>
@@ -232,7 +232,7 @@ export default function ContactSection({ selectedProduct }) {
                   <p>
                     <a href="tel:+917300070778">+91 73000 70778</a>
                     <span style={{ color: '#64748b' }}> / </span>
-                    <a href="tel:+918800885185">+91 8800885185</a>
+                    <a href="tel:+918800885185">+91 73000 96120</a>
                   </p>
                 </div>
               </div>

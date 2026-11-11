@@ -24,6 +24,10 @@ class Settings(BaseSettings):
     SALES_PHONE: str = "+917300070778"
     ALTERNATE_PHONE: str = "+918800885185"
 
+    ADMIN_USERNAME: str = "admin"
+    ADMIN_PASSWORD: str = "AggarwalSteel@2026"
+    ADMIN_TOKEN: str = "as_adm_token_2026_industrial"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

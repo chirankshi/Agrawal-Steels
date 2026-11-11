@@ -98,7 +98,7 @@ export default function Journey() {
             <span className="sub-tag">IN-HOUSE MANUFACTURING &bull; RACKING &amp; FABRICATION</span>
             <h3 className="sub-title">Majestic AR Technology Pvt. Ltd.</h3>
             <p className="sub-desc">
-              Where Innovation Meets Precision. Operating 2 manufacturing units in Bhiwadi &amp; Manesar, producing Heavy-Duty Storage Racks, Mezzanine Floors, SS Commercial Kitchens, and Custom Cabinets.
+              Where Innovation Meets Precision. Operating 2 high-capacity manufacturing units in RIICO Bhiwadi, producing Heavy-Duty Storage Racks, Mezzanine Floors, SS Commercial Kitchens, and Custom Cabinets.
             </p>
           </div>
           <div className="sub-right">

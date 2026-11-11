@@ -140,13 +140,13 @@ function ContactContent() {
                   <div className="location-header">
                     <IconMapPin size={20} className="loc-icon" />
                     <div>
-                      <h4>Unit 1: Flagship Manufacturing Facility</h4>
-                      <span className="loc-badge">Majestic AR Technology Pvt. Ltd.</span>
+                      <h4>Head Office &amp; Main Plant</h4>
+                      <span className="loc-badge">Head Office &bull; Bhiwadi</span>
                     </div>
                   </div>
                   <p className="loc-address">
-                    Industrial Area, Phase 2, Bhiwadi / Bahadurgarh Hub, Haryana &amp; Rajasthan Border.
-                    <br /><strong>Facilities:</strong> 520ft Automated Powder Coating Line, Heavy CNC Press Brakes, Roll Forming Mills.
+                    Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan
+                    <br /><strong>Facilities:</strong> 520ft Automated Powder Coating Line, Heavy CNC Press Brakes, Roll Forming Lines.
                   </p>
                 </div>
 
@@ -154,27 +154,13 @@ function ContactContent() {
                   <div className="location-header">
                     <IconMapPin size={20} className="loc-icon" />
                     <div>
-                      <h4>Unit 2: Primary Steel Stockyard &amp; Logistics Hub</h4>
-                      <span className="loc-badge">Aggarwal Steels Stockyard</span>
+                      <h4>Manufacturing Unit 02</h4>
+                      <span className="loc-badge">Unit 02 &bull; Bhiwadi</span>
                     </div>
                   </div>
                   <p className="loc-address">
-                    Main Rohtak Road / Bahadurgarh Industrial Zone, Delhi NCR.
-                    <br /><strong>Facilities:</strong> 50T Electronic Weighbridge, Overhead EOT Cranes, Ready Inventory of HR/CR/Chequered Plates &amp; Beams.
-                  </p>
-                </div>
-
-                <div className="location-card">
-                  <div className="location-header">
-                    <IconMapPin size={20} className="loc-icon" />
-                    <div>
-                      <h4>Corporate Sales &amp; Finance Desk</h4>
-                      <span className="loc-badge">Delhi NCR Central Office</span>
-                    </div>
-                  </div>
-                  <p className="loc-address">
-                    Plot No. 4, Steel Market Complex, New Delhi - 110028.
-                    <br /><strong>Hours:</strong> Mon - Sat: 9:00 AM - 7:30 PM (Sunday Closed)
+                    G1-385, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan
+                    <br /><strong>Facilities:</strong> Heavy Structural Fabrication, High-Capacity EOT Cranes, Primary Steel Stockyard.
                   </p>
                 </div>
               </div>
@@ -185,7 +171,7 @@ function ContactContent() {
                   <IconPhone size={18} className="reach-icon" />
                   <div>
                     <span className="reach-lbl">Direct Sales Hotlines:</span>
-                    <a href="tel:+919999009890" className="reach-val">+91 99990 09890</a> / <a href="tel:+919810012345" className="reach-val">+91 98100 12345</a>
+                    <a href="tel:+917300070778" className="reach-val">+91 73000 70778</a> / <a href="tel:+917300096120" className="reach-val">+91 73000 96120</a>
                   </div>
                 </div>
 
@@ -193,7 +179,7 @@ function ContactContent() {
                   <IconMail size={18} className="reach-icon" />
                   <div>
                     <span className="reach-lbl">Official Email Inquiries:</span>
-                    <a href="mailto:sales@aggarwalsteels.com" className="reach-val">sales@aggarwalsteels.com</a>
+                    <a href="mailto:md@aggarwalsteel.com" className="reach-val">md@aggarwalsteel.com</a> / <a href="mailto:sales@aggarwalsteel.com" className="reach-val">sales@aggarwalsteel.com</a>
                   </div>
                 </div>
 

@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.enquiry import Enquiry, EnquiryStatus
-from app.schemas.enquiry import EnquiryCreate, EnquiryResponse, EnquiryUpdateStatus
+from app.schemas.enquiry import EnquiryCreate, EnquiryResponse, EnquiryUpdateStatus, EnquiryUpdate
 
 router = APIRouter(prefix="/enquiries", tags=["Quotation & Contact Enquiries"])
 logger = logging.getLogger(__name__)
@@ -48,17 +48,45 @@ def submit_enquiry(enquiry_in: EnquiryCreate, db: Session = Depends(get_db)):
         )
 
 
+@router.get("/stats")
+def get_enquiry_stats(db: Session = Depends(get_db)):
+    """Summary counts for admin dashboard."""
+    total = db.query(Enquiry).count()
+    pending = db.query(Enquiry).filter(Enquiry.status == EnquiryStatus.PENDING).count()
+    in_review = db.query(Enquiry).filter(Enquiry.status == EnquiryStatus.IN_REVIEW).count()
+    quoted = db.query(Enquiry).filter(Enquiry.status == EnquiryStatus.QUOTED).count()
+    closed = db.query(Enquiry).filter(Enquiry.status == EnquiryStatus.CLOSED).count()
+
+    return {
+        "total": total,
+        "pending": pending,
+        "in_review": in_review,
+        "quoted": quoted,
+        "closed": closed,
+    }
+
+
 @router.get("/", response_model=List[EnquiryResponse])
 def list_enquiries(
     status_filter: Optional[EnquiryStatus] = Query(None, alias="status"),
+    search: Optional[str] = Query(None),
     skip: int = Query(0, ge=0),
-    limit: int = Query(50, ge=1, le=100),
+    limit: int = Query(100, ge=1, le=500),
     db: Session = Depends(get_db),
 ):
-    """List all recorded customer enquiries with optional status filter."""
+    """List all recorded customer enquiries with optional status filter and search."""
     query = db.query(Enquiry)
     if status_filter:
         query = query.filter(Enquiry.status == status_filter)
+    if search:
+        term = f"%{search}%"
+        query = query.filter(
+            (Enquiry.name.ilike(term))
+            | (Enquiry.phone.ilike(term))
+            | (Enquiry.email.ilike(term))
+            | (Enquiry.product.ilike(term))
+            | (Enquiry.message.ilike(term))
+        )
     return query.order_by(Enquiry.created_at.desc()).offset(skip).limit(limit).all()
 
 
@@ -86,3 +114,35 @@ def update_enquiry_status(
     db.commit()
     db.refresh(enquiry)
     return enquiry
+
+
+@router.put("/{enquiry_id}", response_model=EnquiryResponse)
+def update_enquiry(
+    enquiry_id: int,
+    enquiry_in: EnquiryUpdate,
+    db: Session = Depends(get_db),
+):
+    """Update details of an enquiry."""
+    enquiry = db.query(Enquiry).filter(Enquiry.id == enquiry_id).first()
+    if not enquiry:
+        raise HTTPException(status_code=404, detail="Enquiry not found")
+
+    update_data = enquiry_in.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(enquiry, field, value)
+
+    db.commit()
+    db.refresh(enquiry)
+    return enquiry
+
+
+@router.delete("/{enquiry_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_enquiry(enquiry_id: int, db: Session = Depends(get_db)):
+    """Delete an enquiry from the database."""
+    enquiry = db.query(Enquiry).filter(Enquiry.id == enquiry_id).first()
+    if not enquiry:
+        raise HTTPException(status_code=404, detail="Enquiry not found")
+
+    db.delete(enquiry)
+    db.commit()
+    return None

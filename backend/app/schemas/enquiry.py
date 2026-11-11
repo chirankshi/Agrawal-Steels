@@ -16,6 +16,15 @@ class EnquiryUpdateStatus(BaseModel):
     status: EnquiryStatus
 
 
+class EnquiryUpdate(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    product: Optional[str] = None
+    message: Optional[str] = None
+    status: Optional[EnquiryStatus] = None
+
+
 class EnquiryResponse(BaseModel):
     id: int
     name: str

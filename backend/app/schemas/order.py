@@ -17,6 +17,19 @@ class OrderCreate(BaseModel):
     notes: Optional[str] = None
 
 
+class OrderUpdate(BaseModel):
+    tracking_number: Optional[str] = None
+    client_name: Optional[str] = None
+    phone: Optional[str] = None
+    product: Optional[str] = None
+    quantity_metric_tons: Optional[float] = None
+    delivery_destination: Optional[str] = None
+    stage: Optional[OrderStage] = None
+    estimated_delivery_date: Optional[str] = None
+    vehicle_number: Optional[str] = None
+    notes: Optional[str] = None
+
+
 class OrderResponse(BaseModel):
     id: int
     tracking_number: str

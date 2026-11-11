@@ -5,58 +5,58 @@ import { IconCpu, IconWrench, IconLayers, IconShieldCheck, IconArrowRight, IconZ
 
 const CAPABILITIES = [
   {
-    id: 'laser',
-    title: 'CNC Laser Cutting Machine (3 kW Prime)',
-    badge: '3 kW Fiber Laser',
-    icon: <IconZap size={22} />,
-    desc: 'Ultra-high precision CNC fiber laser cutting for steel sheets and heavy plates. Clean edges, minimal wastage, and exact tolerance for custom drawings and panels.',
-    img: '/images/cnc_bending.jpeg',
-    specs: ['3 kW High Precision Laser', 'Clean Burr-Free Edges', 'Minimal Heat-Affected Zone', 'Custom CAD / DXF Profiling'],
-  },
-  {
     id: 'bending',
-    title: 'CNC Bending Machines (HACO & Energy Mission)',
-    badge: '4 CNC Press Brakes',
+    title: '5 CNC Tandem Bending Machines',
+    badge: '5 Units • Tandem Setup',
     icon: <IconCpu size={22} />,
-    desc: '4 high-performance CNC bending machines (including Tandem setup and HACO units) for complex multi-bend angles, desk panels, heavy shelves, and enclosures.',
-    img: '/images/support_welding.jpeg',
-    specs: ['Energy Mission & HACO Machines', '4-Tandem Bending Setup', 'Up to 12mm Plate Bending', 'Repeat Accuracy ±0.2mm'],
+    desc: '5 high-precision CNC bending machines in tandem configuration for heavy multi-bend profiles, upright columns, desk panels, and complex enclosures with zero deflection.',
+    img: '/images/cnc_bending.jpeg',
+    specs: ['5 CNC Tandem Bending Units', 'Energy Mission & HACO Controls', 'Up to 12mm Plate Bending', 'Repeat Accuracy ±0.2mm'],
   },
   {
-    id: 'powder',
-    title: '520 FT Automatic Powder Coating Plant',
-    badge: 'Automated Robotic Arm',
-    icon: <IconShieldCheck size={22} />,
-    desc: 'Full-fledged 520 ft conveyorized automatic powder coating line with robotic spray arm. Capable of coating up to 12-meter-long structural products in a single continuous stretch with high corrosion resistance.',
-    img: '/images/storage_racking.jpeg',
-    specs: ['520 Ft Conveyorized Line', 'Automated Robotic Arm', '12m Length in Single Stretch', 'Multi-Stage Chemical Pre-Treatment'],
+    id: 'shearing_press',
+    title: 'High-Speed Shearing & Power Press (Up to 250T)',
+    badge: 'Up to 250 Ton Capacity',
+    icon: <IconZap size={22} />,
+    desc: 'High-speed hydraulic shearing for precise, burr-free sheet cutting, backed by mechanical and hydraulic power presses up to 250 Ton capacity for heavy stamping and punching.',
+    img: '/images/support_welding.jpeg',
+    specs: ['Up to 250 Ton Power Press', 'High-Speed Precision Shearing', 'Clean Burr-Free Edge Quality', 'Heavy-Duty Stamping & Piercing'],
   },
   {
     id: 'rollforming',
-    title: 'Heavy Roll Forming & Power Press (Up to 250 Ton)',
-    badge: 'In-House Profiling',
+    title: 'Continuous Roll Forming Machine Lines',
+    badge: 'In-House Cold Roll Profiling',
     icon: <IconLayers size={22} />,
-    desc: 'Continuous roll forming lines producing Slotted Angles, Racking Uprights, MKM Sections, and Omega Profiles. Backed by mechanical power presses up to 250 Ton capacity.',
-    img: '/images/cnc_bending.jpeg',
-    specs: ['Slotted Angles & Omega Sections', 'Heavy Upright Columns', 'Power Press up to 250 Ton', 'Continuous High-Speed Stamping'],
-  },
-  {
-    id: 'racking',
-    title: 'Turnkey Warehouse Storage Systems',
-    badge: 'Majestic AR Technology',
-    icon: <IconLayers size={22} />,
-    desc: 'Heavy-Duty Pallet Racking (Selective, Double Deep, Drive-In, Cantilever), Multi-Tier Mezzanine floors, and supermarket display systems engineered for maximum warehouse cubic volume.',
+    desc: 'Continuous roll forming lines specialized in manufacturing Slotted Angles, Racking Upright Columns, MKM Sections, and Omega Profiles with uniform structural rigidity.',
     img: '/images/storage_racking.jpeg',
-    specs: ['Selective & Drive-In Racks', 'Multi-Tier Mezzanines (2 & 3 Tier)', 'Pallets & Wire Mesh Partitions', 'Complete Turnkey Warehouse Design'],
+    specs: ['Slotted Angles & MKM Sections', 'Racking Uprights & Omega Profiles', 'High-Speed Continuous Roll Forming', 'Consistent Structural Tolerances'],
   },
   {
-    id: 'kitchen',
-    title: 'Commercial Stainless Steel Kitchen Equipment',
-    badge: 'SS 304 Hygienic Grade',
+    id: 'welding',
+    title: 'Miller TIG/MIG & Multi-Spot Welding',
+    badge: 'Certified Welding Setup',
     icon: <IconWrench size={22} />,
-    desc: 'Sanitary stainless steel equipment for hotels, industrial cafeterias, and food processing plants — worktables, prep counters, commercial sinks, and bakery racks with Miller TIG/MIG welding.',
+    desc: 'Equipped with original Miller TIG & MIG welding stations for spotless SS and MS fabrication, along with heavy spot welding machines for electrical enclosures and panels.',
     img: '/images/commercial_kitchen.jpeg',
-    specs: ['SS 304 / 316 Food Grade', 'Miller TIG & MIG Clean Welds', 'Hospital & Commercial Kitchen Units', 'Corrosion-Proof Heavy Gauge'],
+    specs: ['Miller TIG & MIG Power Sources', 'SS & MS Clean Penetration Welds', 'High-Speed Multi-Spot Welding', 'ISO 3834-2 Fusion Weld Certified'],
+  },
+  {
+    id: 'powder_coating',
+    title: '520 Ft Automated Powder Coating Plant',
+    badge: '4-Stage Automated Line',
+    icon: <IconShieldCheck size={22} />,
+    desc: 'State-of-the-art 520 ft conveyorized plant with multi-stage pre-treatment, automatic reciprocator spray booth, and high-temp curing oven for durable, corrosion-proof finish.',
+    img: '/images/storage_racking.jpeg',
+    specs: ['520 Ft Continuous Overhead Conveyor', 'Automatic Reciprocator Spray Booth', 'Multi-Stage Chemical Pre-Treatment', 'Long-Lasting High Corrosion Resistance'],
+  },
+  {
+    id: 'material_handling',
+    title: 'Heavy Material Handling (35T & 15T Cranes)',
+    badge: '35 Ton Lifting Capacity',
+    icon: <IconLayers size={22} />,
+    desc: 'Massive plant lifting infrastructure: two 35-Ton EOT cranes (1st Bay), two 15-Ton EOT cranes (2nd Bay), 15-Ton Hydra mobile crane, and 4-Ton forklifts for 24-hour rapid dispatch.',
+    img: '/images/hero_steel_background.jpg',
+    specs: ['2x 35-Ton EOT Cranes (1st Bay)', '2x 15-Ton EOT Cranes (2nd Bay)', '15-Ton Mobile Hydra Crane', '4-Ton Heavy Industrial Forklift'],
   },
 ];
 
@@ -73,10 +73,10 @@ export default function Manufacturing({ isHome = true }) {
             <IconWrench size={16} /> IN-HOUSE MACHINERY &bull; MAJESTIC AR TECHNOLOGY
           </div>
           <h2 className="section-title text-white">
-            Advanced Machinery: <span className="text-gradient">Precision Metalworking</span>
+            In-House Plant &amp; <span className="text-gradient">Advanced Machinery</span>
           </h2>
           <p className="section-desc text-gray">
-            Equipped with state-of-the-art CNC lasers, HACO/Energy Mission press brakes, and a 520ft robotic powder coating line for complete in-house fabrication from raw coil to finished installation.
+            Equipped with 5 CNC tandem press brakes, up to 250-Ton power presses, continuous roll forming, 35-Ton heavy EOT cranes, and North India&apos;s premier 520ft automated powder coating line.
           </p>
         </div>
 
@@ -116,7 +116,7 @@ export default function Manufacturing({ isHome = true }) {
         {isHome && (
           <div className="section-cta-wrap">
             <Link href="/manufacturing" className="btn-modern-outline" id="btnViewAllMachinery">
-              <span>View All Machinery &amp; Technical Specs (All 6 Units)</span>
+              <span>View All Plant Infrastructure &amp; Technical Specs (All 6 Divisions)</span>
               <IconArrowRight size={16} />
             </Link>
           </div>

@@ -2718,32 +2718,45 @@ ul {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xl);
   padding: 1.75rem 2rem;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .contact-modern-form {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-fields-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.modern-field {
+.modern-field,
+.form-field-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.modern-field label {
+.modern-field label,
+.form-field-group label {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--text-silver);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .modern-field input,
@@ -2757,6 +2770,9 @@ ul {
   font-size: 0.9rem;
   color: var(--text-white);
   transition: var(--transition);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .modern-field select option {
@@ -3147,11 +3163,11 @@ ul {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   background: var(--accent-amber);
   color: #070b14;
-  border-radius: var(--radius-sm);
+  border-radius: 50%;
   font-size: 1.25rem;
   font-weight: 900;
   display: flex;
@@ -3162,6 +3178,7 @@ ul {
   pointer-events: none;
   transition: var(--transition);
   z-index: 999;
+  cursor: pointer;
 }
 .scroll-top.visible {
   opacity: 1;
@@ -3483,6 +3500,77 @@ ul {
   .footer-modern { min-height: auto; display: block; }
   .footer-top-wrap { padding: 3rem 0 2rem 0; display: block; flex: none; }
   .footer-modern-grid { grid-template-columns: 1fr; width: 100%; gap: 2rem; }
+  /* Contact Form Modern Responsive */
+  .contact-modern-grid { grid-template-columns: 1fr; width: 100%; gap: 2rem; }
+  .contact-form-container {
+    padding: 1.25rem 1rem;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .form-fields-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+  .modern-field,
+  .form-field-group {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .modern-field label,
+  .form-field-group label {
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    word-break: break-word;
+    white-space: normal;
+  }
+  .modern-field input,
+  .modern-field select,
+  .modern-field textarea,
+  .rfq-input {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+    padding: 12px 14px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .btn-submit-modern {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+  .corporate-details-card {
+    padding: 1.25rem 1rem;
+  }
+  .contact-success-box {
+    padding: 1.5rem 1rem;
+  }
+  .rfq-form-card {
+    padding: 1.25rem 1rem;
+  }
+  .scroll-top {
+    bottom: 1.15rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.92);
+    color: var(--accent-amber);
+    border: 1.5px solid var(--border-amber);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  [data-theme="light"] .scroll-top {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--accent-amber);
+    border: 1.5px solid rgba(217, 119, 6, 0.35);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.15);
+  }
   .growth-chart-wrap { padding: 1.5rem 1rem; width: 100%; box-sizing: border-box; overflow: hidden; }
   .growth-current-revenue { font-size: 1.85rem; }
   .growth-bars-row { gap: 0.5rem; height: 230px; width: 100%; }
@@ -3532,6 +3620,26 @@ ul {
   .growth-bar-year { font-size: 0.62rem; }
   .growth-latest-pill { font-size: 0.52rem; padding: 1px 4px; }
   .growth-active-detail { flex-direction: column; align-items: flex-start; gap: 4px; font-size: 0.78rem; }
+  .whatsapp-action-card {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding: 1.25rem 1rem;
+    gap: 0.85rem;
+  }
+  .wa-icon-box {
+    margin: 0 auto;
+  }
+  .wa-action-btn {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+  .gst-compliance-badge {
+    flex-wrap: wrap;
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
 }
 
 /* ===== LIGHT THEME COMPREHENSIVE OVERRIDES ===== */
@@ -4028,6 +4136,14 @@ ul {
 }
 
 /* ===== DEDICATED MULTI-PAGE CORPORATE STYLES ===== */
+
+.section-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
 
 .dedicated-page-container {
   min-height: calc(100vh - 80px);
@@ -5153,13 +5269,29 @@ ul {
 }
 
 @media (max-width: 768px) {
-  .dedicated-hero-title { font-size: 2.2rem; }
+  .section-container { padding: 0 1rem; }
+  .dedicated-hero-title { font-size: clamp(1.85rem, 5.5vw, 2.2rem); }
   .mfg-feature-grid, .machinery-specs-grid { grid-template-columns: 1fr; }
   .clients-rich-grid { grid-template-columns: 1fr; }
   .sectors-grid { grid-template-columns: 1fr; }
-  .sla-banner { grid-template-columns: 1fr; }
+  .sla-banner { grid-template-columns: 1fr; padding: 1.5rem 1rem; gap: 1.25rem; }
   .synergy-grid { grid-template-columns: 1fr; }
   .about-stats-strip { grid-template-columns: 1fr 1fr; }
+  .quality-card-banner { padding: 1.5rem 1rem; gap: 1.5rem; }
+  .quality-text-col, .quality-cta-col { min-width: 0; width: 100%; }
+  .quality-text-col h2 { font-size: 1.45rem; }
+  .founder-deep-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .founder-image-frame { max-width: 340px; margin: 0 auto; }
+  .founder-cert-badges { max-width: 340px; margin: 0.75rem auto 0; }
+  .filter-controls-flex { flex-direction: column; align-items: stretch; gap: 1rem; }
+  .search-input-wrapper { width: 100%; }
+  .product-search-input { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .dedicated-hero-title { font-size: 1.75rem; line-height: 1.2; word-break: break-word; }
+  .dedicated-hero-subtitle { font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem; }
+  .about-stats-strip { grid-template-columns: 1fr; }
 }
 
 /* Light Theme Overrides for Dedicated Pages */

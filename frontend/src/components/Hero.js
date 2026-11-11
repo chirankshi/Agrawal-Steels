@@ -39,12 +39,12 @@ export default function Hero() {
             </p>
 
             <div className="hero-cta-group">
-              <a href="#products" className="btn-modern-primary">
-                <span>Explore Catalog</span>
+              <a href="#manufacturing" className="btn-modern-primary">
+                <span>In-House Machinery &amp; Plant</span>
                 <IconArrowRight size={18} />
               </a>
-              <a href="#capabilities" className="btn-modern-outline">
-                <span>In-House Machinery</span>
+              <a href="#products" className="btn-modern-outline">
+                <span>Explore Products</span>
               </a>
             </div>
 
@@ -52,7 +52,7 @@ export default function Hero() {
             <div className="hero-grades-row">
               <span className="grades-label">Core Divisions:</span>
               <div className="grades-chips">
-                {['Primary Steel Supply', 'Industrial Storage Racks', 'Mezzanine Floors', 'Commercial SS Kitchen', 'CNC Sheet Bending'].map((cat) => (
+                {['In-House Machinery', 'Storage & Warehouse Racks', 'Mezzanine Floors', 'Heavy Structural & PEB', 'Primary Steel Supply', 'SS Commercial Kitchen'].map((cat) => (
                   <span
                     key={cat}
                     className={`grade-chip ${selectedCategory === cat ? 'grade-chip--active' : ''}`}

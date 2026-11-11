@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from app.config import settings
 from app.database import Base, engine, SessionLocal
 from app.services.seed import seed_database
-from app.routers import enquiries_router, products_router, orders_router, health_router
+from app.routers import enquiries_router, products_router, orders_router, health_router, auth_router
 
 logging.basicConfig(
     level=logging.INFO,
@@ -43,6 +43,7 @@ FastAPI backend service powering the Aggarwal Steels platform:
 * **Direct Quotation Requests & RFQ Enquiries** (from website contact desk)
 * **Live Product Catalog** (IS 2062 HR plates, Fe 550D TMT, ISMB Beams, ISMC Channels, CR/GP Coils)
 * **Real-time Order & Dispatch Tracking**
+* **Admin Authentication & Desk Management**
 * **Health & Diagnostics**
 
 Interactive documentation available at `/docs` (Swagger UI) and `/redoc` (ReDoc).
@@ -64,6 +65,7 @@ app.add_middleware(
 
 # Mount API Routers
 app.include_router(health_router, prefix=settings.API_V1_PREFIX)
+app.include_router(auth_router, prefix=settings.API_V1_PREFIX)
 app.include_router(enquiries_router, prefix=settings.API_V1_PREFIX)
 app.include_router(products_router, prefix=settings.API_V1_PREFIX)
 app.include_router(orders_router, prefix=settings.API_V1_PREFIX)
@@ -79,8 +81,10 @@ def root():
             "status": "online",
             "endpoints": {
                 "health": f"{settings.API_V1_PREFIX}/health",
+                "auth_login": f"{settings.API_V1_PREFIX}/auth/login",
                 "products": f"{settings.API_V1_PREFIX}/products",
                 "enquiries": f"{settings.API_V1_PREFIX}/enquiries",
+                "orders": f"{settings.API_V1_PREFIX}/orders",
                 "order_tracking_example": f"{settings.API_V1_PREFIX}/orders/track/AS-2026-7891",
                 "interactive_docs": "/docs",
                 "redoc": "/redoc",

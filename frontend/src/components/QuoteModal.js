@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { supabase } from '../lib/supabase';
 import { IconPhone, IconZap, IconShieldCheck, IconArrowRight } from './Icons';
 
 export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
@@ -72,7 +73,6 @@ export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
     setErrorMsg('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       const notes = [
         formData.company ? `Company: ${formData.company}` : '',
         formData.quantity ? `Quantity/Tonnage: ${formData.quantity}` : '',
@@ -80,23 +80,41 @@ export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
         formData.message ? `Details: ${formData.message}` : ''
       ].filter(Boolean).join(' | ');
 
-      const res = await fetch(`${apiUrl}/api/v1/enquiries`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email || null,
-          product: formData.product || 'General Steel Inquiry',
-          message: notes || null,
-        }),
-      });
+      const payload = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email || null,
+        product: formData.product || 'General Steel Inquiry',
+        message: notes || null,
+        status: 'pending',
+        source: 'instant_quote_modal',
+      };
 
-      if (res.ok) {
-        const data = await res.json();
-        setEnquiryRef(data.id ? `AS-RFQ-${String(data.id).padStart(4, '0')}` : `AS-RFQ-${Date.now().toString().slice(-4)}`);
-      } else {
-        setEnquiryRef(`AS-RFQ-${Date.now().toString().slice(-4)}`);
+      // 1. Direct Supabase insert
+      let saved = false;
+      try {
+        const { data, error } = await supabase.from('enquiries').insert([payload]).select().single();
+        if (!error && data?.id) {
+          setEnquiryRef(`AS-RFQ-${String(data.id).padStart(4, '0')}`);
+          saved = true;
+        }
+      } catch {}
+
+      // 2. Fallback to API if Supabase didn't respond
+      if (!saved) {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        const res = await fetch(`${apiUrl}/api/v1/enquiries`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }).catch(() => null);
+
+        if (res && res.ok) {
+          const data = await res.json();
+          setEnquiryRef(data.id ? `AS-RFQ-${String(data.id).padStart(4, '0')}` : `AS-RFQ-${Date.now().toString().slice(-4)}`);
+        } else {
+          setEnquiryRef(`AS-RFQ-${Date.now().toString().slice(-4)}`);
+        }
       }
       setSubmitted(true);
     } catch (err) {

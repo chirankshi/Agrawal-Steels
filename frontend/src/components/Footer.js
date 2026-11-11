@@ -1,7 +1,11 @@
+'use client';
+import { useState } from 'react';
+import AdminCardModal from './AdminCardModal';
 import Link from 'next/link';
 import { IconShieldCheck, IconPhone, IconMail, IconMapPin, IconClock, IconFileText } from './Icons';
 
 export default function Footer() {
+  const [showAdminCard, setShowAdminCard] = useState(false);
   return (
     <footer className="footer-modern" id="footer">
       <div className="footer-top-wrap">
@@ -86,22 +90,22 @@ export default function Footer() {
                   <div>
                     <a href="tel:+917300070778">+91 73000 70778</a>
                     <span style={{ color: '#64748b' }}> / </span>
-                    <a href="tel:+918800885185">+91 8800885185</a>
+                    <a href="tel:+918800885185">+91 73000 96120</a>
                   </div>
                 </li>
                 <li>
                   <IconMail size={15} />
                   <div>
-                    <a href="mailto:info@majesticar.in">info@majesticar.in</a>
+                    <a href="mailto:sales@aggarwalsteel.com">sales@aggarwalsteel.com</a>
                   </div>
                 </li>
                 <li>
                   <IconMapPin size={15} />
-                  <span>Head Office: E-372, RIICO Ind. Area, Bhiwadi, RJ 301019</span>
+                  <span>Head Office: Block C, Plot No. E-372, RIICO Ind. Area, Bhiwadi, RJ 301019</span>
                 </li>
                 <li>
                   <IconMapPin size={15} />
-                  <span>Unit 01: 89, Sec 3, IMT Manesar, Gurugram, HR</span>
+                  <span>Unit 02: G1-385, RIICO Ind. Area, Bhiwadi, RJ 301019</span>
                 </li>
                 <li>
                   <IconClock size={15} />
@@ -116,9 +120,13 @@ export default function Footer() {
       <div className="footer-bottom-wrap">
         <div className="container footer-bottom-flex">
           <p>© 2026 Aggarwal Steels &amp; Majestic AR Technology Pvt. Ltd. All rights reserved.</p>
-          <p>Where Innovation Meets Precision &bull; A Legacy of Strength</p>
+          <p>
+            Where Innovation Meets Precision &bull; A Legacy of Strength &bull;{' '}
+            <button type="button" onClick={() => setShowAdminCard(true)} className="footer-admin-btn">Staff Portal</button>
+          </p>
         </div>
       </div>
+      <AdminCardModal isOpen={showAdminCard} onClose={() => setShowAdminCard(false)} />
     </footer>
   );
 }

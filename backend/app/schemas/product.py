@@ -20,6 +20,19 @@ class ProductCreate(ProductBase):
     slug: str = Field(..., max_length=100)
 
 
+class ProductUpdate(BaseModel):
+    name: Optional[str] = None
+    category: Optional[str] = None
+    grade: Optional[str] = None
+    description: Optional[str] = None
+    specs: Optional[str] = None
+    badge: Optional[str] = None
+    image_url: Optional[str] = None
+    tags: Optional[List[str]] = None
+    estimated_price_per_ton: Optional[float] = None
+    is_active: Optional[bool] = None
+
+
 class ProductResponse(ProductBase):
     id: int
     slug: str

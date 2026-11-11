@@ -29,8 +29,8 @@ export default function Home() {
       <main>
         <Hero />
         <TickerStrip />
-        <Products onSelectProduct={(prod) => setSelectedProduct(prod)} />
         <Manufacturing />
+        <Products onSelectProduct={(prod) => setSelectedProduct(prod)} />
         <PartnersStrip />
         <About />
         <Certificates />

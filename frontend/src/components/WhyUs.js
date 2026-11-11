@@ -18,7 +18,7 @@ export default function WhyUs() {
       id: 'whyIndia',
       icon: <IconGlobe size={24} />,
       title: 'PAN India Supply Network',
-      desc: 'Reliable supply reach spanning Bhiwadi, Manesar, Bawal, Faridabad, Mumbai, Pune, Nagpur, Raipur, and Rourkela.',
+      desc: 'Reliable supply reach across 25+ cities in Delhi NCR, Haryana, Rajasthan, UP, Maharashtra, Gujarat, Karnataka, and West Bengal.',
     },
     {
       id: 'whyProducts',
