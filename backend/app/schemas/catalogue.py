@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -11,6 +11,7 @@ class CategoryBase(BaseModel):
     description: Optional[str] = None
     partners: Optional[List[str]] = []
     capacity: Optional[str] = None
+    tagline: Optional[str] = None
     catalogue_page: Optional[int] = None
     image_url: Optional[str] = None
     sort_order: int = 100
@@ -28,6 +29,7 @@ class CategoryUpdate(BaseModel):
     description: Optional[str] = None
     partners: Optional[List[str]] = None
     capacity: Optional[str] = None
+    tagline: Optional[str] = None
     catalogue_page: Optional[int] = None
     image_url: Optional[str] = None
     sort_order: Optional[int] = None
@@ -49,6 +51,7 @@ class SubcategoryBase(BaseModel):
     name: str = Field(..., max_length=150)
     description: Optional[str] = None
     items: Optional[List[str]] = []
+    item_details: Optional[Dict[str, Any]] = None
     catalogue_page: Optional[int] = None
     image_url: Optional[str] = None
     sort_order: int = 100
@@ -65,6 +68,7 @@ class SubcategoryUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     items: Optional[List[str]] = None
+    item_details: Optional[Dict[str, Any]] = None
     catalogue_page: Optional[int] = None
     image_url: Optional[str] = None
     sort_order: Optional[int] = None

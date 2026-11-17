@@ -41,8 +41,8 @@ export default function AdminEnquiriesPage() {
     { key: 'all', label: 'All enquiries', value: allEnquiries.length, accent: '#38bdf8' },
     { key: 'pending', label: 'Pending', value: countOf('pending'), accent: '#f59e0b' },
     { key: 'in_review', label: 'In review', value: countOf('in_review'), accent: '#a78bfa' },
-    { key: 'quoted', label: 'Quoted', value: countOf('quoted'), accent: '#10b981' },
-    { key: 'closed', label: 'Closed', value: countOf('closed'), accent: '#64748b' },
+    { key: 'quoted', label: 'Quoted', value: countOf('quoted'), accent: 'var(--adm-emerald)' },
+    { key: 'closed', label: 'Closed', value: countOf('closed'), accent: 'var(--adm-text-dim)' },
   ];
 
   const handleStatusChange = async (id, newStatus) => {
@@ -94,7 +94,7 @@ export default function AdminEnquiriesPage() {
             <h3 className="panel-card-title">
               Quotation Requests &amp; RFQ Management Desk
             </h3>
-            <p style={{ margin: '4px 0 0 0', fontSize: '0.75rem', color: '#94a3b8' }}>
+            <p style={{ margin: '4px 0 0 0', fontSize: '0.75rem', color: 'var(--adm-text-muted)' }}>
               Real-time inbound inquiries from website contact desk and quotation modal
             </p>
           </div>
@@ -191,7 +191,7 @@ export default function AdminEnquiriesPage() {
             <tbody>
               {enquiries.length === 0 ? (
                 <tr>
-                  <td colSpan="9" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>
+                  <td colSpan="9" style={{ textAlign: 'center', padding: '3rem', color: 'var(--adm-text-muted)' }}>
                     {loading ? 'Fetching inquiries from sales desk...' : 'No inquiries found matching criteria.'}
                   </td>
                 </tr>
@@ -199,26 +199,26 @@ export default function AdminEnquiriesPage() {
                 paged.slice.map((enq) => (
                   <tr key={enq.id}>
                     <td>
-                      <code style={{ color: '#f59e0b', fontSize: '0.75rem' }}>#{enq.id}</code>
+                      <code style={{ color: 'var(--adm-amber)', fontSize: '0.75rem' }}>#{enq.id}</code>
                     </td>
                     <td>
-                      <strong style={{ color: '#f8fafc', display: 'block' }}>{enq.name}</strong>
+                      <strong style={{ color: 'var(--adm-text-main)', display: 'block' }}>{enq.name}</strong>
                     </td>
                     <td>
-                      <div style={{ color: '#cbd5e1' }}>{enq.phone}</div>
+                      <div style={{ color: 'var(--adm-text-silver)' }}>{enq.phone}</div>
                     </td>
                     <td>
-                      <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{enq.email || '—'}</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--adm-text-muted)' }}>{enq.email || '—'}</span>
                     </td>
                     <td>
                       <span className="badge-category">{enq.product}</span>
                     </td>
-                    <td style={{ fontSize: '0.75rem', color: '#94a3b8', whiteSpace: 'nowrap' }}>{SOURCE_LABELS[enq.source] || enq.source || '—'}</td>
+                    <td style={{ fontSize: '0.75rem', color: 'var(--adm-text-muted)', whiteSpace: 'nowrap' }}>{SOURCE_LABELS[enq.source] || enq.source || '—'}</td>
                     <td style={{ maxWidth: '280px' }}>
                       <div
                         style={{
                           fontSize: '0.78rem',
-                          color: '#cbd5e1',
+                          color: 'var(--adm-text-silver)',
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
                           whiteSpace: 'nowrap',
@@ -228,7 +228,7 @@ export default function AdminEnquiriesPage() {
                         {enq.message || 'Standard inquiry'}
                       </div>
                       {enq.notes && (
-                        <div style={{ fontSize: '0.7rem', color: '#f59e0b', marginTop: '2px' }}>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--adm-amber)', marginTop: '2px' }}>
                           Note: {enq.notes}
                         </div>
                       )}
@@ -246,7 +246,7 @@ export default function AdminEnquiriesPage() {
                         <option value="closed">Closed</option>
                       </select>
                     </td>
-                    <td style={{ fontSize: '0.75rem', color: '#94a3b8', whiteSpace: 'nowrap' }}>
+                    <td style={{ fontSize: '0.75rem', color: 'var(--adm-text-muted)', whiteSpace: 'nowrap' }}>
                       {new Date(enq.created_at).toLocaleDateString('en-IN', {
                         day: 'numeric',
                         month: 'short',
@@ -325,36 +325,36 @@ export default function AdminEnquiriesPage() {
             </div>
 
             <div className="modal-body">
-              <div style={{ background: '#050811', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase' }}>Client Name</div>
-                <div style={{ fontSize: '1rem', fontWeight: 700, color: '#f8fafc', marginBottom: '8px' }}>{selectedEnquiry.name}</div>
+              <div style={{ background: 'var(--adm-bg-card)', padding: '12px', borderRadius: '8px', border: '1px solid var(--adm-border)' }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--adm-text-muted)', textTransform: 'uppercase' }}>Client Name</div>
+                <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--adm-text-main)', marginBottom: '8px' }}>{selectedEnquiry.name}</div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   <div>
-                    <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Phone:</span>{' '}
-                    <strong style={{ color: '#cbd5e1' }}>{selectedEnquiry.phone}</strong>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--adm-text-dim)' }}>Phone:</span>{' '}
+                    <strong style={{ color: 'var(--adm-text-silver)' }}>{selectedEnquiry.phone}</strong>
                   </div>
                   <div>
-                    <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Email:</span>{' '}
-                    <strong style={{ color: '#cbd5e1' }}>{selectedEnquiry.email || 'None'}</strong>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--adm-text-dim)' }}>Email:</span>{' '}
+                    <strong style={{ color: 'var(--adm-text-silver)' }}>{selectedEnquiry.email || 'None'}</strong>
                   </div>
                 </div>
 
                 <div style={{ marginTop: '8px' }}>
-                  <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Product:</span>{' '}
-                  <strong style={{ color: '#f59e0b' }}>{selectedEnquiry.product}</strong>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--adm-text-dim)' }}>Product:</span>{' '}
+                  <strong style={{ color: 'var(--adm-amber)' }}>{selectedEnquiry.product}</strong>
                 </div>
                 <div style={{ marginTop: '6px' }}>
-                  <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Came from:</span>{' '}
-                  <strong style={{ color: '#cbd5e1' }}>{SOURCE_LABELS[selectedEnquiry.source] || selectedEnquiry.source || '—'}</strong>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--adm-text-dim)' }}>Came from:</span>{' '}
+                  <strong style={{ color: 'var(--adm-text-silver)' }}>{SOURCE_LABELS[selectedEnquiry.source] || selectedEnquiry.source || '—'}</strong>
                 </div>
               </div>
 
               <div>
-                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--adm-text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>
                   Original Customer Requirements &amp; Site Details:
                 </label>
-                <div style={{ background: '#050811', padding: '12px', borderRadius: '6px', fontSize: '0.85rem', color: '#cbd5e1', lineHeight: '1.6' }}>
+                <div style={{ background: 'var(--adm-bg-card)', padding: '12px', borderRadius: '6px', fontSize: '0.85rem', color: 'var(--adm-text-silver)', lineHeight: '1.6' }}>
                   {selectedEnquiry.message || 'No additional specifications provided.'}
                 </div>
               </div>

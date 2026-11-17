@@ -40,7 +40,9 @@ export default function AdminLoginPage() {
   return (
     <div className="login-wrap">
       <div className="login-card">
-        <div className="login-logo">AS</div>
+        <div className="login-logo">
+          <img src="/images/brand/aggarwal_logo_circle.png" alt="Aggarwal Steels" />
+        </div>
 
         <div className="login-header">
           <h2>Aggarwal Steels</h2>
@@ -50,9 +52,9 @@ export default function AdminLoginPage() {
         {error && (
           <div
             style={{
-              background: 'rgba(244, 63, 94, 0.12)',
-              border: '1px solid rgba(244, 63, 94, 0.3)',
-              color: '#fda4af',
+              background: 'rgba(225, 29, 72, 0.08)',
+              border: '1px solid rgba(225, 29, 72, 0.3)',
+              color: '#be123c',
               fontSize: '0.8rem',
               padding: '10px 14px',
               borderRadius: '6px',
@@ -64,7 +66,7 @@ export default function AdminLoginPage() {
           </div>
         )}
 
-        <p style={{ color: '#94a3b8', fontSize: '0.78rem', textAlign: 'center', margin: '0 0 1.25rem' }}>
+        <p style={{ color: 'var(--adm-text-muted)', fontSize: '0.78rem', textAlign: 'center', margin: '0 0 1.25rem' }}>
           Sign in with the admin email and password configured for this desk.
         </p>
 
@@ -105,7 +107,7 @@ export default function AdminLoginPage() {
                   transform: 'translateY(-50%)',
                   background: 'none',
                   border: 'none',
-                  color: '#94a3b8',
+                  color: 'var(--adm-text-muted)',
                   cursor: 'pointer',
                   fontSize: '0.75rem',
                 }}
@@ -135,7 +137,7 @@ export default function AdminLoginPage() {
           <Link
             href="/"
             style={{
-              color: '#94a3b8',
+              color: 'var(--adm-text-muted)',
               fontSize: '0.78rem',
               textDecoration: 'none',
               display: 'inline-flex',

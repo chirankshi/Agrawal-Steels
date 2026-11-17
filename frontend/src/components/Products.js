@@ -48,7 +48,7 @@ export default function Products({ onSelectProduct, isHome = true }) {
         {/* Browse by catalogue category (links into the full directory) */}
         <div className="products-filter-pills" id="productFilterBar">
           {tree.map((c) => (
-            <Link key={c.slug} href={`/products?category=${c.slug}`} className="filter-pill-btn" title={`${c.subcategories.length} sub-categories`}>
+            <Link key={c.slug} href={`/products/${c.slug}`} className="filter-pill-btn" title={`${c.subcategories.length} sub-categories`}>
               {SHORT_NAMES[c.slug] || c.name}
             </Link>
           ))}

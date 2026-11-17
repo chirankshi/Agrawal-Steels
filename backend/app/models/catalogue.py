@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from sqlalchemy import Boolean, Column, DateTime, Integer, String, Text, UniqueConstraint
 
 from app.database import Base
-from app.models.types import StringList
+from app.models.types import JSONData, StringList
 
 
 def _now():
@@ -26,6 +26,7 @@ class Category(Base):
     description = Column(Text, nullable=True)
     partners = Column(StringList, nullable=True)
     capacity = Column(String(200), nullable=True)
+    tagline = Column(Text, nullable=True)
     catalogue_page = Column(Integer, nullable=True)
     image_url = Column(Text, nullable=True)
     sort_order = Column(Integer, default=100, nullable=False)
@@ -44,6 +45,7 @@ class Subcategory(Base):
     name = Column(String(150), nullable=False)
     description = Column(Text, nullable=True)
     items = Column(StringList, nullable=True)  # catalogue line items under this sub-category
+    item_details = Column(JSONData, nullable=True)  # {item name: {description, image_url}}
     catalogue_page = Column(Integer, nullable=True)
     image_url = Column(Text, nullable=True)
     sort_order = Column(Integer, default=100, nullable=False)

@@ -58,7 +58,7 @@ export default function AdminShell({ children }) {
   if (!mounted) {
     return (
       <div className="admin-body" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: '#f59e0b', fontSize: '0.9rem', fontWeight: 700 }}>Initializing Aggarwal Steels Command Desk...</div>
+        <div style={{ color: 'var(--adm-amber)', fontSize: '0.9rem', fontWeight: 700 }}>Initializing Aggarwal Steels Command Desk...</div>
       </div>
     );
   }
@@ -145,7 +145,9 @@ export default function AdminShell({ children }) {
         {/* Sidebar */}
         <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
           <div className="admin-brand">
-            <div className="admin-brand-logo">AS</div>
+            <div className="admin-brand-logo">
+              <img src="/images/brand/aggarwal_logo_circle.png" alt="Aggarwal Steels" />
+            </div>
             <div className="admin-brand-info">
               <h1>AGGARWAL STEELS</h1>
               <span>Command Desk</span>

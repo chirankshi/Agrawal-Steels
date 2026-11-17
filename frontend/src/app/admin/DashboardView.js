@@ -38,7 +38,7 @@ export default function AdminDashboard() {
   const cards = [
     { label: 'New enquiries (pending)', value: stats ? stats.pending : '…', href: '/admin/enquiries', accent: '#f59e0b' },
     { label: 'Total enquiries', value: stats ? stats.total : '…', href: '/admin/enquiries', accent: '#38bdf8' },
-    { label: 'Products live on site', value: productCount ?? '…', href: '/admin/products', accent: '#10b981' },
+    { label: 'Products live on site', value: productCount ?? '…', href: '/admin/products', accent: 'var(--adm-emerald)' },
     { label: 'Categories / sub-categories', value: catalogueCounts ? `${catalogueCounts.categories} / ${catalogueCounts.subcategories}` : '…', href: '/admin/catalogue', accent: '#a78bfa' },
     { label: 'Machines on manufacturing page', value: catalogueCounts ? catalogueCounts.machines : '…', href: '/admin/machines', accent: '#fb7185' },
   ];
@@ -81,16 +81,16 @@ export default function AdminDashboard() {
             </thead>
             <tbody>
               {recent.length === 0 ? (
-                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '2rem', color: '#94a3b8' }}>{stats ? 'No enquiries yet.' : 'Loading...'}</td></tr>
+                <tr><td colSpan="6" style={{ textAlign: 'center', padding: '2rem', color: 'var(--adm-text-muted)' }}>{stats ? 'No enquiries yet.' : 'Loading...'}</td></tr>
               ) : (
                 recent.map((e) => (
                   <tr key={e.id}>
-                    <td><strong style={{ color: '#f8fafc' }}>{e.name}</strong>{e.email && <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>{e.email}</div>}</td>
+                    <td><strong style={{ color: 'var(--adm-text-main)' }}>{e.name}</strong>{e.email && <div style={{ fontSize: '0.72rem', color: 'var(--adm-text-muted)' }}>{e.email}</div>}</td>
                     <td><a href={`tel:${e.phone}`} style={{ color: '#38bdf8' }}>{e.phone}</a></td>
-                    <td style={{ fontSize: '0.8rem', color: '#cbd5e1' }}>{e.product}</td>
-                    <td style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{SOURCE_LABELS[e.source] || e.source || '—'}</td>
+                    <td style={{ fontSize: '0.8rem', color: 'var(--adm-text-silver)' }}>{e.product}</td>
+                    <td style={{ fontSize: '0.75rem', color: 'var(--adm-text-muted)' }}>{SOURCE_LABELS[e.source] || e.source || '—'}</td>
                     <td><span className={`status-badge badge-${e.status || 'pending'}`}>{(e.status || 'pending').replace('_', ' ')}</span></td>
-                    <td style={{ fontSize: '0.75rem', color: '#94a3b8' }}>{timeAgo(e.created_at)}</td>
+                    <td style={{ fontSize: '0.75rem', color: 'var(--adm-text-muted)' }}>{timeAgo(e.created_at)}</td>
                   </tr>
                 ))
               )}

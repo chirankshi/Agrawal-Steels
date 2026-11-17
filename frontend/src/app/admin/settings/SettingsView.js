@@ -46,7 +46,7 @@ export default function AdminSettingsPage() {
         <div className="panel-card-header">
           <div>
             <h3 className="panel-card-title">Site Settings</h3>
-            <p style={{ margin: '4px 0 0 0', fontSize: '0.75rem', color: '#94a3b8' }}>
+            <p style={{ margin: '4px 0 0 0', fontSize: '0.75rem', color: 'var(--adm-text-muted)' }}>
               Announcement bar, phone numbers, emails and working hours shown across the website.
             </p>
           </div>
@@ -58,14 +58,14 @@ export default function AdminSettingsPage() {
         <form onSubmit={handleSave}>
           <div className="settings-grid">
             {notice && (
-              <div className="span-2" style={{ background: notice.startsWith('Saved.') ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: notice.startsWith('Saved.') ? '#10b981' : '#fbbf24', padding: '10px 14px', borderRadius: 8, fontSize: '0.82rem', fontWeight: 600 }}>
+              <div className="span-2" style={{ background: notice.startsWith('Saved.') ? 'rgba(16,185,129,0.15)' : 'rgba(245,158,11,0.15)', color: notice.startsWith('Saved.') ? 'var(--adm-emerald)' : 'var(--adm-amber)', padding: '10px 14px', borderRadius: 8, fontSize: '0.82rem', fontWeight: 600 }}>
                 {notice}
               </div>
             )}
 
             {SETTING_FIELDS.map((f) =>
               f.type === 'checkbox' ? (
-                <label key={f.key} className="span-2" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.88rem', color: '#f8fafc', cursor: 'pointer' }}>
+                <label key={f.key} className="span-2" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.88rem', color: 'var(--adm-text-main)', cursor: 'pointer' }}>
                   <input type="checkbox" checked={Boolean(settings[f.key])} onChange={(e) => set(f.key, e.target.checked)} style={{ width: 18, height: 18 }} />
                   {f.label}
                 </label>
@@ -81,7 +81,7 @@ export default function AdminSettingsPage() {
               <button type="submit" className="btn-primary-adm" disabled={saving}>{saving ? 'Saving...' : 'Save Settings'}</button>
               <button type="button" className="btn-secondary-adm" onClick={handleReset}>Restore Defaults</button>
             </div>
-            <p className="span-2" style={{ fontSize: '0.72rem', color: '#64748b', margin: 0 }}>
+            <p className="span-2" style={{ fontSize: '0.72rem', color: 'var(--adm-text-dim)', margin: 0 }}>
               Where these appear: announcement bar (top of every page), footer, home contact section, contact page, and the Instant Quote popup.
             </p>
           </div>

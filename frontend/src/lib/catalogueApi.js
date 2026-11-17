@@ -6,6 +6,7 @@
  */
 import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
+import { CATEGORY_DESCRIPTION_SEED, ITEM_DETAILS_SEED, SUBCATEGORY_DESCRIPTION_SEED, TAGLINE_SEED, parseDetails } from './segments';
 import {
   CATEGORY_SEED,
   SUBCATEGORY_SEED,
@@ -22,8 +23,11 @@ const CACHE_TTL_MS = 30_000;
 const toList = (v) => (Array.isArray(v) ? v.filter(Boolean) : typeof v === 'string' && v ? v.split(',').map((s) => s.trim()).filter(Boolean) : []);
 const bySort = (a, b) => (Number(a.sort_order) || 0) - (Number(b.sort_order) || 0) || (Number(a.id) || 0) - (Number(b.id) || 0);
 
-const normCategory = (c) => ({ ...c, partners: toList(c.partners), sort_order: Number(c.sort_order) || 0, is_active: c.is_active !== false });
-const normSubcategory = (s) => ({ ...s, items: toList(s.items), sort_order: Number(s.sort_order) || 0, is_active: s.is_active !== false });
+const normCategory = (c) => ({ ...c, tagline: c.tagline ?? TAGLINE_SEED[c.slug] ?? '', description: c.description || CATEGORY_DESCRIPTION_SEED[c.slug] || '', partners: toList(c.partners), sort_order: Number(c.sort_order) || 0, is_active: c.is_active !== false });
+const normSubcategory = (s) => {
+  const details = parseDetails(s.item_details);
+  return { ...s, description: s.description || SUBCATEGORY_DESCRIPTION_SEED[s.slug] || '', items: toList(s.items), item_details: Object.keys(details).length || 'item_details' in s ? details : ITEM_DETAILS_SEED[s.slug] || {}, sort_order: Number(s.sort_order) || 0, is_active: s.is_active !== false };
+};
 const normMachine = (m) => ({ ...m, stages: toList(m.stages), qty: m.qty === '' || m.qty == null ? null : Number(m.qty), sort_order: Number(m.sort_order) || 0, is_active: m.is_active !== false });
 
 /** Bundled seed in the flat-row shape (ids are the slugs). */

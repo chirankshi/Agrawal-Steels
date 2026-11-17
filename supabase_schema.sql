@@ -300,3 +300,7 @@ UPDATE public.products p SET category = c.name
 UPDATE public.products p SET subcategory_slug = s.slug
   FROM public.subcategories s
   WHERE p.subcategory_slug IS NULL AND s.category_slug = p.category_slug AND lower(s.name) = lower(p.subcategory);
+
+-- 5b. Segment pages: per-item description/image and a category tagline
+ALTER TABLE public.subcategories ADD COLUMN IF NOT EXISTS item_details JSONB DEFAULT '{}'::jsonb;
+ALTER TABLE public.categories ADD COLUMN IF NOT EXISTS tagline TEXT;

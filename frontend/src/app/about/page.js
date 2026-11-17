@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import AnnouncementBar from '../../components/AnnouncementBar';
 import Footer from '../../components/Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
@@ -18,7 +17,6 @@ export default function AboutPage() {
   return (
     <>
       <ScrollAnimations />
-      <AnnouncementBar />
       <Navbar />
 
       <main className="dedicated-page-container">

@@ -2,7 +2,6 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '../../components/Navbar';
-import AnnouncementBar from '../../components/AnnouncementBar';
 import Footer from '../../components/Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
@@ -373,7 +372,6 @@ export default function ContactPage() {
   return (
     <>
       <ScrollAnimations />
-      <AnnouncementBar />
       <Navbar />
       <Suspense fallback={<div style={{ padding: '100px 0', textAlign: 'center' }}>Loading Contact Desk...</div>}>
         <ContactContent />

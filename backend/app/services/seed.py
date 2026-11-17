@@ -48,6 +48,8 @@ def _ensure_product_columns():
             "catalogue_page": "INTEGER",
         },
         "enquiries": {"notes": "TEXT"},
+        "subcategories": {"item_details": "TEXT"},
+        "categories": {"tagline": "TEXT"},
     }
     with engine.begin() as conn:
         for table, columns in wanted.items():

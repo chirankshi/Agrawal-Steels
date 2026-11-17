@@ -76,7 +76,7 @@ export default function AdminProductsPage() {
   const paged = usePaged(products, 10);
   const statCards = [
     { key: 'all', label: 'All products', value: inCategory.length, accent: '#38bdf8' },
-    { key: 'live', label: 'Live on site', value: inCategory.filter(STATUS_MATCH.live).length, accent: '#10b981' },
+    { key: 'live', label: 'Live on site', value: inCategory.filter(STATUS_MATCH.live).length, accent: 'var(--adm-emerald)' },
     { key: 'home', label: 'On home page', value: inCategory.filter(STATUS_MATCH.home).length, accent: '#a78bfa' },
     { key: 'hidden', label: 'Hidden', value: inCategory.filter(STATUS_MATCH.hidden).length, accent: '#f59e0b' },
     { key: 'nophoto', label: 'Without own photo', value: inCategory.filter(STATUS_MATCH.nophoto).length, accent: '#fb7185' },
@@ -197,7 +197,7 @@ export default function AdminProductsPage() {
         <div className="panel-card-header">
           <div>
             <h3 className="panel-card-title">Product Catalogue &amp; Images</h3>
-            <p style={{ margin: '4px 0 0 0', fontSize: '0.75rem', color: '#94a3b8' }}>
+            <p style={{ margin: '4px 0 0 0', fontSize: '0.75rem', color: 'var(--adm-text-muted)' }}>
               Add products, assign categories, upload photos and choose what appears on the home page. Changes go live on the website.
             </p>
           </div>
@@ -242,7 +242,7 @@ export default function AdminProductsPage() {
             </thead>
             <tbody>
               {products.length === 0 ? (
-                <tr><td colSpan="8" style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8' }}>{loading ? 'Loading catalogue products...' : 'No products found.'}</td></tr>
+                <tr><td colSpan="8" style={{ textAlign: 'center', padding: '3rem', color: 'var(--adm-text-muted)' }}>{loading ? 'Loading catalogue products...' : 'No products found.'}</td></tr>
               ) : (
                 paged.slice.map((prod) => (
                   <tr key={prod.id}>
@@ -251,19 +251,19 @@ export default function AdminProductsPage() {
                     </td>
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                        <strong style={{ color: '#f8fafc' }} className="cell-nowrap" title={prod.name}>{prod.name}</strong>
-                        {prod.badge && <span style={{ fontSize: '0.65rem', padding: '1px 6px', borderRadius: '3px', background: 'rgba(245, 158, 11, 0.15)', color: '#f59e0b', fontWeight: 700 }}>{prod.badge}</span>}
+                        <strong style={{ color: 'var(--adm-text-main)' }} className="cell-nowrap" title={prod.name}>{prod.name}</strong>
+                        {prod.badge && <span style={{ fontSize: '0.65rem', padding: '1px 6px', borderRadius: '3px', background: 'rgba(245, 158, 11, 0.15)', color: 'var(--adm-amber)', fontWeight: 700 }}>{prod.badge}</span>}
                       </div>
-                      <code style={{ fontSize: '0.7rem', color: '#64748b' }}>/{prod.slug}</code>
-                      {prod.subcategory && <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>{prod.subcategory}</div>}
+                      <code style={{ fontSize: '0.7rem', color: 'var(--adm-text-dim)' }}>/{prod.slug}</code>
+                      {prod.subcategory && <div style={{ fontSize: '0.72rem', color: 'var(--adm-text-muted)' }}>{prod.subcategory}</div>}
                     </td>
                     <td><span className="badge-category">{resolveProductPlacement(prod, tree).category?.name || prod.category}</span></td>
-                    <td style={{ color: '#cbd5e1' }}>
+                    <td style={{ color: 'var(--adm-text-silver)' }}>
                       <div className="cell-nowrap" title={prod.grade || ''}>{prod.grade || '—'}</div>
-                      <div className="cell-nowrap" style={{ color: '#94a3b8' }} title={prod.specs || ''}>{prod.specs || ''}</div>
+                      <div className="cell-nowrap" style={{ color: 'var(--adm-text-muted)' }} title={prod.specs || ''}>{prod.specs || ''}</div>
                     </td>
-                    <td style={{ color: '#cbd5e1', fontSize: '0.8rem' }}>{prod.sort_order ?? '—'}</td>
-                    <td>{prod.show_on_home ? <span className="status-badge badge-quoted">Home</span> : <span style={{ color: '#64748b', fontSize: '0.75rem' }}>—</span>}</td>
+                    <td style={{ color: 'var(--adm-text-silver)', fontSize: '0.8rem' }}>{prod.sort_order ?? '—'}</td>
+                    <td>{prod.show_on_home ? <span className="status-badge badge-quoted">Home</span> : <span style={{ color: 'var(--adm-text-dim)', fontSize: '0.75rem' }}>—</span>}</td>
                     <td>
                       <button type="button" onClick={() => handleToggleActive(prod.id)} className={`status-badge ${prod.is_active ? 'badge-closed' : 'badge-pending'}`} style={{ border: 'none', cursor: 'pointer', outline: 'none' }} title="Click to toggle visibility on the website">
                         {prod.is_active ? 'Live' : 'Hidden'}
@@ -301,27 +301,27 @@ export default function AdminProductsPage() {
                 {/* Images */}
                 <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '16px', alignItems: 'start' }}>
                   <div>
-                    <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', display: 'block', marginBottom: 6 }}>MAIN PRODUCT PHOTO</label>
+                    <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--adm-text-muted)', display: 'block', marginBottom: 6 }}>MAIN PRODUCT PHOTO</label>
                     <div
                       onClick={() => !uploading && mainFileRef.current?.click()}
                       onDragOver={(e) => e.preventDefault()}
                       onDrop={(e) => { e.preventDefault(); handleImageFile(e.dataTransfer.files?.[0], 'main'); }}
-                      style={{ width: 220, height: 150, borderRadius: 10, border: '2px dashed var(--adm-border)', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', overflow: 'hidden', position: 'relative' }}
+                      style={{ width: 220, height: 150, borderRadius: 10, border: '2px dashed var(--adm-border)', background: 'var(--adm-bg-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', overflow: 'hidden', position: 'relative' }}
                       title="Click or drop an image"
                     >
                       {formData.image_url ? (
                         <img src={formData.image_url} alt="Main" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       ) : (
-                        <span style={{ color: '#64748b', fontSize: '0.75rem', textAlign: 'center', padding: 10 }}>Click or drop a photo<br />JPG / PNG, auto-resized</span>
+                        <span style={{ color: 'var(--adm-text-dim)', fontSize: '0.75rem', textAlign: 'center', padding: 10 }}>Click or drop a photo<br />JPG / PNG, auto-resized</span>
                       )}
-                      {uploading && <span style={{ position: 'absolute', inset: 0, background: 'rgba(15,23,42,0.75)', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 700 }}>Uploading...</span>}
+                      {uploading && <span style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.82)', color: 'var(--adm-amber)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 700 }}>Uploading...</span>}
                     </div>
                     <input ref={mainFileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => { handleImageFile(e.target.files?.[0], 'main'); e.target.value = ''; }} />
                     <input type="text" placeholder="...or paste an image URL" value={formData.image_url} onChange={(e) => set({ image_url: e.target.value })} style={{ marginTop: 8, width: '100%', fontSize: '0.72rem' }} />
                   </div>
 
                   <div>
-                    <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', display: 'block', marginBottom: 6 }}>GALLERY (OPTIONAL, UP TO 6)</label>
+                    <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--adm-text-muted)', display: 'block', marginBottom: 6 }}>GALLERY (OPTIONAL, UP TO 6)</label>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                       {formData.gallery.map((url, i) => (
                         <div key={i} style={{ position: 'relative', width: 84, height: 60, borderRadius: 6, overflow: 'hidden', border: '1px solid var(--adm-border)' }}>
@@ -330,11 +330,11 @@ export default function AdminProductsPage() {
                         </div>
                       ))}
                       {formData.gallery.length < 6 && (
-                        <button type="button" onClick={() => galleryFileRef.current?.click()} disabled={uploading} style={{ width: 84, height: 60, borderRadius: 6, border: '2px dashed var(--adm-border)', background: 'transparent', color: '#94a3b8', cursor: 'pointer', fontSize: '0.7rem' }}>+ Add</button>
+                        <button type="button" onClick={() => galleryFileRef.current?.click()} disabled={uploading} style={{ width: 84, height: 60, borderRadius: 6, border: '2px dashed var(--adm-border)', background: 'transparent', color: 'var(--adm-text-muted)', cursor: 'pointer', fontSize: '0.7rem' }}>+ Add</button>
                       )}
                       <input ref={galleryFileRef} type="file" accept="image/*" multiple style={{ display: 'none' }} onChange={async (e) => { for (const f of Array.from(e.target.files || [])) await handleImageFile(f, 'gallery'); e.target.value = ''; }} />
                     </div>
-                    {notice && <p style={{ marginTop: 10, fontSize: '0.72rem', color: notice.includes('failed') || notice.includes('only') ? '#fbbf24' : '#10b981' }}>{notice}</p>}
+                    {notice && <p style={{ marginTop: 10, fontSize: '0.72rem', color: notice.includes('failed') || notice.includes('only') ? 'var(--adm-amber)' : 'var(--adm-emerald)' }}>{notice}</p>}
                   </div>
                 </div>
 
@@ -355,7 +355,7 @@ export default function AdminProductsPage() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                   <div className="form-group-adm">
-                    <label>Category * <small style={{ color: '#64748b', fontWeight: 400 }}>(from the catalogue)</small></label>
+                    <label>Category * <small style={{ color: 'var(--adm-text-dim)', fontWeight: 400 }}>(from the catalogue)</small></label>
                     <select value={formData.category_slug} onChange={(e) => chooseCategory(e.target.value)} required>
                       <option value="" disabled>Select a category…</option>
                       {tree.map((c) => <option key={c.slug} value={c.slug}>{c.name}</option>)}
@@ -368,7 +368,7 @@ export default function AdminProductsPage() {
                       {(formCategory?.subcategories || []).map((sc) => <option key={sc.slug} value={sc.slug}>{sc.name}</option>)}
                     </select>
                     {formSubcategory && formSubcategory.items.length > 0 && (
-                      <small style={{ display: 'block', marginTop: 4, fontSize: '0.68rem', color: '#64748b' }}>
+                      <small style={{ display: 'block', marginTop: 4, fontSize: '0.68rem', color: 'var(--adm-text-dim)' }}>
                         Catalogue items: {formSubcategory.items.slice(0, 6).join(', ')}{formSubcategory.items.length > 6 ? '…' : ''}
                       </small>
                     )}
@@ -399,11 +399,11 @@ export default function AdminProductsPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginTop: 4 }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.85rem', color: '#f8fafc', cursor: 'pointer' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.85rem', color: 'var(--adm-text-main)', cursor: 'pointer' }}>
                     <input type="checkbox" checked={formData.show_on_home} onChange={(e) => set({ show_on_home: e.target.checked })} style={{ width: 18, height: 18 }} />
                     Show in home-page best sellers
                   </label>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.85rem', color: '#f8fafc', cursor: 'pointer' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.85rem', color: 'var(--adm-text-main)', cursor: 'pointer' }}>
                     <input type="checkbox" checked={formData.is_active} onChange={(e) => set({ is_active: e.target.checked })} style={{ width: 18, height: 18 }} />
                     Live on website
                   </label>

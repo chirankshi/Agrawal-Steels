@@ -69,6 +69,10 @@ export default function Navbar() {
             height={64}
             className="brand-logo-img"
           />
+          <span className="brand-text">
+            <span className="brand-name">Aggarwal Steels</span>
+            <span className="brand-sub">Majestic AR Technology</span>
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
