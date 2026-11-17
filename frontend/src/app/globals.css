@@ -6815,3 +6815,23 @@ iframe {
 @media (max-width: 440px) {
   .catalogue-items-grid { grid-template-columns: 1fr; }
 }
+
+/* Footer admin login links */
+.footer-admin-link { color: var(--accent-amber) !important; font-weight: 700; }
+.footer-admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-amber);
+  color: var(--accent-amber) !important;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+  vertical-align: middle;
+}
+.footer-admin-btn:hover { background: var(--accent-amber); color: #0f172a !important; }

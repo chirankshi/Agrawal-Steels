@@ -77,6 +77,7 @@ export default function Footer() {
                 <li><Link href="/manufacturing">CNC Multi-Axis Hydraulic Press Brakes</Link></li>
                 <li><Link href="/products#ss-commercial-kitchen">Commercial Stainless Steel Fabrication</Link></li>
                 <li><Link href="/clients">Enterprise Clients &amp; Projects &rarr;</Link></li>
+                <li><Link href="/admin/login" className="footer-admin-link">Admin Login &rarr;</Link></li>
               </ul>
             </div>
 
@@ -129,7 +130,10 @@ export default function Footer() {
           <p>© 2026 Aggarwal Steels &amp; Majestic AR Technology Pvt. Ltd. All rights reserved.</p>
           <p>
             Where Innovation Meets Precision &bull; A Legacy of Strength &bull;{' '}
-            <Link href="/admin/login" className="footer-admin-btn">Staff Portal</Link>
+            <Link href="/admin/login" className="footer-admin-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+              Admin Login
+            </Link>
           </p>
         </div>
       </div>
