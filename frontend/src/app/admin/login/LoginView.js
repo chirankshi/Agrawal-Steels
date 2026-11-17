@@ -77,7 +77,7 @@ export default function AdminLoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@aggarwalsteel.com"
+              placeholder="Enter admin email"
               autoComplete="username"
             />
           </div>
