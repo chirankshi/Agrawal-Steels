@@ -26,7 +26,7 @@ export default function About() {
               Established in <strong>2015</strong>, <strong>Aggarwal Steels</strong> alongside manufacturing sister arm <strong>Majestic AR Technology Pvt. Ltd.</strong> has grown into an integrated steel supply and industrial fabrication powerhouse.
             </p>
             <p className="about-sub">
-              With over <strong>11+ years of trading experience</strong> and <strong>4+ years of advanced manufacturing</strong>, we operate <strong>2 manufacturing plants</strong> and <strong>3 trading units</strong> with a consolidated group turnover exceeding <strong>₹200+ Crore</strong> and a 250+ dedicated workforce. From primary steel distribution (SAIL, TATA, JSPL, AMNS) to heavy warehouse racking and automated powder-coating lines, we power India's mega infrastructure and manufacturing sectors.
+              With over <strong>11+ years of trading experience</strong> and <strong>4+ years of advanced manufacturing</strong>, we operate <strong>2 manufacturing plants</strong> and <strong>3 trading units</strong> with a consolidated group turnover of <strong>₹230 Crore (FY 2025-26)</strong> and a 250+ dedicated workforce. From primary steel distribution (SAIL, TATA, JSPL, AMNS) to heavy warehouse racking and automated powder-coating lines, we power India's mega infrastructure and manufacturing sectors.
             </p>
 
             {/* Core Values Bento Grid */}
@@ -84,7 +84,7 @@ export default function About() {
                   height={50}
                 />
                 <div className="founder-meta">
-                  <span>ESTABLISHED 2015 &bull; ₹200+ CR RUN-RATE</span>
+                  <span>ESTABLISHED 2015 &bull; ₹230 CR TURNOVER FY 2025-26</span>
                 </div>
               </div>
             </div>

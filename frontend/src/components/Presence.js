@@ -1,24 +1,8 @@
 import Link from 'next/link';
-import { IconMapPin, IconGlobe, IconPhone, IconMail, IconArrowRight, IconShieldCheck } from './Icons';
+import { IconMapPin, IconGlobe, IconPhone, IconMail, IconArrowRight } from './Icons';
+import { LOCATIONS } from '../data/company';
 
 export default function Presence() {
-  const locations = [
-    {
-      type: 'HEAD OFFICE',
-      name: 'Corporate Headquarters & Manufacturing',
-      address: 'Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi 301019, Rajasthan',
-      badge: 'Head Office',
-      iconColor: '#f59e0b',
-    },
-    {
-      type: 'UNIT 02',
-      name: 'Heavy Manufacturing & Powder Coating Facility',
-      address: 'G1-385, RIICO Industrial Area, Bhiwadi 301019, Rajasthan',
-      badge: 'Manufacturing Unit 02',
-      iconColor: '#00e5ff',
-    },
-  ];
-
   const contactPersons = [
     {
       name: 'Mr. Aakash Goyal',
@@ -58,11 +42,11 @@ export default function Presence() {
             Our Locations &amp; <span className="text-gradient">Key Leadership</span>
           </h2>
           <p className="section-desc text-gray">
-            Operating our Head Office and high-capacity manufacturing facilities in RIICO Industrial Area, Bhiwadi, Rajasthan.
+            Head Office and two manufacturing plants in RIICO Industrial Area, Bhiwadi, plus Majestic AR Technology works at IMT Manesar and Bawal, Haryana.
           </p>
         </div>
 
-        {/* 2 Official Location Cards from Catalogue */}
+        {/* Official Location Cards from the 2026 Catalogue */}
         <div
           style={{
             display: 'grid',
@@ -71,16 +55,16 @@ export default function Presence() {
             marginBottom: '2rem',
           }}
         >
-          {locations.map((loc, idx) => (
+          {LOCATIONS.map((loc, idx) => (
             <div
               key={idx}
               className="hub-modern-card"
               style={{
                 borderLeft: `4px solid ${loc.iconColor}`,
-                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.7))',
+                background: 'var(--bg-card)',
                 borderRadius: '14px',
                 padding: '1.4rem',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                border: '1px solid var(--border-subtle)',
                 display: 'flex',
                 gap: '16px',
                 alignItems: 'flex-start',
@@ -115,8 +99,8 @@ export default function Presence() {
                   <span
                     style={{
                       fontSize: '0.72rem',
-                      background: 'rgba(255, 255, 255, 0.08)',
-                      color: '#cbd5e1',
+                      background: 'var(--bg-elevated)',
+                      color: 'var(--text-silver)',
                       padding: '2px 8px',
                       borderRadius: '4px',
                       fontWeight: 600,
@@ -125,10 +109,10 @@ export default function Presence() {
                     {loc.badge}
                   </span>
                 </div>
-                <h4 style={{ color: '#ffffff', fontSize: '1.05rem', margin: '0 0 6px 0', fontWeight: 700 }}>
+                <h4 style={{ color: 'var(--text-white)', fontSize: '1.05rem', margin: '0 0 6px 0', fontWeight: 700 }}>
                   {loc.name}
                 </h4>
-                <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: '1.5', margin: 0 }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0 }}>
                   {loc.address}
                 </p>
               </div>
@@ -139,7 +123,7 @@ export default function Presence() {
         {/* Key Contact Persons from Catalogue Page 32 */}
         <div
           style={{
-            background: 'rgba(15, 23, 42, 0.6)',
+            background: 'var(--bg-card)',
             border: '1px solid rgba(245, 158, 11, 0.2)',
             borderRadius: '14px',
             padding: '1.5rem',
@@ -147,8 +131,8 @@ export default function Presence() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1rem' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#f59e0b' }}></span>
-            <h4 style={{ color: '#f59e0b', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1.2px', margin: 0, fontWeight: 700 }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-amber)' }}></span>
+            <h4 style={{ color: 'var(--accent-amber)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1.2px', margin: 0, fontWeight: 700 }}>
               Key Contact Persons &bull; Direct Connect
             </h4>
           </div>
@@ -164,25 +148,25 @@ export default function Presence() {
               <div
                 key={i}
                 style={{
-                  background: 'rgba(30, 41, 59, 0.6)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-subtle)',
                   borderRadius: '10px',
                   padding: '1.1rem 1.3rem',
                 }}
               >
-                <div style={{ color: '#ffffff', fontWeight: 800, fontSize: '1.05rem' }}>{person.name}</div>
-                <div style={{ color: '#94a3b8', fontSize: '0.8rem', marginTop: '2px', marginBottom: '10px' }}>{person.role}</div>
+                <div style={{ color: 'var(--text-white)', fontWeight: 800, fontSize: '1.05rem' }}>{person.name}</div>
+                <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '2px', marginBottom: '10px' }}>{person.role}</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.88rem' }}>
                   <a
                     href={`tel:${person.phone.replace(/[^0-9+]/g, '')}`}
-                    style={{ color: '#00e5ff', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600 }}
+                    style={{ color: 'var(--accent-cyan)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600 }}
                   >
                     <IconPhone size={14} />
                     <span>{person.phone}</span>
                   </a>
                   <a
                     href={`mailto:${person.email}`}
-                    style={{ color: '#cbd5e1', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    style={{ color: 'var(--text-silver)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}
                   >
                     <IconMail size={14} />
                     <span>{person.email}</span>
@@ -195,7 +179,7 @@ export default function Presence() {
 
         {/* National Presence Banner (Catalogue Page 31: 25+ Cities) */}
         <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-          <h4 style={{ color: '#94a3b8', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px' }}>
+          <h4 style={{ color: 'var(--text-muted)', fontSize: '0.82rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px' }}>
             Supply Reach Across India (25+ Cities &bull; 100+ Satisfied Clients):
           </h4>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
@@ -203,11 +187,11 @@ export default function Presence() {
               <span
                 key={i}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  background: 'var(--bg-card)',
+                  border: '1px solid var(--border-subtle)',
                   borderRadius: '20px',
                   padding: '5px 14px',
-                  color: '#e2e8f0',
+                  color: 'var(--text-silver)',
                   fontSize: '0.82rem',
                   fontWeight: 600,
                 }}
@@ -221,7 +205,7 @@ export default function Presence() {
                 border: '1px solid rgba(245, 158, 11, 0.3)',
                 borderRadius: '20px',
                 padding: '5px 14px',
-                color: '#f59e0b',
+                color: 'var(--accent-amber)',
                 fontSize: '0.82rem',
                 fontWeight: 700,
               }}

@@ -2,12 +2,12 @@
 // Connects to Supabase Cloud PostgreSQL with automatic offline/client-side storage fallback
 
 import { supabase } from './supabase.js';
+import { SEED_PRODUCTS, normalizeProduct } from './productsApi';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const STORAGE_KEYS = {
   AUTH: 'aggarwal_admin_auth',
   ENQUIRIES: 'aggarwal_admin_enquiries',
-  ORDERS: 'aggarwal_admin_orders',
   PRODUCTS: 'aggarwal_admin_products',
   SETTINGS: 'aggarwal_admin_settings',
 };
@@ -76,151 +76,22 @@ const INITIAL_ENQUIRIES = [
   }
 ];
 
-const INITIAL_ORDERS = [
-  {
-    id: 1,
-    tracking_number: "AS-2026-8841",
-    client_name: "Larsen Infrastructure Ltd",
-    phone: "+91 98112 34567",
-    product: "MS TMT Bars Fe 550D (16mm, 20mm)",
-    quantity_metric_tons: 120.0,
-    delivery_destination: "Delhi-Meerut Expressway Package 4, Muradnagar Site",
-    stage: "In Transit",
-    estimated_delivery_date: "Tomorrow, 02:00 PM",
-    vehicle_number: "HR 38 AB 4912",
-    notes: "Dispatch from Ghaziabad stockyard. Driver contact: +91 94123 88990.",
-    created_at: new Date(Date.now() - 3600000 * 8).toISOString()
-  },
-  {
-    id: 2,
-    tracking_number: "AS-2026-8812",
-    client_name: "Apex Logistics Parks Pvt Ltd",
-    phone: "+91 99887 76655",
-    product: "Heavy Duty Pallet Racking Columns & Beams",
-    quantity_metric_tons: 38.5,
-    delivery_destination: "Plot 44, Sector 8, IMT Manesar, Gurugram",
-    stage: "Ready for Dispatch",
-    estimated_delivery_date: "03 Nov 2026, 11:00 AM",
-    vehicle_number: "HR 55 Y 2041",
-    notes: "Pre-dispatch QC check complete. Mill test certificates attached with bill of lading.",
-    created_at: new Date(Date.now() - 3600000 * 24).toISOString()
-  },
-  {
-    id: 3,
-    tracking_number: "AS-2026-8790",
-    client_name: "DLF CyberCity Project Works",
-    phone: "+91 98711 00223",
-    product: "ISMC 200 & MS Equal Angles 100x100x10",
-    quantity_metric_tons: 65.0,
-    delivery_destination: "DLF Phase 5, Golf Course Ext Road, Gurugram",
-    stage: "Processing at Stockyard / Mill",
-    estimated_delivery_date: "05 Nov 2026, 06:00 PM",
-    vehicle_number: "Vehicle unassigned",
-    notes: "SAIL rolling section batch #4409. Cutting to 6m custom lengths in progress.",
-    created_at: new Date(Date.now() - 3600000 * 48).toISOString()
-  },
-  {
-    id: 4,
-    tracking_number: "AS-2026-8654",
-    client_name: "Bhiwadi Pre-Engineered Buildings Ltd",
-    phone: "+91 97123 45678",
-    product: "IS 2062 E250 HR Steel Plates (16mm & 20mm)",
-    quantity_metric_tons: 85.0,
-    delivery_destination: "RIICO Industrial Area, Phase 3, Bhiwadi",
-    stage: "Delivered",
-    estimated_delivery_date: "Delivered on 30 Oct 2026",
-    vehicle_number: "RJ 02 GA 3319",
-    notes: "Safe delivery acknowledged by site engineer. MTC stamped and filed.",
-    created_at: new Date(Date.now() - 3600000 * 96).toISOString()
-  }
-];
+const INITIAL_PRODUCTS = SEED_PRODUCTS;
 
-const INITIAL_PRODUCTS = [
-  {
-    id: 1,
-    slug: "ms-tmt-bars",
-    name: "MS TMT Rebars (Fe 500D / 550D)",
-    category: "Steel Supply & Trading",
-    grade: "Fe 500D, Fe 550D (IS 1786)",
-    description: "High-ductility earthquake-resistant Thermo-Mechanically Treated rebars sourced directly from primary producers (SAIL, TATA, Jindal).",
-    specs: "Diameters: 8mm to 32mm | Length: 12 meters standard | Elongation: >16%",
-    badge: "PRIMARY MILL DIRECT",
-    image_url: "/images/product_tmt_bars.jpg",
-    tags: ["TMT", "Rebars", "Fe 550D", "Construction"],
-    estimated_price_per_ton: 54500,
-    is_active: true
-  },
-  {
-    id: 2,
-    slug: "hr-plates-coils",
-    name: "HR Plates & Coils (IS 2062)",
-    category: "Steel Supply & Trading",
-    grade: "IS 2062 E250 / E350 BR/BO",
-    description: "Hot rolled steel plates and slit coils with uniform thickness, excellent weldability, and superior tensile strength for heavy fabrication.",
-    specs: "Thickness: 2.0mm to 63mm | Width: 1250mm to 2500mm | Length: Up to 12m",
-    badge: "TEST CERTIFIED",
-    image_url: "/images/product_hr_plates.jpg",
-    tags: ["HR Plates", "Hot Rolled", "IS 2062", "Coils"],
-    estimated_price_per_ton: 56200,
-    is_active: true
-  },
-  {
-    id: 3,
-    slug: "structural-steel-beams-channels",
-    name: "Structural Steel Beams & ISMC Channels",
-    category: "Steel Supply & Trading",
-    grade: "IS 2062 Grade A/B",
-    description: "Comprehensive range of heavy structural sections including ISMB, ISMC, ISA Equal Angles, and Universal Beams for industrial projects.",
-    specs: "Beams: ISMB 100 to 600 | Channels: ISMC 75 to 400 | Angles: 25x25 to 200x200",
-    badge: "HEAVY STRUCTURAL",
-    image_url: "/images/product_structural.jpg",
-    tags: ["ISMC", "ISMB", "Structural", "Beams", "Angles"],
-    estimated_price_per_ton: 55800,
-    is_active: true
-  },
-  {
-    id: 4,
-    slug: "heavy-duty-pallet-racks",
-    name: "Heavy Duty Warehouse Pallet Racks",
-    category: "Industrial Storage & Warehousing",
-    grade: "High Tensile CRCA / Galvanized Steel",
-    description: "Engineered selective and drive-in pallet racking systems customized for multi-level warehouses with automated or forklift retrieval.",
-    specs: "Load: Up to 3,500 kg/level | Height: Up to 12 meters | Pitch adjustability: 50mm",
-    badge: "BESTSELLER",
-    image_url: "/images/product_pallet_racks.jpg",
-    tags: ["Pallet Racks", "Warehouse", "Storage", "Industrial"],
-    estimated_price_per_ton: 68000,
-    is_active: true
-  },
-  {
-    id: 5,
-    slug: "multi-tier-mezzanine-floors",
-    name: "Multi-Tier Industrial Mezzanine Floors",
-    category: "Industrial Storage & Warehousing",
-    grade: "Heavy Gauge Structural Steel",
-    description: "High-load freestanding steel mezzanine floor platforms designed to double or triple usable facility floor space without civil modifications.",
-    specs: "Load capacity: 300 to 1,500 kg/sqm | Custom column grid up to 8m x 8m",
-    badge: "CUSTOM ENGINEERED",
-    image_url: "/images/product_mezzanine.jpg",
-    tags: ["Mezzanine", "Warehouse", "Steel Platform"],
-    estimated_price_per_ton: 72000,
-    is_active: true
-  },
-  {
-    id: 6,
-    slug: "pre-engineered-buildings-peb",
-    name: "Pre-Engineered Steel Buildings (PEB)",
-    category: "Steel Structures & PEB",
-    grade: "High-Grade Structural Steel (345 MPa)",
-    description: "Turnkey pre-engineered steel buildings, industrial sheds, and clear-span warehouse superstructures designed with CAD/BIM accuracy.",
-    specs: "Clear span: Up to 60 meters | Bay spacing: 6m to 9m | Crane capacity: Up to 30T",
-    badge: "TURNKEY SOLUTION",
-    image_url: "/images/product_peb.jpg",
-    tags: ["PEB", "Industrial Sheds", "Steel Buildings"],
-    estimated_price_per_ton: 62000,
-    is_active: true
+// Helper: FastAPI backend call (returns parsed JSON, or null when offline / error)
+async function apiJson(path, options = {}) {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1${path}`, {
+      headers: { 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(4000),
+      ...options,
+    });
+    if (!res.ok) return null;
+    return res.status === 204 ? true : await res.json();
+  } catch {
+    return null;
   }
-];
+}
 
 // Helper: Local Storage wrapper
 function getLocal(key, defaultVal) {
@@ -242,6 +113,7 @@ function setLocal(key, val) {
     console.warn('Storage set failed:', e);
   }
 }
+
 
 export const adminApi = {
   // Check whether Supabase or backend is online
@@ -265,34 +137,48 @@ export const adminApi = {
   // -------------------------------------------------------------
   // AUTHENTICATION
   // -------------------------------------------------------------
-  async login(username, password) {
-    const expectedUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME || 'admin';
-    const expectedPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'AggarwalSteel@2026';
+  // Admin sign-in goes through the FastAPI backend, which checks the email +
+  // password configured in its environment (ADMIN_EMAIL / ADMIN_PASSWORD).
+  async login(email, password) {
+    const identifier = (email || '').trim();
+    if (!identifier || !password) {
+      return { success: false, message: 'Enter your email and password.' };
+    }
 
-    if (
-      (username === expectedUsername && password === expectedPassword) ||
-      (username === 'admin' && password === 'AggarwalSteel@2026') ||
-      (username === 'aakash' && password === 'AggarwalSteel@2026')
-    ) {
+    let res;
+    try {
+      // Generous timeout: a sleeping free-tier backend can take ~30-60s to wake.
+      res = await fetch(`${API_BASE}/api/v1/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: identifier, password }),
+        signal: AbortSignal.timeout(60000),
+      });
+    } catch {
+      return { success: false, message: 'Could not reach the server. Please try again in a moment.' };
+    }
+
+    let data = {};
+    try { data = await res.json(); } catch {}
+
+    if (res.ok && data.access_token) {
       const session = {
-        token: 'as_adm_token_2026_industrial',
+        token: data.access_token,
         user: {
-          username: username,
-          role: 'Super Admin',
-          desk: 'Corporate Faridabad Desk',
-          email: 'md@majesticar.com',
+          username: data.user?.username || identifier.split('@')[0],
+          email: data.user?.email || identifier,
+          role: data.user?.role || 'Super Admin',
+          desk: data.user?.desk || 'Corporate Faridabad Desk',
         },
         loginTime: Date.now(),
+        expiresAt: Date.now() + (data.expires_in || 43200) * 1000,
         mode: 'authenticated',
       };
       setLocal(STORAGE_KEYS.AUTH, session);
       return { success: true, session };
     }
 
-    return {
-      success: false,
-      message: 'Invalid credentials. Default user is admin / AggarwalSteel@2026',
-    };
+    return { success: false, message: data.detail || 'Invalid email or password.' };
   },
 
   logout() {
@@ -302,12 +188,37 @@ export const adminApi = {
   },
 
   getCurrentUser() {
-    return getLocal(STORAGE_KEYS.AUTH, null);
+    const session = getLocal(STORAGE_KEYS.AUTH, null);
+    if (session?.expiresAt && session.expiresAt < Date.now()) {
+      this.logout();
+      return null;
+    }
+    return session;
   },
 
   isAuthenticated() {
     const session = this.getCurrentUser();
     return Boolean(session && session.token);
+  },
+
+  // Re-validates the stored token with the backend. Returns the session, or
+  // null (and clears local state) when the server rejects it.
+  async refreshSession() {
+    const local = this.getCurrentUser();
+    if (!local) return null;
+    try {
+      const res = await fetch(`${API_BASE}/api/v1/auth/verify`, {
+        headers: { Authorization: `Bearer ${local.token}` },
+        signal: AbortSignal.timeout(8000),
+      });
+      if (res.status === 401) {
+        this.logout();
+        return null;
+      }
+      return local;
+    } catch {
+      return local; // server asleep / offline: keep the cached session
+    }
   },
 
   // -------------------------------------------------------------
@@ -456,265 +367,151 @@ export const adminApi = {
   },
 
   // -------------------------------------------------------------
-  // ORDERS & SHIPMENTS
+  // PRODUCTS & CATALOGUE  (Supabase -> FastAPI -> localStorage)
   // -------------------------------------------------------------
-  async getOrders(filters = {}) {
-    let list = [];
-
-    try {
-      let query = supabase.from('orders').select('*').order('created_at', { ascending: false });
-      if (filters.stage && filters.stage !== 'all') {
-        query = query.eq('stage', filters.stage);
-      }
-      if (filters.search) {
-        query = query.or(
-          `tracking_number.ilike.%${filters.search}%,client_name.ilike.%${filters.search}%,product.ilike.%${filters.search}%,vehicle_number.ilike.%${filters.search}%,delivery_destination.ilike.%${filters.search}%`
-        );
-      }
-      const { data, error } = await query;
-      if (!error && Array.isArray(data)) {
-        list = data;
-        setLocal(STORAGE_KEYS.ORDERS, list);
-        return list;
-      }
-    } catch {}
-
-    list = getLocal(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
-
-    if (filters.stage && filters.stage !== 'all') {
-      list = list.filter((i) => i.stage === filters.stage);
-    }
-    if (filters.search) {
-      const s = filters.search.toLowerCase();
-      list = list.filter(
-        (i) =>
-          i.tracking_number?.toLowerCase().includes(s) ||
-          i.client_name?.toLowerCase().includes(s) ||
-          i.product?.toLowerCase().includes(s) ||
-          i.vehicle_number?.toLowerCase().includes(s) ||
-          i.delivery_destination?.toLowerCase().includes(s)
-      );
-    }
-
-    return list.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+  _productsLocal() {
+    return getLocal(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS).map(normalizeProduct);
   },
 
-  async createOrder(orderData) {
-    const payload = {
-      tracking_number: orderData.tracking_number || `AS-2026-${Math.floor(1000 + Math.random() * 9000)}`,
-      client_name: orderData.client_name,
-      phone: orderData.phone || '+91 73000 70778',
-      product: orderData.product,
-      quantity_metric_tons: parseFloat(orderData.quantity_metric_tons || 10),
-      delivery_destination: orderData.delivery_destination,
-      stage: orderData.stage || 'RFQ Received',
-      estimated_delivery_date: orderData.estimated_delivery_date || '',
-      vehicle_number: orderData.vehicle_number || '',
-      notes: orderData.notes || '',
-    };
-
-    try {
-      const { data, error } = await supabase.from('orders').insert([payload]).select().single();
-      if (!error && data) {
-        const all = getLocal(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
-        setLocal(STORAGE_KEYS.ORDERS, [data, ...all]);
-        return data;
-      }
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
-    const newRecord = {
-      id: Date.now(),
-      ...payload,
-      created_at: new Date().toISOString(),
-    };
-    setLocal(STORAGE_KEYS.ORDERS, [newRecord, ...all]);
-    return newRecord;
-  },
-
-  async updateOrder(id, orderData) {
-    try {
-      await supabase
-        .from('orders')
-        .update({ ...orderData, updated_at: new Date().toISOString() })
-        .eq('id', id);
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
-    const updated = all.map((item) =>
-      item.id === Number(id) ? { ...item, ...orderData, updated_at: new Date().toISOString() } : item
-    );
-    setLocal(STORAGE_KEYS.ORDERS, updated);
-    return true;
-  },
-
-  async deleteOrder(id) {
-    try {
-      await supabase.from('orders').delete().eq('id', id);
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
-    const filtered = all.filter((item) => item.id !== Number(id));
-    setLocal(STORAGE_KEYS.ORDERS, filtered);
-    return true;
-  },
-
-  async getOrderStats() {
-    try {
-      const { data, error } = await supabase.from('orders').select('stage, quantity_metric_tons');
-      if (!error && Array.isArray(data)) {
-        const totalTonnage = data.reduce((acc, curr) => acc + (Number(curr.quantity_metric_tons) || 0), 0);
-        return {
-          total: data.length,
-          total_tonnage: Math.round(totalTonnage * 10) / 10,
-          in_transit: data.filter((i) => i.stage === 'In Transit').length,
-          processing: data.filter((i) => i.stage === 'Processing at Stockyard / Mill').length,
-          ready_dispatch: data.filter((i) => i.stage === 'Ready for Dispatch').length,
-          delivered: data.filter((i) => i.stage === 'Delivered').length,
-        };
-      }
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ORDERS, INITIAL_ORDERS);
-    const totalTonnage = all.reduce((acc, curr) => acc + (Number(curr.quantity_metric_tons) || 0), 0);
+  _productPayload(productData) {
+    const slug =
+      productData.slug ||
+      (productData.name || '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+    const list = (v) => (Array.isArray(v) ? v : String(v || '').split(',').map((t) => t.trim()).filter(Boolean));
     return {
-      total: all.length,
-      total_tonnage: Math.round(totalTonnage * 10) / 10,
-      in_transit: all.filter((i) => i.stage === 'In Transit').length,
-      processing: all.filter((i) => i.stage === 'Processing at Stockyard / Mill').length,
-      ready_dispatch: all.filter((i) => i.stage === 'Ready for Dispatch').length,
-      delivered: all.filter((i) => i.stage === 'Delivered').length,
+      name: productData.name,
+      slug,
+      category: productData.category || 'Primary Steel Supply & Trading',
+      category_slug: productData.category_slug || null,
+      subcategory: productData.subcategory || '',
+      subcategory_slug: productData.subcategory_slug || null,
+      tagline: productData.tagline || '',
+      grade: productData.grade || '',
+      description: productData.description || '',
+      specs: productData.specs || '',
+      sizes: productData.sizes || '',
+      dispatch: productData.dispatch || '',
+      applications: list(productData.applications),
+      badge: productData.badge || '',
+      image_url: productData.image_url || '/images/product_tmt_bars.jpg',
+      gallery: list(productData.gallery),
+      tags: list(productData.tags),
+      estimated_price_per_ton: parseFloat(productData.estimated_price_per_ton || 0) || 0,
+      sort_order: parseInt(productData.sort_order ?? 100, 10) || 0,
+      show_on_home: Boolean(productData.show_on_home),
+      catalogue_page: productData.catalogue_page === '' || productData.catalogue_page == null ? null : Number(productData.catalogue_page),
+      is_active: productData.is_active ?? true,
     };
   },
 
-  // -------------------------------------------------------------
-  // PRODUCTS & INVENTORY
-  // -------------------------------------------------------------
   async getProducts(filters = {}) {
-    let list = [];
-
+    // 1. Supabase
     try {
-      let query = supabase.from('products').select('*').order('id', { ascending: true });
-      if (filters.category && filters.category !== 'all') {
-        query = query.eq('category', filters.category);
-      }
+      let query = supabase.from('products').select('*').order('sort_order', { ascending: true }).order('id', { ascending: true });
+      if (filters.category && filters.category !== 'all') query = query.eq('category', filters.category);
       if (filters.search) {
         query = query.or(
-          `name.ilike.%${filters.search}%,grade.ilike.%${filters.search}%,specs.ilike.%${filters.search}%,description.ilike.%${filters.search}%`
+          `name.ilike.%${filters.search}%,grade.ilike.%${filters.search}%,specs.ilike.%${filters.search}%,description.ilike.%${filters.search}%,tagline.ilike.%${filters.search}%`
         );
       }
       const { data, error } = await query;
       if (!error && Array.isArray(data)) {
-        list = data;
+        const list = data.map(normalizeProduct);
         setLocal(STORAGE_KEYS.PRODUCTS, list);
         return list;
       }
     } catch {}
 
-    list = getLocal(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
-
-    if (filters.category && filters.category !== 'all') {
-      list = list.filter((i) => i.category === filters.category);
+    // 2. FastAPI backend
+    const params = new URLSearchParams({ limit: '500' });
+    if (filters.category && filters.category !== 'all') params.set('category', filters.category);
+    if (filters.search) params.set('search', filters.search);
+    const apiList = await apiJson(`/products?${params.toString()}`);
+    if (Array.isArray(apiList)) {
+      const list = apiList.map(normalizeProduct);
+      setLocal(STORAGE_KEYS.PRODUCTS, list);
+      return list;
     }
+
+    // 3. Local fallback
+    let list = this._productsLocal();
+    if (filters.category && filters.category !== 'all') list = list.filter((i) => i.category === filters.category);
     if (filters.search) {
       const s = filters.search.toLowerCase();
-      list = list.filter(
-        (i) =>
-          i.name?.toLowerCase().includes(s) ||
-          i.grade?.toLowerCase().includes(s) ||
-          i.specs?.toLowerCase().includes(s) ||
-          i.description?.toLowerCase().includes(s)
+      list = list.filter((i) =>
+        [i.name, i.grade, i.specs, i.description, i.tagline].some((v) => v?.toLowerCase().includes(s))
       );
     }
-
-    return list;
+    return list.sort((a, b) => a.sort_order - b.sort_order || (Number(a.id) || 0) - (Number(b.id) || 0));
   },
 
   async createProduct(productData) {
-    const slug =
-      productData.slug ||
-      productData.name
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
-
-    const tagsArray = Array.isArray(productData.tags)
-      ? productData.tags
-      : (productData.tags || '')
-          .split(',')
-          .map((t) => t.trim())
-          .filter(Boolean);
-
-    const payload = {
-      name: productData.name,
-      slug: slug,
-      category: productData.category || 'Steel Supply & Trading',
-      grade: productData.grade || '',
-      description: productData.description || '',
-      specs: productData.specs || '',
-      badge: productData.badge || '',
-      image_url: productData.image_url || '/images/product_tmt_bars.jpg',
-      tags: tagsArray,
-      estimated_price_per_ton: parseFloat(productData.estimated_price_per_ton || 0),
-      is_active: productData.is_active ?? true,
-    };
+    const payload = this._productPayload(productData);
 
     try {
       const { data, error } = await supabase.from('products').insert([payload]).select().single();
       if (!error && data) {
-        const all = getLocal(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
-        setLocal(STORAGE_KEYS.PRODUCTS, [data, ...all]);
+        setLocal(STORAGE_KEYS.PRODUCTS, [normalizeProduct(data), ...this._productsLocal()]);
         return data;
       }
     } catch {}
 
-    const all = getLocal(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
-    const newRecord = {
-      id: Date.now(),
-      ...payload,
-      created_at: new Date().toISOString(),
-    };
-    setLocal(STORAGE_KEYS.PRODUCTS, [newRecord, ...all]);
+    const created = await apiJson('/products', { method: 'POST', body: JSON.stringify(payload) });
+    if (created && created.id) {
+      setLocal(STORAGE_KEYS.PRODUCTS, [normalizeProduct(created), ...this._productsLocal()]);
+      return created;
+    }
+
+    const newRecord = normalizeProduct({ id: Date.now(), ...payload, created_at: new Date().toISOString() });
+    setLocal(STORAGE_KEYS.PRODUCTS, [newRecord, ...this._productsLocal()]);
     return newRecord;
   },
 
   async updateProduct(id, productData) {
-    try {
-      await supabase.from('products').update(productData).eq('id', id);
-    } catch {}
+    const payload = this._productPayload({ ...this._productsLocal().find((p) => String(p.id) === String(id)), ...productData });
 
-    const all = getLocal(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
-    const updated = all.map((item) =>
-      item.id === Number(id) ? { ...item, ...productData } : item
+    let saved = false;
+    try {
+      const { error } = await supabase.from('products').update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id);
+      saved = !error;
+    } catch {}
+    if (!saved) saved = Boolean(await apiJson(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }));
+
+    setLocal(
+      STORAGE_KEYS.PRODUCTS,
+      this._productsLocal().map((item) => (String(item.id) === String(id) ? normalizeProduct({ ...item, ...payload }) : item))
     );
-    setLocal(STORAGE_KEYS.PRODUCTS, updated);
     return true;
   },
 
   async toggleProductActive(id) {
-    const all = getLocal(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
-    const existing = all.find((item) => item.id === Number(id));
+    const all = this._productsLocal();
+    const existing = all.find((item) => String(item.id) === String(id));
     const nextState = existing ? !existing.is_active : false;
 
+    let saved = false;
     try {
-      await supabase.from('products').update({ is_active: nextState }).eq('id', id);
+      const { error } = await supabase.from('products').update({ is_active: nextState }).eq('id', id);
+      saved = !error;
     } catch {}
+    if (!saved) await apiJson(`/products/${id}/toggle-active`, { method: 'PATCH' });
 
-    const updated = all.map((item) =>
-      item.id === Number(id) ? { ...item, is_active: nextState } : item
-    );
-    setLocal(STORAGE_KEYS.PRODUCTS, updated);
+    setLocal(STORAGE_KEYS.PRODUCTS, all.map((item) => (String(item.id) === String(id) ? { ...item, is_active: nextState } : item)));
     return true;
   },
 
   async deleteProduct(id) {
+    let saved = false;
     try {
-      await supabase.from('products').delete().eq('id', id);
+      const { error } = await supabase.from('products').delete().eq('id', id);
+      saved = !error;
     } catch {}
+    if (!saved) await apiJson(`/products/${id}`, { method: 'DELETE' });
 
-    const all = getLocal(STORAGE_KEYS.PRODUCTS, INITIAL_PRODUCTS);
-    const filtered = all.filter((item) => item.id !== Number(id));
-    setLocal(STORAGE_KEYS.PRODUCTS, filtered);
+    setLocal(STORAGE_KEYS.PRODUCTS, this._productsLocal().filter((item) => String(item.id) !== String(id)));
     return true;
   },
 

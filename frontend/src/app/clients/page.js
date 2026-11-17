@@ -7,28 +7,10 @@ import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
 import {
   IconAward,
-  IconShieldCheck,
-  IconCheckCircle,
-  IconArrowRight,
   IconPhone,
-  IconDownload,
-  IconZap,
-  IconGlobe
+  IconDownload
 } from '../../components/Icons';
-
-const CLIENTS_LIST = [
-  { name: 'Amazon', logo: '/images/brand/clients/client_logo_1.png', category: 'Warehousing & E-Commerce', project: 'High-Bay Pallet Racking & Multi-Tier Shelving' },
-  { name: 'Maruti Suzuki', logo: '/images/brand/clients/client_logo_2.png', category: 'Automotive & Manufacturing', project: 'Heavy-Duty Storage & Press Component Racks' },
-  { name: 'M3M India', logo: '/images/brand/clients/client_logo_3.png', category: 'Real Estate & Infrastructure', project: 'Structural Steel Beams, Plates & PEB Supply' },
-  { name: 'Afcons Infrastructure', logo: '/images/brand/clients/client_logo_4.png', category: 'Civil & Heavy Engineering', project: 'Heavy ISMB Girders & Bridge Structural Steel' },
-  { name: 'KEI Industries', logo: '/images/brand/clients/client_logo_5.png', category: 'Power & Cables', project: 'Cable Drum Heavy Cantilever Racking & Structural Steel' },
-  { name: 'National Logistics Hub', logo: '/images/brand/clients/client_logo_6.png', category: '3PL Logistics & Cold Storage', project: 'Drive-in & Double-Deep Pallet Storage Racks' },
-  { name: 'Apex Industrial', logo: '/images/brand/clients/client_logo_7.png', category: 'Industrial Fabrication', project: 'Cold Rolled Sheets & In-House Powder Coating' },
-  { name: 'Paramount Infra', logo: '/images/brand/clients/client_logo_8.png', category: 'PEB Warehouses', project: 'Pre-Engineered Building Structural Framing' },
-  { name: 'Continental Spares', logo: '/images/brand/clients/client_logo_9.png', category: 'Automotive Spares', project: 'Multi-Tier Picking Mezzanines & Slotted Shelving' },
-  { name: 'Pinnacle Logistics', logo: '/images/brand/clients/client_logo_10.png', category: 'Supply Chain Hubs', project: 'Custom Storage Racking & Conveyor Walkways' },
-  { name: 'Sterling Engineering', logo: '/images/brand/clients/client_logo_11.png', category: 'Precision Machinery', project: 'High-Tensile MS Plates & CNC Laser Cutting Supply' },
-];
+import { CLIENTS } from '../../data/clients';
 
 const SECTORS = [
   {
@@ -107,10 +89,14 @@ export default function ClientsPage() {
             </div>
 
             <div className="clients-rich-grid">
-              {CLIENTS_LIST.map((c, i) => (
-                <div key={i} className="client-rich-card">
+              {CLIENTS.map((c) => (
+                <div key={c.name} className="client-rich-card">
                   <div className="client-rich-logo-box">
-                    <img src={c.logo} alt={c.name} className="client-rich-logo-img" />
+                    {c.logo ? (
+                      <img src={c.logo} alt={c.name} className="client-rich-logo-img" />
+                    ) : (
+                      <span className="client-logo-text">{c.name}</span>
+                    )}
                   </div>
                   <div className="client-rich-info">
                     <h4>{c.name}</h4>

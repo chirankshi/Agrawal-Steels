@@ -1,4 +1,4 @@
-import { IconFileText, IconMessageSquare, IconTruck, IconArrowRight } from './Icons';
+import { IconFileText, IconMessageSquare, IconTruck } from './Icons';
 
 export default function OrderProcess() {
   const steps = [

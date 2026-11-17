@@ -6,16 +6,15 @@ import AnnouncementBar from '../../components/AnnouncementBar';
 import Footer from '../../components/Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
+import { submitEnquiry, buildEnquiryNotes } from '../../lib/enquiries';
+import { useSiteSettings, telHref } from '../../lib/siteSettings';
 import {
   IconPhone,
   IconMail,
   IconMapPin,
-  IconClock,
   IconShieldCheck,
   IconCheck,
-  IconMessageSquare,
-  IconArrowRight,
-  IconAward
+  IconArrowRight
 } from '../../components/Icons';
 
 const PRODUCTS_LIST = [
@@ -36,6 +35,7 @@ const PRODUCTS_LIST = [
 ];
 
 function ContactContent() {
+  const { settings } = useSiteSettings();
   const searchParams = useSearchParams();
   const preSelectedProduct = searchParams.get('product') || '';
 
@@ -68,40 +68,17 @@ function ContactContent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      const notes = [
-        formData.company ? `Company: ${formData.company}` : '',
-        formData.quantity ? `Quantity: ${formData.quantity}` : '',
-        formData.location ? `Delivery City: ${formData.location}` : '',
-        formData.message ? `Details: ${formData.message}` : ''
-      ].filter(Boolean).join(' | ');
-
-      const res = await fetch(`${apiUrl}/api/v1/enquiries`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email || null,
-          product: formData.product || 'General Steel Inquiry',
-          message: notes || null,
-        }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setEnquiryRef(data.id ? `AGS-${String(data.id).padStart(4, '0')}` : `AGS-${Date.now().toString().slice(-4)}`);
-      } else {
-        setEnquiryRef(`AGS-${Date.now().toString().slice(-4)}`);
-      }
-    } catch (err) {
-      setEnquiryRef(`AGS-${Date.now().toString().slice(-4)}`);
-    } finally {
-      setLoading(false);
-      setSubmitted(true);
-    }
+    const { ref } = await submitEnquiry({
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      product: formData.product,
+      message: buildEnquiryNotes(formData),
+      source: 'contact_page_rfq',
+    });
+    setEnquiryRef(ref);
+    setLoading(false);
+    setSubmitted(true);
   };
 
   return (
@@ -111,7 +88,7 @@ function ContactContent() {
         <div className="section-container">
           <div className="dedicated-hero-badge">
             <IconMapPin size={14} />
-            <span>DIRECT CONNECT • 5 UNITS ACROSS DELHI NCR & RAJASTHAN</span>
+            <span>DIRECT CONNECT • 4 UNITS ACROSS RAJASTHAN & HARYANA</span>
           </div>
           <h1 className="dedicated-hero-title">
             Request an Instant <span className="text-gradient">Tonnage &amp; Racking Quote</span>
@@ -163,6 +140,34 @@ function ContactContent() {
                     <br /><strong>Facilities:</strong> Heavy Structural Fabrication, High-Capacity EOT Cranes, Primary Steel Stockyard.
                   </p>
                 </div>
+
+                <div className="location-card">
+                  <div className="location-header">
+                    <IconMapPin size={20} className="loc-icon" />
+                    <div>
+                      <h4>Majestic AR Technology – Unit 01</h4>
+                      <span className="loc-badge">Unit 01 &bull; IMT Manesar</span>
+                    </div>
+                  </div>
+                  <p className="loc-address">
+                    89, Sector 3, IMT Manesar, Gurugram, Haryana
+                    <br /><strong>Facilities:</strong> Precision Sheet Metal Components, Storage Racking Assembly, Trading Stockyard.
+                  </p>
+                </div>
+
+                <div className="location-card">
+                  <div className="location-header">
+                    <IconMapPin size={20} className="loc-icon" />
+                    <div>
+                      <h4>Majestic AR Technology – Unit 03</h4>
+                      <span className="loc-badge">Unit 03 &bull; Bawal</span>
+                    </div>
+                  </div>
+                  <p className="loc-address">
+                    81, Phase IV, Sector 15, Bawal, Haryana
+                    <br /><strong>Facilities:</strong> Sheet Metal Fabrication, Material Handling Equipment, Trolleys &amp; Conveyors.
+                  </p>
+                </div>
               </div>
 
               {/* Quick Communication Box */}
@@ -171,7 +176,7 @@ function ContactContent() {
                   <IconPhone size={18} className="reach-icon" />
                   <div>
                     <span className="reach-lbl">Direct Sales Hotlines:</span>
-                    <a href="tel:+917300070778" className="reach-val">+91 73000 70778</a> / <a href="tel:+917300096120" className="reach-val">+91 73000 96120</a>
+                    <a href={telHref(settings.sales_phone)} className="reach-val">{settings.sales_phone}</a> / <a href={telHref(settings.alternate_phone)} className="reach-val">{settings.alternate_phone}</a>
                   </div>
                 </div>
 
@@ -179,7 +184,7 @@ function ContactContent() {
                   <IconMail size={18} className="reach-icon" />
                   <div>
                     <span className="reach-lbl">Official Email Inquiries:</span>
-                    <a href="mailto:md@aggarwalsteel.com" className="reach-val">md@aggarwalsteel.com</a> / <a href="mailto:sales@aggarwalsteel.com" className="reach-val">sales@aggarwalsteel.com</a>
+                    <a href={`mailto:${settings.md_email}`} className="reach-val">{settings.md_email}</a> / <a href={`mailto:${settings.sales_email}`} className="reach-val">{settings.sales_email}</a>
                   </div>
                 </div>
 

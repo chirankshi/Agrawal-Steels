@@ -1,22 +1,22 @@
 'use client';
 import { useState } from 'react';
-import { IconAward, IconGlobe, IconLayers, IconTruck, IconArrowRight, IconShieldCheck } from './Icons';
+import { IconAward, IconGlobe, IconLayers, IconTruck, IconArrowRight } from './Icons';
 
 export default function Journey() {
-  const [activeYear, setActiveYear] = useState('2024-25');
+  const [activeYear, setActiveYear] = useState('2025-26');
 
   // Exact figures from Document Page 4 ("Our Journey...")
   const timeline = [
-    { year: '2021-22', revenue: '₹52 Cr.', height: '35%', desc: 'Expanding national flat & long primary steel distribution network' },
-    { year: '2022-23', revenue: '₹68 Cr.', height: '46%', desc: 'Setting up Majestic AR Technology Pvt. Ltd. racking & manufacturing' },
-    { year: '2023-24', revenue: '₹98 Cr.', height: '66%', desc: 'Commissioning automated 520ft robotic powder coating line & CNC machines' },
-    { year: '2024-25', revenue: '₹148 Cr.', height: '80%', desc: 'Record audited annual milestone across steel supply & warehousing systems' },
-    { year: '2025-26', revenue: '₹200+ Cr.', height: '100%', desc: 'Current group run-rate with 2 manufacturing plants & 3 trading units', isLatest: true },
+    { year: '2021-22', revenue: '₹52 Cr.', height: '23%', desc: 'Expanding national flat & long primary steel distribution network' },
+    { year: '2022-23', revenue: '₹68 Cr.', height: '30%', desc: 'Setting up Majestic AR Technology Pvt. Ltd. racking & manufacturing' },
+    { year: '2023-24', revenue: '₹98 Cr.', height: '43%', desc: 'Commissioning automated 520ft robotic powder coating line & CNC machines' },
+    { year: '2024-25', revenue: '₹148 Cr.', height: '64%', desc: 'Record audited annual milestone across steel supply & warehousing systems' },
+    { year: '2025-26', revenue: '₹230 Cr.', height: '100%', desc: 'Record ₹2.3 billion group turnover with 2 manufacturing plants & 3 trading units', isLatest: true },
   ];
 
   const milestones = [
     { label: 'Year Established', value: '2015', icon: <IconAward size={20} /> },
-    { label: 'Group Turnover', value: '₹200+ Cr', icon: <IconTruck size={20} /> },
+    { label: 'Group Turnover', value: '₹230 Cr', icon: <IconTruck size={20} /> },
     { label: 'Workforce', value: '250+ Team', icon: <IconLayers size={20} /> },
     { label: 'Trading Experience', value: '11+ Years', icon: <IconGlobe size={20} /> },
   ];
@@ -41,7 +41,7 @@ export default function Journey() {
           <div className="growth-chart-header">
             <div>
               <span className="growth-chart-label">CONSOLIDATED GROUP TURNOVER TRAJECTORY</span>
-              <div className="growth-current-revenue">₹200+ Crore <span className="growth-badge">Run-Rate Milestone</span></div>
+              <div className="growth-current-revenue">₹230 Crore <span className="growth-badge">FY 2025-26</span></div>
             </div>
             <div className="growth-legend">
               <span className="legend-dot"></span>

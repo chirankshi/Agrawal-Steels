@@ -29,13 +29,13 @@ export default function Home() {
       <main>
         <Hero />
         <TickerStrip />
+        <About />
+        <Journey />
+        <WhyUs />
         <Manufacturing />
         <Products onSelectProduct={(prod) => setSelectedProduct(prod)} />
-        <PartnersStrip />
-        <About />
         <Certificates />
-        <WhyUs />
-        <Journey />
+        <PartnersStrip />
         <Presence />
         <OrderProcess />
         <ContactSection selectedProduct={selectedProduct} />

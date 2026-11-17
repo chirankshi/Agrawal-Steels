@@ -25,7 +25,8 @@ def submit_enquiry(enquiry_in: EnquiryCreate, db: Session = Depends(get_db)):
             product=enquiry_in.product,
             message=enquiry_in.message,
             status=EnquiryStatus.PENDING,
-            source="website_rfq_form",
+            source=enquiry_in.source or "website_rfq_form",
+            notes=enquiry_in.notes,
         )
         db.add(new_enquiry)
         db.commit()
@@ -66,6 +67,7 @@ def get_enquiry_stats(db: Session = Depends(get_db)):
     }
 
 
+@router.get("", response_model=List[EnquiryResponse], include_in_schema=False)
 @router.get("/", response_model=List[EnquiryResponse])
 def list_enquiries(
     status_filter: Optional[EnquiryStatus] = Query(None, alias="status"),

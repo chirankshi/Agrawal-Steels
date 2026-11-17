@@ -1,0 +1,941 @@
+{
+  "categories": [
+    {
+      "slug": "steel-supply",
+      "name": "Primary Steel Supply & Trading",
+      "company": "Aggarwal Steels",
+      "description": "",
+      "partners": [
+        "Tata Steel (authorised dealer)",
+        "Jindal Steel (authorised dealer)",
+        "SAIL",
+        "AM/NS India",
+        "APL Apollo",
+        "Jindal Stainless"
+      ],
+      "capacity": "",
+      "catalogue_page": 24,
+      "image_url": "",
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "racking",
+      "name": "Storage & Warehouse Racking",
+      "company": "Majestic AR Technology",
+      "description": "",
+      "partners": [],
+      "capacity": "",
+      "catalogue_page": 12,
+      "image_url": "",
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "mezzanine",
+      "name": "Mezzanine Floors & Multi-Tier",
+      "company": "Majestic AR Technology",
+      "description": "",
+      "partners": [],
+      "capacity": "",
+      "catalogue_page": 13,
+      "image_url": "",
+      "sort_order": 30,
+      "is_active": true
+    },
+    {
+      "slug": "material-handling",
+      "name": "Material Handling",
+      "company": "Majestic AR Technology",
+      "description": "",
+      "partners": [],
+      "capacity": "",
+      "catalogue_page": 15,
+      "image_url": "",
+      "sort_order": 40,
+      "is_active": true
+    },
+    {
+      "slug": "ms-sheet-metal",
+      "name": "MS Sheet Metal Fabrication",
+      "company": "Majestic AR Technology",
+      "description": "",
+      "partners": [],
+      "capacity": "",
+      "catalogue_page": 17,
+      "image_url": "",
+      "sort_order": 50,
+      "is_active": true
+    },
+    {
+      "slug": "ss-fabrication",
+      "name": "Stainless Steel Fabrication & Commercial Kitchen",
+      "company": "Majestic AR Technology",
+      "description": "",
+      "partners": [],
+      "capacity": "",
+      "catalogue_page": 16,
+      "image_url": "",
+      "sort_order": 60,
+      "is_active": true
+    },
+    {
+      "slug": "heavy-structural",
+      "name": "Heavy Structural Fabrication & PEB",
+      "company": "Aggarwal Steels (Unit 1)",
+      "description": "",
+      "partners": [],
+      "capacity": "700 to 1,000 MT per month, ISO 3834-2 welding",
+      "catalogue_page": 21,
+      "image_url": "",
+      "sort_order": 70,
+      "is_active": true
+    },
+    {
+      "slug": "infrastructure",
+      "name": "Infrastructure Components",
+      "company": "Majestic AR Technology",
+      "description": "",
+      "partners": [],
+      "capacity": "",
+      "catalogue_page": 20,
+      "image_url": "",
+      "sort_order": 80,
+      "is_active": true
+    },
+    {
+      "slug": "services",
+      "name": "Services",
+      "company": "Majestic AR Technology",
+      "description": "",
+      "partners": [],
+      "capacity": "",
+      "catalogue_page": 9,
+      "image_url": "",
+      "sort_order": 90,
+      "is_active": true
+    }
+  ],
+  "subcategories": [
+    {
+      "slug": "tmt-bars",
+      "category_slug": "steel-supply",
+      "name": "TMT Bars",
+      "description": "",
+      "items": [
+        "Fe 415",
+        "Fe 500D",
+        "Fe 550D"
+      ],
+      "image_url": "",
+      "catalogue_page": 24,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "plates-coils",
+      "category_slug": "steel-supply",
+      "name": "Plates & Coils",
+      "description": "",
+      "items": [
+        "HR plates",
+        "HR coils",
+        "CR coils & slit coils",
+        "GP coils & sheets",
+        "Chequered plates",
+        "Roofing sheets",
+        "Perforated sheets"
+      ],
+      "image_url": "",
+      "catalogue_page": 24,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "structural-sections",
+      "category_slug": "steel-supply",
+      "name": "Structural Sections",
+      "description": "",
+      "items": [
+        "MS angles (equal & unequal)",
+        "MS channels (ISMC)",
+        "MS beams (ISMB / NPB / WPB)",
+        "MS flats",
+        "MS round & square bars"
+      ],
+      "image_url": "",
+      "catalogue_page": 24,
+      "sort_order": 30,
+      "is_active": true
+    },
+    {
+      "slug": "pipes-hollow-sections",
+      "category_slug": "steel-supply",
+      "name": "Pipes & Hollow Sections",
+      "description": "",
+      "items": [
+        "Square (SHS)",
+        "Rectangular (RHS)",
+        "Round pipes"
+      ],
+      "image_url": "",
+      "catalogue_page": 24,
+      "sort_order": 40,
+      "is_active": true
+    },
+    {
+      "slug": "stainless-steel",
+      "category_slug": "steel-supply",
+      "name": "Stainless Steel",
+      "description": "",
+      "items": [
+        "SS sheets 202 / 304 / 316",
+        "SS pipes & tubes"
+      ],
+      "image_url": "",
+      "catalogue_page": 24,
+      "sort_order": 50,
+      "is_active": true
+    },
+    {
+      "slug": "rail-lines",
+      "category_slug": "steel-supply",
+      "name": "Rail Lines",
+      "description": "",
+      "items": [
+        "New rail lines",
+        "Old rail lines"
+      ],
+      "image_url": "",
+      "catalogue_page": 24,
+      "sort_order": 60,
+      "is_active": true
+    },
+    {
+      "slug": "pallet-storage-systems",
+      "category_slug": "racking",
+      "name": "Pallet Storage Systems",
+      "description": "",
+      "items": [
+        "Selective pallet racks",
+        "Double-deep pallet racks",
+        "Narrow-aisle pallet racks",
+        "Drive-in pallet racks",
+        "Drive-through pallet racks",
+        "Cantilever racks",
+        "Mobile pallet racks",
+        "Pallet flow racks",
+        "Heavy-duty racks with decking panel"
+      ],
+      "image_url": "",
+      "catalogue_page": 12,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "shelving",
+      "category_slug": "racking",
+      "name": "Shelving",
+      "description": "",
+      "items": [
+        "Slotted angle racks",
+        "Long span shelving (LSS)",
+        "Light-duty shelving",
+        "Bin storage racks",
+        "Small parts storage",
+        "Adjustable shelves",
+        "L-shape racks"
+      ],
+      "image_url": "",
+      "catalogue_page": 12,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "display-racks-supermarket",
+      "category_slug": "racking",
+      "name": "Display Racks (Supermarket)",
+      "description": "",
+      "items": [
+        "Gondola racks",
+        "Wall racks",
+        "End racks",
+        "Corner racks",
+        "Island racks",
+        "Slotted display racks",
+        "Fruit & vegetable racks",
+        "Bakery racks",
+        "Checkout racks"
+      ],
+      "image_url": "",
+      "catalogue_page": 12,
+      "sort_order": 30,
+      "is_active": true
+    },
+    {
+      "slug": "metal-pallets",
+      "category_slug": "racking",
+      "name": "Metal Pallets",
+      "description": "",
+      "items": [
+        "Powder-coated pallet",
+        "Powder-coated slatted pallet",
+        "GI pallet",
+        "Custom pallet"
+      ],
+      "image_url": "",
+      "catalogue_page": 12,
+      "sort_order": 40,
+      "is_active": true
+    },
+    {
+      "slug": "rack-accessories",
+      "category_slug": "racking",
+      "name": "Rack Accessories",
+      "description": "",
+      "items": [
+        "Column guard",
+        "Row guard",
+        "Wire mesh partition",
+        "Pallet support bar (PSB)",
+        "Pallet back stopper",
+        "Base plate"
+      ],
+      "image_url": "",
+      "catalogue_page": 12,
+      "sort_order": 50,
+      "is_active": true
+    },
+    {
+      "slug": "mezzanine-floors",
+      "category_slug": "mezzanine",
+      "name": "Mezzanine Floors",
+      "description": "",
+      "items": [
+        "Storage mezzanine",
+        "Office mezzanine",
+        "Industrial mezzanine",
+        "Multi-level mezzanine",
+        "Mezzanine with conveyor",
+        "Staircases & safety railings",
+        "Heavy-duty floor decking"
+      ],
+      "image_url": "",
+      "catalogue_page": 13,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "multi-tier-racking",
+      "category_slug": "mezzanine",
+      "name": "Multi-Tier Racking",
+      "description": "",
+      "items": [
+        "2-tier racking system",
+        "3-tier racking system",
+        "Multi-level storage",
+        "Rack-supported mezzanine",
+        "Integrated solutions"
+      ],
+      "image_url": "",
+      "catalogue_page": 13,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "trolleys",
+      "category_slug": "material-handling",
+      "name": "Trolleys",
+      "description": "",
+      "items": [
+        "Platform trolley",
+        "Mesh-side platform trolley",
+        "Roll cage trolley",
+        "Collapsible mesh container",
+        "Bin trolley",
+        "Tool trolley",
+        "Order-picking trolley with step",
+        "Heavy platform trolley",
+        "Hand pallet truck"
+      ],
+      "image_url": "",
+      "catalogue_page": 15,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "conveyors",
+      "category_slug": "material-handling",
+      "name": "Conveyors",
+      "description": "",
+      "items": [
+        "Roller conveyor (gravity & motorised)",
+        "Belt conveyor",
+        "Skate wheel conveyor",
+        "Spiral conveyor",
+        "Loading / unloading conveyor",
+        "Modular conveyor",
+        "Flexible conveyor"
+      ],
+      "image_url": "",
+      "catalogue_page": 15,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "workstations-assembly-lines",
+      "category_slug": "material-handling",
+      "name": "Workstations & Assembly Lines",
+      "description": "",
+      "items": [
+        "Aluminium profile workstation",
+        "Pipe joint workstation",
+        "Assembly line workstation",
+        "Complete assembly lines"
+      ],
+      "image_url": "",
+      "catalogue_page": 15,
+      "sort_order": 30,
+      "is_active": true
+    },
+    {
+      "slug": "cabinets-enclosures",
+      "category_slug": "ms-sheet-metal",
+      "name": "Cabinets & Enclosures",
+      "description": "",
+      "items": [
+        "Electrical panel cabinets",
+        "Control panel cabinets",
+        "Outdoor cabinets",
+        "Data centre cabinets",
+        "Telecom cabinets",
+        "Wall-mount cabinets",
+        "Modular cabinets",
+        "Industrial cabinets",
+        "Customised cabinets"
+      ],
+      "image_url": "",
+      "catalogue_page": 17,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "tanks-boxes",
+      "category_slug": "ms-sheet-metal",
+      "name": "Tanks & Boxes",
+      "description": "",
+      "items": [
+        "Transformer tanks",
+        "Oil storage tanks",
+        "Diesel storage tanks",
+        "Horizontal tanks",
+        "Vertical tanks",
+        "Process tanks",
+        "Battery boxes",
+        "Inverter boxes",
+        "UPS boxes",
+        "Junction boxes",
+        "Outdoor electrical boxes"
+      ],
+      "image_url": "",
+      "catalogue_page": 17,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "panels",
+      "category_slug": "ms-sheet-metal",
+      "name": "Panels",
+      "description": "",
+      "items": [
+        "Plain panel",
+        "Stiffened panel",
+        "Powder-coated panel",
+        "GI panel",
+        "Perforated panel",
+        "Louvered panel",
+        "Panel with stiffener",
+        "CR panels"
+      ],
+      "image_url": "",
+      "catalogue_page": 17,
+      "sort_order": 30,
+      "is_active": true
+    },
+    {
+      "slug": "components-for-oems",
+      "category_slug": "ms-sheet-metal",
+      "name": "Components for OEMs",
+      "description": "",
+      "items": [
+        "Battery box (EV)",
+        "Outdoor cabinet",
+        "Indoor cabinet",
+        "Electrical panel box",
+        "Fixture & chassis",
+        "Industrial UPS cabinet",
+        "Small UPS cabinet",
+        "Network rack",
+        "Server rack",
+        "Wall-mount rack",
+        "Genset canopy / outer body"
+      ],
+      "image_url": "",
+      "catalogue_page": 17,
+      "sort_order": 40,
+      "is_active": true
+    },
+    {
+      "slug": "shelves-benches-partitions",
+      "category_slug": "ms-sheet-metal",
+      "name": "Shelves, Benches & Partitions",
+      "description": "",
+      "items": [
+        "MS shelves & racks",
+        "Work tables & benches",
+        "Industrial trolleys",
+        "Gates, grills & partitions",
+        "Custom fabricated parts",
+        "Brackets & mounting parts",
+        "Cable trays & covers"
+      ],
+      "image_url": "",
+      "catalogue_page": 17,
+      "sort_order": 50,
+      "is_active": true
+    },
+    {
+      "slug": "commercial-kitchen-equipment",
+      "category_slug": "ss-fabrication",
+      "name": "Commercial Kitchen Equipment",
+      "description": "",
+      "items": [
+        "Cooking ranges",
+        "Bain marie",
+        "Griddles & fryers",
+        "Work tables (with / without backsplash)",
+        "Pot racks & wall shelves",
+        "Sinks & dish-wash units",
+        "Hand-wash stations",
+        "Exhaust hoods & ducts"
+      ],
+      "image_url": "",
+      "catalogue_page": 16,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "ss-counters-shelving-trolleys",
+      "category_slug": "ss-fabrication",
+      "name": "SS Counters, Shelving & Trolleys",
+      "description": "",
+      "items": [
+        "SS counters",
+        "Display counters",
+        "Food service equipment",
+        "SS shelves & shelving units",
+        "Bakery racks",
+        "Service trolleys",
+        "SS storage racks",
+        "Locker cabinets",
+        "Wall cabinets",
+        "Louvered cabinets"
+      ],
+      "image_url": "",
+      "catalogue_page": 16,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "hygiene-sanitation",
+      "category_slug": "ss-fabrication",
+      "name": "Hygiene & Sanitation",
+      "description": "",
+      "items": [
+        "SS sinks & wash units",
+        "Hand-wash & sanitisation units",
+        "SS dustbins",
+        "Toilet partitions",
+        "Cleanroom equipment"
+      ],
+      "image_url": "",
+      "catalogue_page": 16,
+      "sort_order": 30,
+      "is_active": true
+    },
+    {
+      "slug": "ss-industrial-structures",
+      "category_slug": "ss-fabrication",
+      "name": "SS Industrial Structures",
+      "description": "",
+      "items": [
+        "Railway battery boxes",
+        "SS cable trays & supports",
+        "Handrails & railings",
+        "Laser-cut panels",
+        "Ducting & ventilation",
+        "Enclosures & panels",
+        "Customised SS structures (platforms, staircases, frames)"
+      ],
+      "image_url": "",
+      "catalogue_page": 16,
+      "sort_order": 40,
+      "is_active": true
+    },
+    {
+      "slug": "buildings",
+      "category_slug": "heavy-structural",
+      "name": "Buildings",
+      "description": "",
+      "items": [
+        "Pre-engineered buildings (PEB)",
+        "Industrial sheds",
+        "Shed & canopy fabrication"
+      ],
+      "image_url": "",
+      "catalogue_page": 21,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "bridges-rail",
+      "category_slug": "heavy-structural",
+      "name": "Bridges & Rail",
+      "description": "",
+      "items": [
+        "Bridge structures",
+        "Road over-bridge (ROB)",
+        "Foot over-bridge (FOB)",
+        "Truss & bridge fabrication"
+      ],
+      "image_url": "",
+      "catalogue_page": 21,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "industrial-structures",
+      "category_slug": "heavy-structural",
+      "name": "Industrial Structures",
+      "description": "",
+      "items": [
+        "EOT crane girders",
+        "Transmission tower structures",
+        "Platforms & walkways",
+        "Support structures",
+        "Pipe structures",
+        "Staircase fabrication",
+        "Ducting fabrication",
+        "Tank structures"
+      ],
+      "image_url": "",
+      "catalogue_page": 21,
+      "sort_order": 30,
+      "is_active": true
+    },
+    {
+      "slug": "scaffolding-systems",
+      "category_slug": "infrastructure",
+      "name": "Scaffolding Systems",
+      "description": "",
+      "items": [
+        "Scaffolding GI planks",
+        "Modular scaffolding"
+      ],
+      "image_url": "",
+      "catalogue_page": 20,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "cable-tray-systems",
+      "category_slug": "infrastructure",
+      "name": "Cable Tray Systems",
+      "description": "",
+      "items": [
+        "Perforated cable tray",
+        "Ladder cable tray",
+        "Cable tray accessories"
+      ],
+      "image_url": "",
+      "catalogue_page": 20,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "road-crash-barriers",
+      "category_slug": "infrastructure",
+      "name": "Road Crash Barriers",
+      "description": "",
+      "items": [
+        "W-beam crash barriers",
+        "Crash barrier components",
+        "Posts & accessories"
+      ],
+      "image_url": "",
+      "catalogue_page": 20,
+      "sort_order": 30,
+      "is_active": true
+    },
+    {
+      "slug": "finishing",
+      "category_slug": "services",
+      "name": "Finishing",
+      "description": "",
+      "items": [
+        "Powder coating job work (520 ft line, up to 12 m parts)"
+      ],
+      "image_url": "",
+      "catalogue_page": 9,
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "slug": "fabrication-to-drawing",
+      "category_slug": "services",
+      "name": "Fabrication to Drawing",
+      "description": "",
+      "items": [
+        "Laser cutting",
+        "CNC bending",
+        "Custom fabrication from CAD / DXF",
+        "Build-to-print sheet metal"
+      ],
+      "image_url": "",
+      "catalogue_page": 9,
+      "sort_order": 20,
+      "is_active": true
+    },
+    {
+      "slug": "project-services",
+      "category_slug": "services",
+      "name": "Project Services",
+      "description": "",
+      "items": [
+        "In-house design & R&D",
+        "Site installation & erection",
+        "After-sales support"
+      ],
+      "image_url": "",
+      "catalogue_page": 9,
+      "sort_order": 30,
+      "is_active": true
+    }
+  ],
+  "machines": [
+    {
+      "slug": "cnc-laser-cutting-machine",
+      "group_name": "Cutting & Forming",
+      "name": "CNC Laser Cutting Machine",
+      "spec": "3 kW fibre laser, sheet & plate profiling",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 6,
+      "sort_order": 110,
+      "is_active": true
+    },
+    {
+      "slug": "cnc-bending-machines-tandem",
+      "group_name": "Cutting & Forming",
+      "name": "CNC Bending Machines (Tandem)",
+      "spec": "Energy Mission & HACO press brakes, up to 12 mm plate, ±0.2 mm repeatability, 4,000 mm bed",
+      "qty": 5,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 7,
+      "sort_order": 120,
+      "is_active": true
+    },
+    {
+      "slug": "hydraulic-shearing-machine",
+      "group_name": "Cutting & Forming",
+      "name": "Hydraulic Shearing Machine",
+      "spec": "High-speed variable-rake shear, plates up to 12 mm, 3.1 m blade",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 7,
+      "sort_order": 130,
+      "is_active": true
+    },
+    {
+      "slug": "power-press",
+      "group_name": "Cutting & Forming",
+      "name": "Power Press",
+      "spec": "Mechanical / hydraulic, up to 250 T, stamping & piercing",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 7,
+      "sort_order": 140,
+      "is_active": true
+    },
+    {
+      "slug": "roll-forming-machine",
+      "group_name": "Cutting & Forming",
+      "name": "Roll Forming Machine",
+      "spec": "Slotted angle, racking upright, MKM & Omega sections",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 8,
+      "sort_order": 150,
+      "is_active": true
+    },
+    {
+      "slug": "cnc-milling-ctl",
+      "group_name": "Machining",
+      "name": "CNC Milling (CTL)",
+      "spec": "High-precision machining of components",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 7,
+      "sort_order": 210,
+      "is_active": true
+    },
+    {
+      "slug": "vertical-milling-machine",
+      "group_name": "Machining",
+      "name": "Vertical Milling Machine",
+      "spec": "Custom component machining",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 7,
+      "sort_order": 220,
+      "is_active": true
+    },
+    {
+      "slug": "lathe",
+      "group_name": "Machining",
+      "name": "Lathe",
+      "spec": "Turning of shafts, pins and fittings",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 7,
+      "sort_order": 230,
+      "is_active": true
+    },
+    {
+      "slug": "cnc-milling-turning-centre",
+      "group_name": "Machining",
+      "name": "CNC Milling & Turning Centre",
+      "spec": "Precision turned parts",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 7,
+      "sort_order": 240,
+      "is_active": true
+    },
+    {
+      "slug": "tig-mig-welding-machines",
+      "group_name": "Welding",
+      "name": "TIG / MIG Welding Machines",
+      "spec": "Miller units, SS & MS fabrication",
+      "qty": null,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 8,
+      "sort_order": 310,
+      "is_active": true
+    },
+    {
+      "slug": "spot-welding-machine",
+      "group_name": "Welding",
+      "name": "Spot Welding Machine",
+      "spec": "Panels & enclosures",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 8,
+      "sort_order": 320,
+      "is_active": true
+    },
+    {
+      "slug": "robotic-welding-cell",
+      "group_name": "Welding",
+      "name": "Robotic Welding Cell",
+      "spec": "Repeatable structural welds",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 8,
+      "sort_order": 330,
+      "is_active": true
+    },
+    {
+      "slug": "520-ft-automated-powder-coating-plant",
+      "group_name": "Finishing",
+      "name": "520 ft Automated Powder Coating Plant",
+      "spec": "Conveyorised line with robotic arm; 9-stage pre-treatment, automatic booth, camel-back curing oven; parts up to 12 m long; 70–80 micron DFT; 500 h salt-spray",
+      "qty": 1,
+      "stages": [
+        "Loading & hanging",
+        "Pre-treatment & cleaning",
+        "Automatic powder coating booth",
+        "Curing oven",
+        "Conveyor",
+        "Finished products",
+        "Quality checking",
+        "Unloading & handling",
+        "Final output"
+      ],
+      "image_url": "",
+      "catalogue_page": 9,
+      "sort_order": 410,
+      "is_active": true
+    },
+    {
+      "slug": "eot-cranes-35-t",
+      "group_name": "Material Handling & Plant",
+      "name": "EOT Cranes 35 T",
+      "spec": "1st bay",
+      "qty": 2,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 9,
+      "sort_order": 510,
+      "is_active": true
+    },
+    {
+      "slug": "eot-cranes-15-t",
+      "group_name": "Material Handling & Plant",
+      "name": "EOT Cranes 15 T",
+      "spec": "2nd bay",
+      "qty": 2,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 9,
+      "sort_order": 520,
+      "is_active": true
+    },
+    {
+      "slug": "hydra-crane-15-t",
+      "group_name": "Material Handling & Plant",
+      "name": "Hydra Crane 15 T",
+      "spec": "Yard handling",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 9,
+      "sort_order": 530,
+      "is_active": true
+    },
+    {
+      "slug": "forklift-4-t",
+      "group_name": "Material Handling & Plant",
+      "name": "Forklift 4 T",
+      "spec": "Stockyard & dispatch",
+      "qty": 1,
+      "stages": [],
+      "image_url": "",
+      "catalogue_page": 9,
+      "sort_order": 540,
+      "is_active": true
+    }
+  ]
+}

@@ -1,18 +1,21 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { IconTruck, IconShieldCheck, IconZap } from './Icons';
+import { IconZap } from './Icons';
+import { useSiteSettings } from '../lib/siteSettings';
 
 export default function AnnouncementBar() {
   const [visible, setVisible] = useState(true);
+  const { settings } = useSiteSettings();
+  const show = visible && settings.announcement_enabled !== false;
 
   useEffect(() => {
-    document.documentElement.style.setProperty('--announcement-height', visible ? '38px' : '0px');
+    document.documentElement.style.setProperty('--announcement-height', show ? '38px' : '0px');
     return () => {
       document.documentElement.style.setProperty('--announcement-height', '0px');
     };
-  }, [visible]);
+  }, [show]);
 
-  if (!visible) return null;
+  if (!show) return null;
 
   return (
     <div className="announcement-bar" id="announcementBar">
@@ -21,7 +24,7 @@ export default function AnnouncementBar() {
           <IconZap size={14} /> EXPRESS DISPATCH
         </span>
         <span className="announcement-text">
-          MS Material dispatched within 24 hours &bull; PAN India logistics &bull; 100% BIS / ISI certified mill test certificates
+          {settings.announcement_text}
         </span>
         <button
           className="announcement-close"

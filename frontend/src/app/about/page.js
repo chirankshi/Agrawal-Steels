@@ -9,9 +9,7 @@ import CountUp from '../../components/CountUp';
 import Certificates from '../../components/Certificates';
 import {
   IconAward,
-  IconShieldCheck,
   IconCheckCircle,
-  IconArrowRight,
   IconPhone,
   IconDownload
 } from '../../components/Icons';
@@ -108,14 +106,14 @@ export default function AboutPage() {
                 <p className="founder-body-text">
                   Today, the group operates across <strong>5 strategic units</strong> (including state-of-the-art 
                   manufacturing plants in Bhiwadi and warehousing hubs in Delhi NCR), managing over 
-                  <strong> ₹200 Crores</strong> in annual turnover and supporting 250+ dedicated engineers, 
+                  <strong> ₹230 Crores</strong> in annual turnover (FY 2025-26) and supporting 250+ dedicated engineers, 
                   fabrication experts, and logistics personnel.
                 </p>
 
                 <div className="about-stats-strip">
                   <div className="stat-box stagger-stat-1">
                     <span className="stat-val">
-                      <CountUp target={200} prefix="₹" suffix=" Cr+" duration={2000} unitClassName="stat-unit-about" />
+                      <CountUp target={230} prefix="₹" suffix=" Cr" duration={2000} unitClassName="stat-unit-about" />
                     </span>
                     <span className="stat-lbl">Annual Turnover</span>
                   </div>

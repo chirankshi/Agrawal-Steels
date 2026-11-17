@@ -10,6 +10,8 @@ class EnquiryCreate(BaseModel):
     email: Optional[EmailStr] = Field(None, description="Official Contact Email")
     product: str = Field(..., min_length=2, max_length=150, description="Primary Steel Product Requested")
     message: Optional[str] = Field(None, max_length=2000, description="Specifications, Tonnage, and Site details")
+    source: Optional[str] = Field(None, max_length=50, description="Which form on the site sent this")
+    notes: Optional[str] = Field(None, max_length=4000, description="Internal notes / structured form details")
 
 
 class EnquiryUpdateStatus(BaseModel):
@@ -23,6 +25,7 @@ class EnquiryUpdate(BaseModel):
     product: Optional[str] = None
     message: Optional[str] = None
     status: Optional[EnquiryStatus] = None
+    notes: Optional[str] = None
 
 
 class EnquiryResponse(BaseModel):
@@ -33,7 +36,8 @@ class EnquiryResponse(BaseModel):
     product: str
     message: Optional[str] = None
     status: EnquiryStatus
-    source: str
+    source: Optional[str] = None
+    notes: Optional[str] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
 

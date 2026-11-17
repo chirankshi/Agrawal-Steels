@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { submitEnquiry } from '../lib/enquiries';
+import { useSiteSettings, telHref, waHref } from '../lib/siteSettings';
 import { IconMapPin, IconPhone, IconMail, IconClock, IconMessageSquare, IconCheck, IconShieldCheck, IconArrowRight } from './Icons';
 
 const PRODUCTS_LIST = [
@@ -24,6 +25,7 @@ const PRODUCTS_LIST = [
 ];
 
 export default function ContactSection({ selectedProduct }) {
+  const { settings } = useSiteSettings();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -44,36 +46,10 @@ export default function ContactSection({ selectedProduct }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      const res = await fetch(`${apiUrl}/api/v1/enquiries`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email || null,
-          product: formData.product,
-          message: formData.message || null,
-        }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setEnquiryRef(`AS-RFQ-${String(data.id).padStart(4, '0')}`);
-      } else {
-        setEnquiryRef(`AS-RFQ-${Date.now().toString().slice(-4)}`);
-      }
-    } catch {
-      // Graceful fallback when backend is temporarily offline
-      setEnquiryRef(`AS-RFQ-${Date.now().toString().slice(-4)}`);
-    } finally {
-      setLoading(false);
-      setSubmitted(true);
-    }
+    const { ref } = await submitEnquiry({ ...formData, source: 'website_rfq_form' });
+    setEnquiryRef(ref);
+    setLoading(false);
+    setSubmitted(true);
   };
 
   return (
@@ -230,9 +206,9 @@ export default function ContactSection({ selectedProduct }) {
                 <div>
                   <strong>Direct Technical Sales &amp; Enquiries</strong>
                   <p>
-                    <a href="tel:+917300070778">+91 73000 70778</a>
+                    <a href={telHref(settings.sales_phone)}>{settings.sales_phone}</a>
                     <span style={{ color: '#64748b' }}> / </span>
-                    <a href="tel:+918800885185">+91 73000 96120</a>
+                    <a href={telHref(settings.alternate_phone)}>{settings.alternate_phone}</a>
                   </p>
                 </div>
               </div>
@@ -244,7 +220,7 @@ export default function ContactSection({ selectedProduct }) {
                 <div>
                   <strong>Official Correspondence</strong>
                   <p>
-                    <a href="mailto:info@majesticar.in">info@majesticar.in</a>
+                    <a href={`mailto:${settings.sales_email}`}>{settings.sales_email}</a>
                   </p>
                 </div>
               </div>
@@ -255,7 +231,7 @@ export default function ContactSection({ selectedProduct }) {
                 </div>
                 <div>
                   <strong>Commercial Working Hours</strong>
-                  <p>Monday – Saturday: 09:00 AM – 06:00 PM IST</p>
+                  <p>{settings.working_hours}</p>
                 </div>
               </div>
 
@@ -275,7 +251,7 @@ export default function ContactSection({ selectedProduct }) {
                 <p>Chat directly with Mr. Aakash Goyal &amp; technical sales desk</p>
               </div>
               <a
-                href="https://wa.me/917300070778?text=Hello%20Aggarwal%20Steels,%20I%20would%20like%20to%20enquire%20about%20steel%20and%20racking%20solutions"
+                href={waHref(settings.whatsapp_number, 'Hello Aggarwal Steels, I would like to enquire about steel and racking solutions')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="wa-action-btn"

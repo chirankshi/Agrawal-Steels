@@ -5,6 +5,7 @@ import AnnouncementBar from '../../components/AnnouncementBar';
 import Footer from '../../components/Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
+import MachineryShowcase from '../../components/MachineryShowcase';
 import {
   IconFactory,
   IconShieldCheck,
@@ -119,80 +120,8 @@ export default function ManufacturingPage() {
           </div>
         </section>
 
-        {/* Heavy Fabrication Machinery */}
-        <section className="mfg-machinery-section">
-          <div className="section-container">
-            <div className="section-header">
-              <span className="section-tag">FABRICATION INFRASTRUCTURE</span>
-              <h2 className="section-title">Heavy Metal Forming & Shearing Equipment</h2>
-              <p className="section-desc">
-                High-capacity CNC machinery delivering micron-level repeatability on heavy steel plates and cold rolled coils.
-              </p>
-            </div>
-
-            <div className="machinery-specs-grid">
-              <div className="machinery-spec-card">
-                <div className="machinery-badge">CNC Press Brakes</div>
-                <h3>CNC Multi-Axis Hydraulic Bending</h3>
-                <p>Capacities from 100 Ton to 250 Ton with 4000 mm bed length for complex racking uprights, box step-beams, and custom profiles.</p>
-                <div className="machinery-metric-row">
-                  <div>
-                    <span className="metric-number">250T</span>
-                    <span className="metric-label">Max Tonnage</span>
-                  </div>
-                  <div>
-                    <span className="metric-number">4.0m</span>
-                    <span className="metric-label">Max Bed Length</span>
-                  </div>
-                  <div>
-                    <span className="metric-number">±0.2mm</span>
-                    <span className="metric-label">Tolerance</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="machinery-spec-card">
-                <div className="machinery-badge">Hydraulic Shearing</div>
-                <h3>Variable Rake Heavy Shearing Machines</h3>
-                <p>Precision hydraulic shearing capable of cutting MS plates up to 12 mm thickness without twist or burr formation.</p>
-                <div className="machinery-metric-row">
-                  <div>
-                    <span className="metric-number">12mm</span>
-                    <span className="metric-label">Max Plate Cut</span>
-                  </div>
-                  <div>
-                    <span className="metric-number">3.1m</span>
-                    <span className="metric-label">Blade Length</span>
-                  </div>
-                  <div>
-                    <span className="metric-number">100%</span>
-                    <span className="metric-label">Burr-Free Edge</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="machinery-spec-card">
-                <div className="machinery-badge">Roll Forming</div>
-                <h3>Automated Racking Roll Forming Lines</h3>
-                <p>Continuous roll forming mills with in-line CNC punching dies for precision teardrop, diamond, and slotted hole pitches.</p>
-                <div className="machinery-metric-row">
-                  <div>
-                    <span className="metric-number">14+</span>
-                    <span className="metric-label">Roll Stations</span>
-                  </div>
-                  <div>
-                    <span className="metric-number">12.5m</span>
-                    <span className="metric-label">Single Piece Uprights</span>
-                  </div>
-                  <div>
-                    <span className="metric-number">High-Tensile</span>
-                    <span className="metric-label">IS 5986 Steel</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* In-house machinery (from the catalogue, editable in Admin > Machines) */}
+        <MachineryShowcase />
 
         {/* Quality Lab & Certifications */}
         <section className="mfg-quality-section">

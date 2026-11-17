@@ -102,3 +102,25 @@ const response = await fetch('http://localhost:8000/api/v1/enquiries', {
   }),
 });
 ```
+
+---
+
+## ☁️ Deploying on Render
+
+This is an ASGI app, so Render's default `gunicorn your_application.wsgi` start command fails with `gunicorn: command not found`. Use the settings below (also captured in the repo-root `render.yaml` Blueprint):
+
+| Setting | Value |
+| --- | --- |
+| Root Directory | `backend` |
+| Build Command | `pip install --upgrade pip && pip install -r requirements.txt` |
+| Start Command | `uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
+| Health Check Path | `/api/v1/health` |
+
+Environment variables to set in the Render dashboard:
+
+* `DATABASE_URL` – Supabase Postgres URL (see `.env.example`). Without it the API falls back to SQLite on Render's ephemeral disk and data is lost on every deploy.
+* `ALLOWED_ORIGINS` – comma-separated frontend origins, e.g. `https://your-site.vercel.app`.
+* `APP_ENV=production`, `DEBUG=False`.
+* `ADMIN_EMAIL`, `ADMIN_PASSWORD` – the admin panel login. `ADMIN_SECRET` – random string that signs admin session tokens.
+
+Note: files written to `backend/uploads/` are also lost on redeploy unless a Render Disk is attached (or the uploads are moved to Supabase Storage).

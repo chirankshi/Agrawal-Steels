@@ -1,4 +1,4 @@
-import { IconShieldCheck, IconZap, IconTruck, IconGlobe } from './Icons';
+import { IconShieldCheck, IconZap, IconGlobe } from './Icons';
 
 export default function TickerStrip() {
   const highlights = [

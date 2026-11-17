@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { IconShieldCheck, IconAward, IconDownload, IconArrowRight, IconCheck, IconLayers } from './Icons';
+import { IconShieldCheck, IconDownload, IconArrowRight, IconLayers } from './Icons';
 
 export default function Certificates() {
   const [activeModalCert, setActiveModalCert] = useState(null);

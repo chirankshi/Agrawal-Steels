@@ -1,0 +1,33 @@
+# Render Blueprint for the Aggarwal Steels FastAPI backend.
+# If the service was created manually in the Render dashboard, copy the
+# buildCommand / startCommand below into Settings, and set the env vars
+# under Environment. The default "gunicorn your_application.wsgi" will not
+# work: this is an ASGI app served by uvicorn.
+services:
+  - type: web
+    name: aggarwal-steels-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_ORIGINS
+        # Comma-separated list of frontend origins, e.g. https://your-site.vercel.app
+        sync: false
+      - key: DATABASE_URL
+        # Supabase Postgres URL; see backend/.env.example
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ADMIN_SECRET
+        generateValue: true

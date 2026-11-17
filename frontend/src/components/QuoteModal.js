@@ -1,10 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { supabase } from '../lib/supabase';
+import { submitEnquiry, buildEnquiryNotes } from '../lib/enquiries';
+import { useSiteSettings, telHref, waHref } from '../lib/siteSettings';
 import { IconPhone, IconZap, IconShieldCheck, IconArrowRight } from './Icons';
 
 export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
+  const { settings } = useSiteSettings();
   const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -71,65 +73,23 @@ export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
     e.preventDefault();
     setLoading(true);
     setErrorMsg('');
-
-    try {
-      const notes = [
-        formData.company ? `Company: ${formData.company}` : '',
-        formData.quantity ? `Quantity/Tonnage: ${formData.quantity}` : '',
-        formData.location ? `Delivery Site/PIN: ${formData.location}` : '',
-        formData.message ? `Details: ${formData.message}` : ''
-      ].filter(Boolean).join(' | ');
-
-      const payload = {
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email || null,
-        product: formData.product || 'General Steel Inquiry',
-        message: notes || null,
-        status: 'pending',
-        source: 'instant_quote_modal',
-      };
-
-      // 1. Direct Supabase insert
-      let saved = false;
-      try {
-        const { data, error } = await supabase.from('enquiries').insert([payload]).select().single();
-        if (!error && data?.id) {
-          setEnquiryRef(`AS-RFQ-${String(data.id).padStart(4, '0')}`);
-          saved = true;
-        }
-      } catch {}
-
-      // 2. Fallback to API if Supabase didn't respond
-      if (!saved) {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-        const res = await fetch(`${apiUrl}/api/v1/enquiries`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        }).catch(() => null);
-
-        if (res && res.ok) {
-          const data = await res.json();
-          setEnquiryRef(data.id ? `AS-RFQ-${String(data.id).padStart(4, '0')}` : `AS-RFQ-${Date.now().toString().slice(-4)}`);
-        } else {
-          setEnquiryRef(`AS-RFQ-${Date.now().toString().slice(-4)}`);
-        }
-      }
-      setSubmitted(true);
-    } catch (err) {
-      // Offline fallback ensures client inquiry is never lost
-      setEnquiryRef(`AS-RFQ-${Date.now().toString().slice(-4)}`);
-      setSubmitted(true);
-    } finally {
-      setLoading(false);
-    }
+    const { ref } = await submitEnquiry({
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      product: formData.product,
+      message: buildEnquiryNotes(formData),
+      source: 'instant_quote_modal',
+    });
+    setEnquiryRef(ref);
+    setSubmitted(true);
+    setLoading(false);
   };
 
   if (!isOpen || !mounted) return null;
 
   // WhatsApp quick-link with prefilled text
-  const whatsappText = encodeURIComponent(
+  const whatsappText = (
     `Hello Aggarwal Steels Sales Desk,\n\nI just submitted an Instant RFQ [${enquiryRef || 'New'}].\n` +
     `• Name: ${formData.name}\n` +
     `• Phone: ${formData.phone}\n` +
@@ -139,7 +99,7 @@ export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
     (formData.location ? `• Delivery Site: ${formData.location}\n` : '') +
     `\nPlease share the best mill-direct rate and dispatch timeline.`
   );
-  const whatsappUrl = `https://wa.me/917300070778?text=${whatsappText}`;
+  const whatsappUrl = waHref(settings.whatsapp_number, whatsappText);
 
   const modalContent = (
     <div
@@ -211,11 +171,11 @@ export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
                 <span>⚡ Get Expedited Rate on WhatsApp</span>
               </a>
               <a
-                href="tel:+917300070778"
+                href={telHref(settings.sales_phone)}
                 className="btn-quote-call"
               >
                 <IconPhone size={15} />
-                <span>Call Plant Sales Desk (+91 73000 70778)</span>
+                <span>Call Plant Sales Desk ({settings.sales_phone})</span>
               </a>
               <button
                 type="button"

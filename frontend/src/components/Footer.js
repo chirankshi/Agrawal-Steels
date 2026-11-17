@@ -1,11 +1,10 @@
 'use client';
-import { useState } from 'react';
-import AdminCardModal from './AdminCardModal';
+import { useSiteSettings, telHref } from '../lib/siteSettings';
 import Link from 'next/link';
-import { IconShieldCheck, IconPhone, IconMail, IconMapPin, IconClock, IconFileText } from './Icons';
+import { IconPhone, IconMail, IconMapPin, IconClock, IconFileText } from './Icons';
 
 export default function Footer() {
-  const [showAdminCard, setShowAdminCard] = useState(false);
+  const { settings } = useSiteSettings();
   return (
     <footer className="footer-modern" id="footer">
       <div className="footer-top-wrap">
@@ -88,15 +87,15 @@ export default function Footer() {
                 <li>
                   <IconPhone size={15} />
                   <div>
-                    <a href="tel:+917300070778">+91 73000 70778</a>
+                    <a href={telHref(settings.sales_phone)}>{settings.sales_phone}</a>
                     <span style={{ color: '#64748b' }}> / </span>
-                    <a href="tel:+918800885185">+91 73000 96120</a>
+                    <a href={telHref(settings.alternate_phone)}>{settings.alternate_phone}</a>
                   </div>
                 </li>
                 <li>
                   <IconMail size={15} />
                   <div>
-                    <a href="mailto:sales@aggarwalsteel.com">sales@aggarwalsteel.com</a>
+                    <a href={`mailto:${settings.sales_email}`}>{settings.sales_email}</a>
                   </div>
                 </li>
                 <li>
@@ -108,8 +107,16 @@ export default function Footer() {
                   <span>Unit 02: G1-385, RIICO Ind. Area, Bhiwadi, RJ 301019</span>
                 </li>
                 <li>
+                  <IconMapPin size={15} />
+                  <span>Unit 01: 89, Sector 3, IMT Manesar, Gurugram, HR</span>
+                </li>
+                <li>
+                  <IconMapPin size={15} />
+                  <span>Unit 03: 81, Phase IV, Sector 15, Bawal, HR</span>
+                </li>
+                <li>
                   <IconClock size={15} />
-                  <span>Mon – Sat: 09:00 AM – 06:00 PM IST</span>
+                  <span>{settings.working_hours}</span>
                 </li>
               </ul>
             </div>
@@ -122,11 +129,10 @@ export default function Footer() {
           <p>© 2026 Aggarwal Steels &amp; Majestic AR Technology Pvt. Ltd. All rights reserved.</p>
           <p>
             Where Innovation Meets Precision &bull; A Legacy of Strength &bull;{' '}
-            <button type="button" onClick={() => setShowAdminCard(true)} className="footer-admin-btn">Staff Portal</button>
+            <Link href="/admin/login" className="footer-admin-btn">Staff Portal</Link>
           </p>
         </div>
       </div>
-      <AdminCardModal isOpen={showAdminCard} onClose={() => setShowAdminCard(false)} />
     </footer>
   );
 }

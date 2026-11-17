@@ -20,13 +20,15 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = "sqlite:///./aggarwal_steels.db"
 
-    SALES_EMAIL: str = "md@majesticar.com"
+    SALES_EMAIL: str = "sales@aggarwalsteel.com"
     SALES_PHONE: str = "+917300070778"
-    ALTERNATE_PHONE: str = "+918800885185"
+    ALTERNATE_PHONE: str = "+917300096120"
 
-    ADMIN_USERNAME: str = "admin"
-    ADMIN_PASSWORD: str = "AggarwalSteel@2026"
-    ADMIN_TOKEN: str = "as_adm_token_2026_industrial"
+    # Admin panel credentials. Set in backend/.env locally and in the Render
+    # dashboard (Environment) for the live deployment.
+    ADMIN_EMAIL: str = ""
+    ADMIN_PASSWORD: str = ""
+    ADMIN_SECRET: str = ""  # random string used to sign admin session tokens
 
     model_config = SettingsConfigDict(
         env_file=".env",

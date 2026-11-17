@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { IconShieldCheck, IconZap, IconTruck, IconGlobe, IconArrowRight, IconCheck, IconAward } from './Icons';
+import { IconTruck, IconArrowRight, IconAward } from './Icons';
 import CountUp from './CountUp';
 
 export default function Hero() {
@@ -80,9 +80,9 @@ export default function Hero() {
                 <div className="telemetry-stat-box stagger-stat-1">
                   <span className="stat-label-modern">Annual Turnover</span>
                   <div className="stat-value-modern">
-                    <CountUp target={200} prefix="₹" suffix="Cr+" duration={2000} />
+                    <CountUp target={230} prefix="₹" suffix="Cr" duration={2000} />
                   </div>
-                  <span className="stat-note-modern">Consistent 40%+ YoY Surge</span>
+                  <span className="stat-note-modern">Group turnover FY 2025-26</span>
                 </div>
 
                 <div className="telemetry-stat-box stagger-stat-2">
