@@ -5,6 +5,7 @@ import Footer from '../../components/Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
 import MachineryShowcase from '../../components/MachineryShowcase';
+import { useSiteSettings, telHref } from '../../lib/siteSettings';
 import {
   IconFactory,
   IconShieldCheck,
@@ -18,6 +19,7 @@ import {
 } from '../../components/Icons';
 
 export default function ManufacturingPage() {
+  const { settings } = useSiteSettings();
   return (
     <>
       <ScrollAnimations />
@@ -154,9 +156,9 @@ export default function ManufacturingPage() {
                   <span>Speak With Plant Head</span>
                   <IconArrowRight size={16} />
                 </Link>
-                <a href="tel:+919999009890" className="btn-secondary">
+                <a href={telHref(settings.sales_phone)} className="btn-secondary">
                   <IconPhone size={16} />
-                  <span>Call: +91 99990 09890</span>
+                  <span>Call: {settings.sales_phone}</span>
                 </a>
               </div>
             </div>

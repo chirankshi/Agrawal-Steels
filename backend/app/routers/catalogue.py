@@ -2,6 +2,7 @@
 from typing import List, Optional, Type
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from app.routers.auth import require_admin
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -64,7 +65,7 @@ def list_categories(only_active: bool = Query(False), db: Session = Depends(get_
     return _ordered(db, Category, only_active)
 
 
-@router.post("/categories", response_model=CategoryResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/categories", response_model=CategoryResponse, status_code=status.HTTP_201_CREATED, dependencies=[Depends(require_admin)])
 def create_category(body: CategoryCreate, db: Session = Depends(get_db)):
     if db.query(Category).filter(Category.slug == body.slug).first():
         raise HTTPException(status_code=400, detail="A category with this slug already exists")
@@ -75,7 +76,7 @@ def create_category(body: CategoryCreate, db: Session = Depends(get_db)):
     return row
 
 
-@router.put("/categories/{item_id}", response_model=CategoryResponse)
+@router.put("/categories/{item_id}", response_model=CategoryResponse, dependencies=[Depends(require_admin)])
 def update_category(item_id: int, body: CategoryUpdate, db: Session = Depends(get_db)):
     row = _get_or_404(db, Category, item_id, "Category")
     data = _clean(body.model_dump(exclude_unset=True))
@@ -94,7 +95,7 @@ def update_category(item_id: int, body: CategoryUpdate, db: Session = Depends(ge
     return row
 
 
-@router.delete("/categories/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/categories/{item_id}", status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(require_admin)])
 def delete_category(item_id: int, db: Session = Depends(get_db)):
     row = _get_or_404(db, Category, item_id, "Category")
     db.query(Subcategory).filter(Subcategory.category_slug == row.slug).delete()
@@ -118,7 +119,7 @@ def list_subcategories(
     return q.order_by(Subcategory.sort_order.asc(), Subcategory.id.asc()).all()
 
 
-@router.post("/subcategories", response_model=SubcategoryResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/subcategories", response_model=SubcategoryResponse, status_code=status.HTTP_201_CREATED, dependencies=[Depends(require_admin)])
 def create_subcategory(body: SubcategoryCreate, db: Session = Depends(get_db)):
     if not db.query(Category).filter(Category.slug == body.category_slug).first():
         raise HTTPException(status_code=400, detail="Unknown category_slug")
@@ -132,7 +133,7 @@ def create_subcategory(body: SubcategoryCreate, db: Session = Depends(get_db)):
     return row
 
 
-@router.put("/subcategories/{item_id}", response_model=SubcategoryResponse)
+@router.put("/subcategories/{item_id}", response_model=SubcategoryResponse, dependencies=[Depends(require_admin)])
 def update_subcategory(item_id: int, body: SubcategoryUpdate, db: Session = Depends(get_db)):
     row = _get_or_404(db, Subcategory, item_id, "Sub-category")
     data = _clean(body.model_dump(exclude_unset=True))
@@ -155,7 +156,7 @@ def update_subcategory(item_id: int, body: SubcategoryUpdate, db: Session = Depe
     return row
 
 
-@router.delete("/subcategories/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/subcategories/{item_id}", status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(require_admin)])
 def delete_subcategory(item_id: int, db: Session = Depends(get_db)):
     row = _get_or_404(db, Subcategory, item_id, "Sub-category")
     db.delete(row)
@@ -169,7 +170,7 @@ def list_machines(only_active: bool = Query(False), db: Session = Depends(get_db
     return _ordered(db, Machine, only_active)
 
 
-@router.post("/machines", response_model=MachineResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/machines", response_model=MachineResponse, status_code=status.HTTP_201_CREATED, dependencies=[Depends(require_admin)])
 def create_machine(body: MachineCreate, db: Session = Depends(get_db)):
     if db.query(Machine).filter(Machine.slug == body.slug).first():
         raise HTTPException(status_code=400, detail="A machine with this slug already exists")
@@ -180,7 +181,7 @@ def create_machine(body: MachineCreate, db: Session = Depends(get_db)):
     return row
 
 
-@router.put("/machines/{item_id}", response_model=MachineResponse)
+@router.put("/machines/{item_id}", response_model=MachineResponse, dependencies=[Depends(require_admin)])
 def update_machine(item_id: int, body: MachineUpdate, db: Session = Depends(get_db)):
     row = _get_or_404(db, Machine, item_id, "Machine")
     for key, value in _clean(body.model_dump(exclude_unset=True)).items():
@@ -190,7 +191,7 @@ def update_machine(item_id: int, body: MachineUpdate, db: Session = Depends(get_
     return row
 
 
-@router.delete("/machines/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/machines/{item_id}", status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(require_admin)])
 def delete_machine(item_id: int, db: Session = Depends(get_db)):
     row = _get_or_404(db, Machine, item_id, "Machine")
     db.delete(row)

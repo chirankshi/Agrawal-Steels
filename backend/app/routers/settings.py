@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from typing import Any, Dict
 
 from fastapi import APIRouter, Depends
+from app.routers.auth import require_admin
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -34,8 +35,8 @@ def get_settings(db: Session = Depends(get_db)) -> Dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
-@router.put("", include_in_schema=False)
-@router.put("/")
+@router.put("", include_in_schema=False, dependencies=[Depends(require_admin)])
+@router.put("/", dependencies=[Depends(require_admin)])
 def update_settings(payload: Dict[str, Any], db: Session = Depends(get_db)) -> Dict[str, Any]:
     """Replace the site settings with the submitted object."""
     row = _row(db)

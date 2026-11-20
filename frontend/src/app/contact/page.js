@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
 import { submitEnquiry, buildEnquiryNotes } from '../../lib/enquiries';
+import ProductOptions from '../../components/ProductOptions';
 import { useSiteSettings, telHref } from '../../lib/siteSettings';
 import {
   IconPhone,
@@ -16,22 +17,6 @@ import {
   IconArrowRight
 } from '../../components/Icons';
 
-const PRODUCTS_LIST = [
-  'HR Plates & Coils (IS 2062)',
-  'CR Sheets & Precision Coils (IS 513)',
-  'MS Chequered Plates & Tear Sheets',
-  'MS Beams & Heavy Joists (ISMB / NPB)',
-  'MS Channels (ISMC) & Angles',
-  'Hollow Sections (SHS/RHS) & MS Pipes',
-  'MS TMT Rebars (Fe 500D / 550D)',
-  'Heavy Duty Warehouse Pallet Racks',
-  'Drive-In & Double Deep High-Bay Racks',
-  'Heavy-Duty Cantilever Racking Systems',
-  'Multi-Tier Mezzanine Floor Systems',
-  'Industrial Slotted Angle Shelving Units',
-  '520ft Automated Powder Coating Services',
-  'Commercial Stainless Steel Kitchen Equipment',
-];
 
 function ContactContent() {
   const { settings } = useSiteSettings();
@@ -121,7 +106,7 @@ function ContactContent() {
                     </div>
                   </div>
                   <p className="loc-address">
-                    Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan
+                    {settings.address_head_office}
                     <br /><strong>Facilities:</strong> 520ft Automated Powder Coating Line, Heavy CNC Press Brakes, Roll Forming Lines.
                   </p>
                 </div>
@@ -135,7 +120,7 @@ function ContactContent() {
                     </div>
                   </div>
                   <p className="loc-address">
-                    G1-385, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan
+                    {settings.address_unit_02}
                     <br /><strong>Facilities:</strong> Heavy Structural Fabrication, High-Capacity EOT Cranes, Primary Steel Stockyard.
                   </p>
                 </div>
@@ -149,7 +134,7 @@ function ContactContent() {
                     </div>
                   </div>
                   <p className="loc-address">
-                    89, Sector 3, IMT Manesar, Gurugram, Haryana
+                    {settings.address_unit_01}
                     <br /><strong>Facilities:</strong> Precision Sheet Metal Components, Storage Racking Assembly, Trading Stockyard.
                   </p>
                 </div>
@@ -163,7 +148,7 @@ function ContactContent() {
                     </div>
                   </div>
                   <p className="loc-address">
-                    81, Phase IV, Sector 15, Bawal, Haryana
+                    {settings.address_unit_03}
                     <br /><strong>Facilities:</strong> Sheet Metal Fabrication, Material Handling Equipment, Trolleys &amp; Conveyors.
                   </p>
                 </div>
@@ -300,10 +285,7 @@ function ContactContent() {
                         onChange={handleChange}
                         className="rfq-input rfq-select"
                       >
-                        <option value="">Select Steel Grade or Storage System...</option>
-                        {PRODUCTS_LIST.map((prod, idx) => (
-                          <option key={idx} value={prod}>{prod}</option>
-                        ))}
+                        <ProductOptions current={formData.product} placeholder="Select a product or service..." />
                       </select>
                     </div>
 

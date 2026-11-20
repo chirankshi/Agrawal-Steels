@@ -2,8 +2,10 @@
 import { useState } from 'react';
 import { IconTruck, IconArrowRight, IconAward } from './Icons';
 import CountUp from './CountUp';
+import { useSiteSettings, num } from '../lib/siteSettings';
 
 export default function Hero() {
+  const { settings } = useSiteSettings();
   const [selectedCategory, setSelectedCategory] = useState('Primary Steel Supply');
 
   return (
@@ -39,12 +41,12 @@ export default function Hero() {
             </p>
 
             <div className="hero-cta-group">
-              <a href="#manufacturing" className="btn-modern-primary">
-                <span>In-House Machinery &amp; Plant</span>
+              <a href="#products" className="btn-modern-primary">
+                <span>Explore Products</span>
                 <IconArrowRight size={18} />
               </a>
-              <a href="#products" className="btn-modern-outline">
-                <span>Explore Products</span>
+              <a href="/Aggarwal_Steels_Catalogue_2026.pdf" download className="btn-modern-outline">
+                <span>Download Catalogue</span>
               </a>
             </div>
 
@@ -73,22 +75,22 @@ export default function Hero() {
                   <span className="telemetry-dot"></span>
                   <span className="telemetry-title">AT A GLANCE &bull; OFFICIAL AUDIT</span>
                 </div>
-                <span className="telemetry-year">SINCE 2015</span>
+                <span className="telemetry-year">SINCE {settings.founded_year}</span>
               </div>
 
               <div className="telemetry-stats-grid">
                 <div className="telemetry-stat-box stagger-stat-1">
                   <span className="stat-label-modern">Annual Turnover</span>
                   <div className="stat-value-modern">
-                    <CountUp target={230} prefix="₹" suffix="Cr" duration={2000} />
+                    <CountUp target={num(settings, 'turnover_cr') * 10} prefix="₹" suffix="Mn" duration={2000} />
                   </div>
-                  <span className="stat-note-modern">Group turnover FY 2025-26</span>
+                  <span className="stat-note-modern">Group turnover {settings.turnover_year}</span>
                 </div>
 
                 <div className="telemetry-stat-box stagger-stat-2">
                   <span className="stat-label-modern">Workforce</span>
                   <div className="stat-value-modern">
-                    <CountUp target={250} suffix="+" duration={2200} />
+                    <CountUp target={num(settings, 'staff_count')} suffix="+" duration={2200} />
                   </div>
                   <span className="stat-note-modern">Engineers, Technicians &amp; Staff</span>
                 </div>
@@ -96,17 +98,17 @@ export default function Hero() {
                 <div className="telemetry-stat-box stagger-stat-3">
                   <span className="stat-label-modern">Trading Experience</span>
                   <div className="stat-value-modern">
-                    <CountUp target={11} suffix="+ Yrs" duration={1800} />
+                    <CountUp target={num(settings, 'trading_years')} suffix="+ Yrs" duration={1800} />
                   </div>
-                  <span className="stat-note-modern">4+ Yrs In-House Manufacturing</span>
+                  <span className="stat-note-modern">{settings.manufacturing_years}+ Yrs In-House Manufacturing</span>
                 </div>
 
                 <div className="telemetry-stat-box stagger-stat-4">
                   <span className="stat-label-modern">Operating Units</span>
                   <div className="stat-value-modern">
-                    <CountUp target={5} suffix="Units" duration={1600} />
+                    <CountUp target={num(settings, 'units_count')} suffix="Units" duration={1600} />
                   </div>
-                  <span className="stat-note-modern">2 Mfg Plants &bull; 3 Trading Hubs</span>
+                  <span className="stat-note-modern">{settings.units_breakdown}</span>
                 </div>
               </div>
 

@@ -3,6 +3,7 @@
  * Live values come from Supabase (categories.tagline, subcategories.item_details);
  * these seeds keep the pages complete when the database is unreachable.
  */
+import { CATEGORY_PHOTOS, ITEM_PHOTOS, SUBCATEGORY_PHOTOS } from '../data/catalogueImages';
 
 export const TAGLINE_SEED = {
   'steel-supply': 'Mill-certified steel. Dispatched in 24 hours.',
@@ -746,14 +747,15 @@ const SUBCATEGORY_IMAGES = {
   'fabrication-to-drawing': '/images/cnc_bending.jpeg',
 };
 
-export const categoryImage = (c) => c?.image_url || CATEGORY_IMAGES[c?.slug] || '/images/hero_steel_background.jpg';
+export const categoryImage = (c) => c?.image_url || CATEGORY_PHOTOS[c?.slug] || CATEGORY_IMAGES[c?.slug] || '/images/hero_steel_background.jpg';
 export const subcategoryImage = (s, c, products = []) =>
-  s?.image_url || products.find((p) => p.image_url)?.image_url || SUBCATEGORY_IMAGES[s?.slug] || categoryImage(c);
+  s?.image_url || SUBCATEGORY_PHOTOS[s?.slug] || products.find((p) => p.image_url)?.image_url || SUBCATEGORY_IMAGES[s?.slug] || categoryImage(c);
 
 /** Item tile data: name + description + image, with fallbacks down the tree. */
 export function itemDetail(item, s, c, products = []) {
   const d = (s?.item_details || {})[item] || {};
-  return { name: item, description: d.description || '', image_url: d.image_url || subcategoryImage(s, c, products), hasOwnImage: Boolean(d.image_url) };
+  const own = d.image_url || ITEM_PHOTOS[s?.slug]?.[item] || '';
+  return { name: item, description: d.description || '', image_url: own || subcategoryImage(s, c, products), hasOwnImage: Boolean(own) };
 }
 
 export const parseDetails = (v) => {

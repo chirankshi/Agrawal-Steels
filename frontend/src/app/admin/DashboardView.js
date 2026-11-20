@@ -29,7 +29,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     Promise.all([adminApi.getEnquiryStats(), adminApi.getEnquiries(), adminApi.getProducts()]).then(([s, list, products]) => {
       setStats(s);
-      setRecent(list.slice(0, 6));
+      setRecent((list || []).slice(0, 6));
       setProductCount(products.filter((p) => p.is_active).length);
     });
     loadCatalogueAdmin().then((c) => setCatalogueCounts({ categories: c.flat.categories.length, subcategories: c.flat.subcategories.length, machines: c.flat.machines.length }));

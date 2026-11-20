@@ -9,13 +9,13 @@ import {
   IconPhone,
   IconDownload
 } from '../../components/Icons';
-import { CLIENTS } from '../../data/clients';
+import { useClients } from '../../lib/siteSettings';
 
 const SECTORS = [
   {
     title: 'E-Commerce & 3PL Logistics',
     stat: '45,000+ Pallet Positions',
-    desc: 'High-density selective pallet racking, multi-tier picking mezzanines, and gravity flow racking for India&apos;s leading e-commerce and logistics networks.',
+    desc: 'High-density selective pallet racking, multi-tier picking mezzanines, and gravity flow racking for India’s leading e-commerce and logistics networks.',
   },
   {
     title: 'Automotive & Engineering OEMs',
@@ -35,6 +35,7 @@ const SECTORS = [
 ];
 
 export default function ClientsPage() {
+  const CLIENTS = useClients();
   return (
     <>
       <ScrollAnimations />
@@ -63,13 +64,13 @@ export default function ClientsPage() {
                 <span>Partner With Us on Your Next Project</span>
               </Link>
               <a
-                href="/Aggarwal_Steels_Catalogue_2026.pdf"
-                download="Aggarwal_Steels_Catalogue_2026.pdf"
+                href="/Aggarwal_Steels_Company_Profile_2026.pdf"
+                download="Aggarwal_Steels_Company_Profile_2026.pdf"
                 className="btn-secondary"
                 id="btnDownloadClientCatalog"
               >
                 <IconDownload size={16} />
-                <span>Download Client & Project Portfolio</span>
+                <span>Download Company Profile</span>
               </a>
             </div>
           </div>

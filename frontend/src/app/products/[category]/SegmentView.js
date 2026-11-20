@@ -20,17 +20,32 @@ function splitTitle(name) {
   return [words.slice(0, cut).join(' '), words.slice(cut).join(' ')];
 }
 
-function ItemRow({ item }) {
+// Varied crops so items sharing their line's photo don't look identical.
+const CROPS = ['30% 40%', '70% 35%', '50% 70%', '20% 75%', '80% 65%', '45% 20%'];
+
+/** One product tile: photo, name, short spec and an enquire link. */
+function ItemCard({ item, line, index }) {
+  const shared = !item.hasOwnImage;
   return (
-    <li className="segment-row">
-      {item.hasOwnImage
-        ? <img className="segment-row-thumb" src={item.image_url} alt="" loading="lazy" />
-        : <span className="segment-row-tick" aria-hidden="true">✓</span>}
-      <span className="segment-row-text">
-        <strong>{item.name}</strong>
-        {item.description && <span>{item.description}</span>}
-      </span>
-    </li>
+    <article className={`prod-tile${shared ? ' prod-tile--shared' : ''}`}>
+      <div className="prod-tile-media">
+        <img
+          src={item.image_url}
+          alt={item.name}
+          loading="lazy"
+          style={shared ? { objectPosition: CROPS[index % CROPS.length] } : undefined}
+        />
+        <span className="prod-tile-chip">{line}</span>
+        {shared && <h3 className="prod-tile-label">{item.name}</h3>}
+      </div>
+      <div className="prod-tile-body">
+        {!shared && <h3>{item.name}</h3>}
+        {item.description && <p>{item.description}</p>}
+        <Link href={`/contact?product=${encodeURIComponent(`${item.name} (${line})`)}`} className="prod-tile-cta">
+          Enquire now <IconArrowRight size={13} />
+        </Link>
+      </div>
+    </article>
   );
 }
 
@@ -129,23 +144,23 @@ export default function SegmentView() {
             const prods = placed.filter((p) => p.subcategory?.slug === s.slug).map((p) => p.prod);
             const items = s.items.map((i) => itemDetail(i, s, category, prods));
             return (
-              <section key={s.slug} id={s.slug} className="segment-panel">
-                <div className="segment-panel-media">
-                  <img src={subcategoryImage(s, category, prods)} alt={s.name} loading="lazy" />
-                </div>
-                <div className="segment-panel-body">
-                  <span className="segment-rule" aria-hidden="true" />
-                  <h2>{s.name}</h2>
-                  {s.description && <p className="segment-panel-desc">{s.description}</p>}
-                  {items.length > 0 && (
-                    <ul className="segment-list">
-                      {items.map((item) => <ItemRow key={item.name} item={item} />)}
-                    </ul>
-                  )}
+              <section key={s.slug} id={s.slug} className="prod-line">
+                <header className="prod-line-head">
+                  <img className="prod-line-bg" src={subcategoryImage(s, category, prods)} alt="" loading="lazy" />
+                  <div className="prod-line-text">
+                    <span className="prod-line-count">{items.length} {items.length === 1 ? 'product' : 'products'}</span>
+                    <h2>{s.name}</h2>
+                    {s.description && <p>{s.description}</p>}
+                  </div>
                   <Link href={`/contact?product=${encodeURIComponent(s.name)}`} className="segment-panel-cta">
                     Get a quote for {s.name} <IconArrowRight size={14} />
                   </Link>
-                </div>
+                </header>
+                {items.length > 0 && (
+                  <div className="prod-tile-grid">
+                    {items.map((item, i) => <ItemCard key={item.name} item={item} line={s.name} index={i} />)}
+                  </div>
+                )}
               </section>
             );
           })}

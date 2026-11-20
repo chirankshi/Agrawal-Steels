@@ -27,8 +27,24 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = "sqlite:///./aggarwal_steels.db"
 
+    # Supabase Storage for admin image uploads. The secret (service role) key
+    # never goes to the browser: only this server uses it.
+    SUPABASE_URL: str = ""
+    SUPABASE_SERVICE_KEY: str = ""
+    SUPABASE_BUCKET: str = "product-images"
+
     SALES_EMAIL: str = "sales@aggarwalsteel.com"
     SALES_PHONE: str = "+917300070778"
+
+    # New-enquiry email alerts (e.g. Gmail: smtp.gmail.com, port 587, an App Password).
+    # Nothing is sent until SMTP_HOST, SMTP_USER and SMTP_PASSWORD are set.
+    SMTP_HOST: str = ""
+    SMTP_PORT: int = 587
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM: str = ""  # defaults to SMTP_USER
+    NOTIFY_EMAILS: str = ""  # comma-separated; defaults to SALES_EMAIL
+    SITE_URL: str = "https://aggarwalsteel.com"
     ALTERNATE_PHONE: str = "+917300096120"
 
     # Admin panel credentials. Set in backend/.env locally and in the Render

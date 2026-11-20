@@ -1107,3 +1107,40 @@
 .item-editor-actions .btn-icon { width: 26px; height: 26px; font-size: 0.75rem; }
 .item-editor-actions .btn-icon:disabled { opacity: 0.35; cursor: default; }
 @media (max-width: 640px) { .item-editor-row { grid-template-columns: 56px minmax(0, 1fr); } .item-editor-actions { grid-column: 1 / -1; justify-content: flex-end; } }
+/* ---------- Message bar (save errors, session expiry) ---------- */
+.admin-message { position: sticky; top: var(--adm-header-height); z-index: 850; display: flex; align-items: center; gap: 12px; margin: 0; padding: 10px 1.75rem; font-size: 0.82rem; font-weight: 600; border-bottom: 1px solid; }
+.admin-message.error { background: #fff1f2; color: #9f1239; border-color: #fecdd3; }
+.admin-message.success { background: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+.admin-message span { flex: 1; min-width: 0; }
+.admin-message-action { background: #9f1239; color: #fff; border: none; border-radius: 6px; padding: 5px 12px; font-size: 0.76rem; font-weight: 700; cursor: pointer; }
+.admin-message-close { background: none; border: none; font-size: 1.2rem; line-height: 1; color: inherit; cursor: pointer; padding: 0 4px; }
+@media (max-width: 768px) { .admin-message { padding: 10px 1rem; } }
+.settings-section-title { margin: 10px 0 0; padding-top: 12px; border-top: 1px solid var(--adm-border); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--adm-text-muted); }
+.settings-section-title:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+/* ---------- Clients admin ---------- */
+.client-admin-list { display: flex; flex-direction: column; }
+.client-admin-row { display: grid; grid-template-columns: 24px 96px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 1.25rem; border-bottom: 1px solid var(--adm-border); }
+.client-admin-row.inactive { opacity: 0.55; }
+.client-admin-pos { font-size: 0.72rem; font-weight: 800; color: var(--adm-text-dim); text-align: right; }
+.client-admin-logo { width: 96px; height: 52px; border-radius: 8px; border: 1px dashed var(--adm-border-strong); background: #fff; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; color: var(--adm-text-muted); font-size: 0.7rem; font-weight: 700; }
+.client-admin-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.client-admin-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; min-width: 0; }
+.client-admin-fields .wide { grid-column: 1 / -1; }
+.client-admin-fields input { width: 100%; padding: 6px 10px; font-size: 0.8rem; border: 1px solid var(--adm-border); border-radius: 6px; background: var(--adm-bg-card); color: var(--adm-text-main); font-family: inherit; box-sizing: border-box; }
+.client-admin-row .btn-icon { width: 28px; height: 28px; }
+.client-admin-row .btn-icon:disabled { opacity: 0.35; cursor: default; }
+@media (max-width: 760px) { .client-admin-row { grid-template-columns: 80px minmax(0, 1fr); } .client-admin-pos { display: none; } .client-admin-logo { width: 80px; } .client-admin-row .action-btn-group { grid-column: 1 / -1; justify-content: flex-end; flex-wrap: wrap; } .client-admin-fields { grid-template-columns: 1fr; } }
+
+/* ---------- Enquiry history ---------- */
+.enq-assignee-filter { padding: 6px 10px; border: 1px solid var(--adm-border); border-radius: var(--adm-radius-sm); background: var(--adm-bg-surface); color: var(--adm-text-main); font-size: 0.78rem; font-family: inherit; }
+.enq-history { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--adm-border); display: flex; flex-direction: column; gap: 10px; max-height: 240px; overflow-y: auto; }
+.enq-history li { position: relative; display: flex; flex-direction: column; gap: 2px; font-size: 0.82rem; color: var(--adm-text-silver); }
+.enq-history li::before { content: ""; position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--adm-border-strong); border: 2px solid var(--adm-bg-surface); }
+.enq-history li.note::before { background: var(--adm-amber); }
+.enq-history li.note span { background: var(--adm-amber-soft); padding: 6px 10px; border-radius: 6px; color: var(--adm-text-main); white-space: pre-wrap; }
+.enq-history time { font-size: 0.7rem; color: var(--adm-text-dim); font-weight: 600; }
+.team-credentials { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 16px 20px; border-color: #a7f3d0; background: #ecfdf5; }
+.team-credentials > div:first-child { flex: 1 1 260px; }
+.team-credentials strong { color: #065f46; }
+.team-credentials p { margin: 4px 0 0; font-size: 0.78rem; color: #047857; }
+.team-credentials code { background: #fff; border: 1px solid #a7f3d0; border-radius: 8px; padding: 8px 12px; font-size: 0.85rem; color: #0f172a; line-height: 1.6; }

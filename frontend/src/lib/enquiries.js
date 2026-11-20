@@ -8,7 +8,8 @@ export function formatEnquiryRef(id) {
 }
 
 /**
- * Persists a website enquiry. Tries Supabase first, then the optional FastAPI
+ * Persists a website enquiry. Tries the Supabase submit function, then a plain
+ * insert, then the FastAPI
  * backend. Never throws: if both stores are unreachable it still returns a
  * reference so the visitor gets a confirmation and the sales desk can follow
  * up by phone.
@@ -27,9 +28,29 @@ export async function submitEnquiry(input) {
     source: input.source || 'website_rfq_form',
   };
 
+  // 1. Database function: inserts and returns the new id. Visitors cannot read
+  //    the enquiries table, so a plain insert could not return the reference.
   try {
-    const { data, error } = await supabase.from('enquiries').insert([payload]).select().single();
-    if (!error && data?.id) return { ref: formatEnquiryRef(data.id), saved: true };
+    const { data, error } = await supabase.rpc('submit_enquiry', {
+      p_name: payload.name,
+      p_phone: payload.phone,
+      p_email: payload.email,
+      p_product: payload.product,
+      p_message: payload.message,
+      p_source: payload.source,
+    });
+    if (!error && data) {
+      alertSalesTeam(data);
+      return { ref: formatEnquiryRef(data), saved: true };
+    }
+  } catch {
+    /* fall through */
+  }
+
+  // 2. Plain insert (allowed insert-only), without reading the row back.
+  try {
+    const { error } = await supabase.from('enquiries').insert([payload]);
+    if (!error) return { ref: formatEnquiryRef(null), saved: true };
   } catch {
     /* fall through to backend */
   }
@@ -50,6 +71,19 @@ export async function submitEnquiry(input) {
   }
 
   return { ref: formatEnquiryRef(null), saved: false };
+}
+
+/**
+ * Asks the backend to email the sales team about a new enquiry. Fire-and-forget:
+ * the visitor never waits for it, and `keepalive` lets it finish if they leave.
+ * The backend sends at most one email per enquiry.
+ */
+function alertSalesTeam(id) {
+  try {
+    fetch(`${API_BASE}/api/v1/enquiries/${id}/notify`, { method: 'POST', keepalive: true }).catch(() => {});
+  } catch {
+    /* alerts are best-effort */
+  }
 }
 
 /** Joins optional RFQ fields into the single free-text `message` column. */

@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from sqlalchemy import Column, Integer, String, Text, DateTime, Enum
 import enum
 from app.database import Base
+from app.models.types import JSONData
 
 
 class EnquiryStatus(str, enum.Enum):
@@ -30,5 +31,8 @@ class Enquiry(Base):
     )
     source = Column(String(50), default="website_contact_form")
     notes = Column(Text, nullable=True)
+    assigned_to = Column(String(120), nullable=True)  # salesperson handling it
+    history = Column(JSONData, nullable=True)  # [{at, by, text}] notes and status changes
+    notified_at = Column(DateTime, nullable=True)  # when the sales alert email went out
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))

@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { submitEnquiry, buildEnquiryNotes } from '../lib/enquiries';
+import ProductOptions from './ProductOptions';
 import { useSiteSettings, telHref, waHref } from '../lib/siteSettings';
 import { IconPhone, IconZap, IconShieldCheck, IconArrowRight } from './Icons';
 
@@ -13,7 +14,7 @@ export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
     phone: '',
     company: '',
     email: '',
-    product: defaultProduct || 'TMT Rebars (Fe 550D / 500D)',
+    product: defaultProduct || '',
     quantity: '',
     location: '',
     message: '',
@@ -255,14 +256,7 @@ export default function QuoteModal({ isOpen, onClose, defaultProduct = '' }) {
                     value={formData.product}
                     onChange={handleChange}
                   >
-                    <option value="TMT Rebars (Fe 550D / 500D)">TMT Rebars (Fe 550D / 500D - SAIL, TATA, Jindal)</option>
-                    <option value="MS Structural Steel (Beams, Channels, Angles)">MS Structural Steel (Beams, ISMC, Angles)</option>
-                    <option value="MS Plates, HR & CR Sheets">MS Plates, HR Sheets &amp; CR Coils</option>
-                    <option value="Heavy Industrial Pallet Racking (Majestic AR)">Heavy Industrial Pallet Racking (Majestic AR)</option>
-                    <option value="Multi-Tier Mezzanine Floors & Cantilevers">Multi-Tier Mezzanine Floors &amp; Cantilevers</option>
-                    <option value="MS Pipes & Hollow Sections (Round / Square / Rect)">MS Pipes &amp; Hollow Sections (Round / Rect / Square)</option>
-                    <option value="Binding Wire & Wire Rods">Binding Wire &amp; High-Tensile Wire Rods</option>
-                    <option value="520ft Automated Powder Coating & Fabrication">520ft Automated Powder Coating &amp; Custom Fabrication</option>
+                    <ProductOptions current={formData.product} />
                   </select>
                 </div>
 

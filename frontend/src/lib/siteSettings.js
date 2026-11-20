@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
+import { adminRequest } from './adminRequest';
+import { CLIENTS } from '../data/clients';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const LS_KEY = 'aggarwal_site_settings';
@@ -15,18 +17,50 @@ export const DEFAULT_SETTINGS = {
   sales_email: 'sales@aggarwalsteel.com',
   md_email: 'md@aggarwalsteel.com',
   working_hours: 'Mon – Sat: 09:00 AM – 06:00 PM IST',
+  // Company figures (hero, About)
+  founded_year: '2015',
+  turnover_cr: '230',
+  turnover_year: 'FY 2025-26',
+  staff_count: '250',
+  trading_years: '11',
+  manufacturing_years: '4',
+  units_count: '5',
+  units_breakdown: '2 Mfg Plants • 3 Trading Hubs',
+  // Addresses (footer, contact page, home contact section)
+  address_head_office: 'Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan',
+  address_unit_02: 'G1-385, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan',
+  address_unit_01: '89, Sector 3, IMT Manesar, Gurugram, Haryana',
+  address_unit_03: '81, Phase IV, Sector 15, Bawal, Haryana',
+  // Client list (Admin -> Clients). Empty means the built-in list.
+  clients: [],
 };
 
 export const SETTING_FIELDS = [
-  { key: 'announcement_enabled', label: 'Show top announcement bar', type: 'checkbox' },
-  { key: 'announcement_text', label: 'Announcement bar text', type: 'text' },
+  { section: 'Contact details' },
   { key: 'sales_phone', label: 'Primary sales phone', type: 'text' },
   { key: 'alternate_phone', label: 'Second phone', type: 'text' },
   { key: 'whatsapp_number', label: 'WhatsApp number (for the Chat buttons)', type: 'text' },
   { key: 'sales_email', label: 'Sales email', type: 'email' },
   { key: 'md_email', label: 'Director / MD email', type: 'email' },
   { key: 'working_hours', label: 'Working hours line', type: 'text' },
+  { section: 'Company figures (home page hero and About page)' },
+  { key: 'founded_year', label: 'Year established', type: 'number' },
+  { key: 'turnover_cr', label: 'Group turnover (₹ crore, shown on site in million ×10)', type: 'number' },
+  { key: 'turnover_year', label: 'Turnover year label', type: 'text' },
+  { key: 'staff_count', label: 'Workforce (number of people)', type: 'number' },
+  { key: 'trading_years', label: 'Years of trading experience', type: 'number' },
+  { key: 'manufacturing_years', label: 'Years of in-house manufacturing', type: 'number' },
+  { key: 'units_count', label: 'Operating units', type: 'number' },
+  { key: 'units_breakdown', label: 'Units breakdown line', type: 'text' },
+  { section: 'Addresses' },
+  { key: 'address_head_office', label: 'Head office (Bhiwadi)', type: 'text', wide: true },
+  { key: 'address_unit_02', label: 'Manufacturing unit 02 (Bhiwadi)', type: 'text', wide: true },
+  { key: 'address_unit_01', label: 'Majestic AR unit 01 (Manesar)', type: 'text', wide: true },
+  { key: 'address_unit_03', label: 'Majestic AR unit 03 (Bawal)', type: 'text', wide: true },
 ];
+
+/** Number setting with a safe fallback, for CountUp targets. */
+export const num = (settings, key) => Number(settings?.[key]) || Number(DEFAULT_SETTINGS[key]) || 0;
 
 const digits = (phone) => String(phone || '').replace(/[^\d]/g, '');
 /** "+91 73000 70778" -> "tel:+917300070778" */
@@ -70,31 +104,18 @@ async function fetchSiteSettings() {
   return { settings: { ...DEFAULT_SETTINGS }, source: 'defaults' };
 }
 
-/** Saves settings through the same chain. Always keeps a browser copy. */
+/** Saves settings through the backend with the admin login token. */
 export async function saveSiteSettings(settings) {
   const payload = merge(settings);
-  try { localStorage.setItem(LS_KEY, JSON.stringify(payload)); } catch { /* ignore */ }
   cached = null; // next read sees the new values
-
-  try {
-    const { error } = await supabase.from('site_settings').upsert({ id: 1, data: payload, updated_at: new Date().toISOString() });
-    if (!error) return { ok: true, storage: 'supabase' };
-  } catch { /* unreachable */ }
-
-  try {
-    const res = await fetch(`${API_BASE}/api/v1/settings`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(4000),
-    });
-    if (res.ok) return { ok: true, storage: 'api' };
-  } catch { /* offline */ }
-
-  return { ok: true, storage: 'local' };
+  const res = await adminRequest('/settings', { method: 'PUT', body: payload });
+  if (res.ok) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(payload)); } catch { /* ignore */ }
+    return { ok: true, storage: 'api' };
+  }
+  return { ok: false, storage: null, error: res.error };
 }
 
-/** React hook for public pages: defaults first, live values once loaded. */
 export function useSiteSettings() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [source, setSource] = useState('defaults');
@@ -104,4 +125,14 @@ export function useSiteSettings() {
     return () => { alive = false; };
   }, []);
   return { settings, source };
+}
+
+/**
+ * Client roster for the logo strip and the Clients page. Edited in Admin -> Clients
+ * (stored in site settings); falls back to the built-in list in data/clients.js.
+ */
+export function useClients() {
+  const { settings } = useSiteSettings();
+  const list = Array.isArray(settings.clients) && settings.clients.length ? settings.clients : CLIENTS;
+  return list.filter((c) => c && c.name && c.is_active !== false);
 }

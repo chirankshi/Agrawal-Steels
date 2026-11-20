@@ -10,7 +10,7 @@ const CAPABILITIES = [
     badge: '5 Units • Tandem Setup',
     icon: <IconCpu size={22} />,
     desc: '5 high-precision CNC bending machines in tandem configuration for heavy multi-bend profiles, upright columns, desk panels, and complex enclosures with zero deflection.',
-    img: '/images/cnc_bending.jpeg',
+    img: '/images/catalogue/cnc-bending-tandem.jpg',
     specs: ['5 CNC Tandem Bending Units', 'Energy Mission & HACO Controls', 'Up to 12mm Plate Bending', 'Repeat Accuracy ±0.2mm'],
   },
   {
@@ -19,7 +19,7 @@ const CAPABILITIES = [
     badge: 'Up to 250 Ton Capacity',
     icon: <IconZap size={22} />,
     desc: 'High-speed hydraulic shearing for precise, burr-free sheet cutting, backed by mechanical and hydraulic power presses up to 250 Ton capacity for heavy stamping and punching.',
-    img: '/images/support_welding.jpeg',
+    img: '/images/catalogue/power-press.jpg',
     specs: ['Up to 250 Ton Power Press', 'High-Speed Precision Shearing', 'Clean Burr-Free Edge Quality', 'Heavy-Duty Stamping & Piercing'],
   },
   {
@@ -28,7 +28,7 @@ const CAPABILITIES = [
     badge: 'In-House Cold Roll Profiling',
     icon: <IconLayers size={22} />,
     desc: 'Continuous roll forming lines specialized in manufacturing Slotted Angles, Racking Upright Columns, MKM Sections, and Omega Profiles with uniform structural rigidity.',
-    img: '/images/storage_racking.jpeg',
+    img: '/images/catalogue/roll-forming-machine.jpg',
     specs: ['Slotted Angles & MKM Sections', 'Racking Uprights & Omega Profiles', 'High-Speed Continuous Roll Forming', 'Consistent Structural Tolerances'],
   },
   {
@@ -37,7 +37,7 @@ const CAPABILITIES = [
     badge: 'Certified Welding Setup',
     icon: <IconWrench size={22} />,
     desc: 'Equipped with original Miller TIG & MIG welding stations for spotless SS and MS fabrication, along with heavy spot welding machines for electrical enclosures and panels.',
-    img: '/images/commercial_kitchen.jpeg',
+    img: '/images/catalogue/tig-mig-welding.jpg',
     specs: ['Miller TIG & MIG Power Sources', 'SS & MS Clean Penetration Welds', 'High-Speed Multi-Spot Welding', 'ISO 3834-2 Fusion Weld Certified'],
   },
   {
@@ -46,7 +46,7 @@ const CAPABILITIES = [
     badge: '4-Stage Automated Line',
     icon: <IconShieldCheck size={22} />,
     desc: 'State-of-the-art 520 ft conveyorized plant with multi-stage pre-treatment, automatic reciprocator spray booth, and high-temp curing oven for durable, corrosion-proof finish.',
-    img: '/images/storage_racking.jpeg',
+    img: '/images/catalogue/powder-coating-plant.jpg',
     specs: ['520 Ft Continuous Overhead Conveyor', 'Automatic Reciprocator Spray Booth', 'Multi-Stage Chemical Pre-Treatment', 'Long-Lasting High Corrosion Resistance'],
   },
   {
@@ -55,7 +55,7 @@ const CAPABILITIES = [
     badge: '35 Ton Lifting Capacity',
     icon: <IconLayers size={22} />,
     desc: 'Massive plant lifting infrastructure: two 35-Ton EOT cranes (1st Bay), two 15-Ton EOT cranes (2nd Bay), 15-Ton Hydra mobile crane, and 4-Ton forklifts for 24-hour rapid dispatch.',
-    img: '/images/hero_steel_background.jpg',
+    img: '/images/catalogue/eot-crane-35t.jpg',
     specs: ['2x 35-Ton EOT Cranes (1st Bay)', '2x 15-Ton EOT Cranes (2nd Bay)', '15-Ton Mobile Hydra Crane', '4-Ton Heavy Industrial Forklift'],
   },
 ];
@@ -94,19 +94,19 @@ export default function Manufacturing({ isHome = true }) {
                 <span className="cap-badge">{cap.badge}</span>
               </div>
               <div className="cap-content">
-                <div className="cap-icon-box">{cap.icon}</div>
-                <h3 className="cap-title">{cap.title}</h3>
-                <p className="cap-desc">{cap.desc}</p>
-                <div className="cap-specs">
-                  {cap.specs.map((spec, i) => (
-                    <span key={i} className="cap-spec-tag">
-                      ✓ {spec}
-                    </span>
-                  ))}
+                <div className="cap-head">
+                  <div className="cap-icon-box">{cap.icon}</div>
+                  <h3 className="cap-title">{cap.title}</h3>
                 </div>
+                <p className="cap-desc">{cap.desc}</p>
+                <ul className="cap-specs">
+                  {cap.specs.map((spec, i) => (
+                    <li key={i} className="cap-spec-tag">{spec}</li>
+                  ))}
+                </ul>
                 <a href="#contact" className="cap-link">
-                  <span>Enquire Machine Specs &amp; RFQ</span>
-                  <IconArrowRight size={16} />
+                  <span>Enquire about this</span>
+                  <IconArrowRight size={14} />
                 </a>
               </div>
             </div>
@@ -116,7 +116,7 @@ export default function Manufacturing({ isHome = true }) {
         {isHome && (
           <div className="section-cta-wrap">
             <Link href="/manufacturing" className="btn-modern-outline" id="btnViewAllMachinery">
-              <span>View All Plant Infrastructure &amp; Technical Specs (All 6 Divisions)</span>
+              <span>View all machinery &amp; plant specs</span>
               <IconArrowRight size={16} />
             </Link>
           </div>

@@ -25,13 +25,9 @@ export default function AdminSettingsPage() {
     e.preventDefault();
     setSaving(true);
     setNotice('');
-    const { storage } = await saveSiteSettings(settings);
-    setSource(storage);
-    setNotice(
-      storage === 'local'
-        ? 'Saved in this browser only. No database was reachable, so other visitors will still see the previous values.'
-        : 'Saved. The website now shows these values.'
-    );
+    const { ok, storage, error } = await saveSiteSettings(settings);
+    if (ok) setSource(storage);
+    setNotice(ok ? 'Saved. The website now shows these values.' : error || 'Not saved. Please try again.');
     setSaving(false);
     setTimeout(() => setNotice(''), 6000);
   };
@@ -47,7 +43,7 @@ export default function AdminSettingsPage() {
           <div>
             <h3 className="panel-card-title">Site Settings</h3>
             <p style={{ margin: '4px 0 0 0', fontSize: '0.75rem', color: 'var(--adm-text-muted)' }}>
-              Announcement bar, phone numbers, emails and working hours shown across the website.
+              Phone numbers, emails, company figures and addresses shown across the website.
             </p>
           </div>
           <span className={`status-badge ${source === 'supabase' || source === 'api' ? 'badge-closed' : 'badge-pending'}`} title={SOURCE_LABEL[source]}>
@@ -64,13 +60,15 @@ export default function AdminSettingsPage() {
             )}
 
             {SETTING_FIELDS.map((f) =>
-              f.type === 'checkbox' ? (
+              f.section ? (
+                <h4 key={f.section} className="span-2 settings-section-title">{f.section}</h4>
+              ) : f.type === 'checkbox' ? (
                 <label key={f.key} className="span-2" style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: '0.88rem', color: 'var(--adm-text-main)', cursor: 'pointer' }}>
                   <input type="checkbox" checked={Boolean(settings[f.key])} onChange={(e) => set(f.key, e.target.checked)} style={{ width: 18, height: 18 }} />
                   {f.label}
                 </label>
               ) : (
-                <div className={`form-group-adm ${f.key === 'announcement_text' ? 'span-2' : ''}`} key={f.key}>
+                <div className={`form-group-adm ${f.wide ? 'span-2' : ''}`} key={f.key}>
                   <label>{f.label}</label>
                   <input type={f.type} value={settings[f.key] ?? ''} onChange={(e) => set(f.key, e.target.value)} />
                 </div>
@@ -82,7 +80,7 @@ export default function AdminSettingsPage() {
               <button type="button" className="btn-secondary-adm" onClick={handleReset}>Restore Defaults</button>
             </div>
             <p className="span-2" style={{ fontSize: '0.72rem', color: 'var(--adm-text-dim)', margin: 0 }}>
-              Where these appear: announcement bar (top of every page), footer, home contact section, contact page, and the Instant Quote popup.
+              Where these appear: footer, contact page, home contact section, Instant Quote popup, Manufacturing page call button, and the figures in the home page hero and About page.
             </p>
           </div>
         </form>

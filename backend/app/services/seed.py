@@ -47,7 +47,7 @@ def _ensure_product_columns():
             "show_on_home": "BOOLEAN DEFAULT 0 NOT NULL",
             "catalogue_page": "INTEGER",
         },
-        "enquiries": {"notes": "TEXT"},
+        "enquiries": {"notes": "TEXT", "assigned_to": "VARCHAR(120)", "history": "TEXT", "notified_at": "DATETIME"},
         "subcategories": {"item_details": "TEXT"},
         "categories": {"tagline": "TEXT"},
     }

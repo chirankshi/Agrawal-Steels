@@ -18,11 +18,16 @@ export default function AdminEnquiriesPage() {
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [notesInput, setNotesInput] = useState('');
+  const [assignInput, setAssignInput] = useState('');
+  const [range, setRange] = useState('all'); // 'all' | '1' | '7' | '30' days
+  const [assignee, setAssignee] = useState('all');
+  const [savingNote, setSavingNote] = useState(false);
 
   const loadEnquiries = async () => {
     setLoading(true);
     try {
-      setAllEnquiries(await adminApi.getEnquiries({ search: searchTerm }));
+      const list = await adminApi.getEnquiries({ search: searchTerm });
+      if (list) setAllEnquiries(list);
     } catch (e) {
       console.error('Error fetching enquiries:', e);
     } finally {
@@ -34,11 +39,15 @@ export default function AdminEnquiriesPage() {
     loadEnquiries();
   }, [searchTerm]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const enquiries = filterStatus === 'all' ? allEnquiries : allEnquiries.filter((e) => e.status === filterStatus);
+  const inRange = (e) => range === 'all' || Date.now() - new Date(e.created_at).getTime() <= Number(range) * 86400000;
+  const byAssignee = (e) => assignee === 'all' || (assignee === 'none' ? !e.assigned_to : e.assigned_to === assignee);
+  const scoped = allEnquiries.filter((e) => inRange(e) && byAssignee(e));
+  const enquiries = filterStatus === 'all' ? scoped : scoped.filter((e) => e.status === filterStatus);
+  const assignees = [...new Set(allEnquiries.map((e) => e.assigned_to).filter(Boolean))].sort();
   const paged = usePaged(enquiries, 10);
-  const countOf = (st) => allEnquiries.filter((e) => e.status === st).length;
+  const countOf = (st) => scoped.filter((e) => e.status === st).length;
   const statCards = [
-    { key: 'all', label: 'All enquiries', value: allEnquiries.length, accent: '#38bdf8' },
+    { key: 'all', label: 'All enquiries', value: scoped.length, accent: '#38bdf8' },
     { key: 'pending', label: 'Pending', value: countOf('pending'), accent: '#f59e0b' },
     { key: 'in_review', label: 'In review', value: countOf('in_review'), accent: '#a78bfa' },
     { key: 'quoted', label: 'Quoted', value: countOf('quoted'), accent: 'var(--adm-emerald)' },
@@ -59,15 +68,28 @@ export default function AdminEnquiriesPage() {
 
   const handleOpenModal = (enq) => {
     setSelectedEnquiry(enq);
-    setNotesInput(enq.notes || enq.message || '');
+    setNotesInput('');
+    setAssignInput(enq.assigned_to || '');
     setModalOpen(true);
   };
 
+  // Adds a note to the history and saves the assignment. Keeps the window open so the history updates.
   const handleSaveNotes = async () => {
     if (!selectedEnquiry) return;
-    await adminApi.updateEnquiry(selectedEnquiry.id, { notes: notesInput });
-    setModalOpen(false);
-    loadEnquiries();
+    const patch = {};
+    if (notesInput.trim()) patch.add_note = notesInput.trim();
+    if ((assignInput.trim() || null) !== (selectedEnquiry.assigned_to || null)) patch.assigned_to = assignInput.trim();
+    if (!Object.keys(patch).length) { setModalOpen(false); return; }
+    setSavingNote(true);
+    const ok = await adminApi.updateEnquiry(selectedEnquiry.id, patch);
+    setSavingNote(false);
+    if (!ok) return;
+    setNotesInput('');
+    const list = await adminApi.getEnquiries({ search: searchTerm });
+    if (list) {
+      setAllEnquiries(list);
+      setSelectedEnquiry(list.find((e) => e.id === selectedEnquiry.id) || selectedEnquiry);
+    }
   };
 
   const handleExport = () => {
@@ -140,21 +162,17 @@ export default function AdminEnquiriesPage() {
             justifyContent: 'space-between',
           }}
         >
-          <div className="filter-tabs">
-            {['all', 'pending', 'in_review', 'quoted', 'closed'].map((st) => (
-              <button
-                key={st}
-                type="button"
-                className={`filter-tab ${filterStatus === st ? 'active' : ''}`}
-                onClick={() => setFilterStatus(st)}
-              >
-                {st === 'all'
-                  ? 'All Inquiries'
-                  : st === 'in_review'
-                  ? 'In Review'
-                  : st.charAt(0).toUpperCase() + st.slice(1)}
-              </button>
-            ))}
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+            <div className="filter-tabs" role="group" aria-label="Date range">
+              {[['all', 'Any time'], ['1', 'Today'], ['7', 'Last 7 days'], ['30', 'Last 30 days']].map(([k, label]) => (
+                <button key={k} type="button" className={`filter-tab ${range === k ? 'active' : ''}`} onClick={() => setRange(k)}>{label}</button>
+              ))}
+            </div>
+            <select className="enq-assignee-filter" value={assignee} onChange={(e) => setAssignee(e.target.value)} aria-label="Assigned to">
+              <option value="all">Everyone</option>
+              <option value="none">Unassigned</option>
+              {assignees.map((a) => <option key={a} value={a}>{a}</option>)}
+            </select>
           </div>
 
           <div className="search-box">
@@ -184,6 +202,7 @@ export default function AdminEnquiriesPage() {
                 <th>Came From</th>
                 <th>Requirements / Site</th>
                 <th>Status</th>
+                <th>Assigned</th>
                 <th>Date Logged</th>
                 <th>Actions</th>
               </tr>
@@ -191,7 +210,7 @@ export default function AdminEnquiriesPage() {
             <tbody>
               {enquiries.length === 0 ? (
                 <tr>
-                  <td colSpan="9" style={{ textAlign: 'center', padding: '3rem', color: 'var(--adm-text-muted)' }}>
+                  <td colSpan="11" style={{ textAlign: 'center', padding: '3rem', color: 'var(--adm-text-muted)' }}>
                     {loading ? 'Fetching inquiries from sales desk...' : 'No inquiries found matching criteria.'}
                   </td>
                 </tr>
@@ -227,9 +246,9 @@ export default function AdminEnquiriesPage() {
                       >
                         {enq.message || 'Standard inquiry'}
                       </div>
-                      {enq.notes && (
+                      {enq.history?.length > 0 && (
                         <div style={{ fontSize: '0.7rem', color: 'var(--adm-amber)', marginTop: '2px' }}>
-                          Note: {enq.notes}
+                          {enq.history.length} update{enq.history.length > 1 ? 's' : ''} · last: {enq.history[enq.history.length - 1].text.slice(0, 40)}
                         </div>
                       )}
                     </td>
@@ -245,6 +264,9 @@ export default function AdminEnquiriesPage() {
                         <option value="quoted">Quoted</option>
                         <option value="closed">Closed</option>
                       </select>
+                    </td>
+                    <td style={{ fontSize: '0.75rem', whiteSpace: 'nowrap', color: enq.assigned_to ? 'var(--adm-text-main)' : 'var(--adm-text-dim)', fontWeight: enq.assigned_to ? 600 : 400 }}>
+                      {enq.assigned_to || 'Unassigned'}
                     </td>
                     <td style={{ fontSize: '0.75rem', color: 'var(--adm-text-muted)', whiteSpace: 'nowrap' }}>
                       {new Date(enq.created_at).toLocaleDateString('en-IN', {
@@ -360,13 +382,35 @@ export default function AdminEnquiriesPage() {
               </div>
 
               <div className="form-group-adm">
-                <label htmlFor="deskNotes">Internal Sales Desk Notes &amp; Follow-up</label>
+                <label htmlFor="deskAssign">Assigned to</label>
+                <input id="deskAssign" list="enq-assignees" value={assignInput} onChange={(e) => setAssignInput(e.target.value)} placeholder="Salesperson name, e.g. Rahul" />
+                <datalist id="enq-assignees">{assignees.map((a) => <option key={a} value={a} />)}</datalist>
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--adm-text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
+                  History
+                </label>
+                <ol className="enq-history">
+                  <li className="event"><time>{new Date(selectedEnquiry.created_at).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</time><span>Enquiry received{selectedEnquiry.notified_at ? ' · sales team emailed' : ''}</span></li>
+                  {selectedEnquiry.notes && <li className="note"><time>Earlier note</time><span>{selectedEnquiry.notes}</span></li>}
+                  {(selectedEnquiry.history || []).map((h, i) => (
+                    <li key={i} className={h.kind === 'note' ? 'note' : 'event'}>
+                      <time>{new Date(h.at).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} · {String(h.by || '').split('@')[0]}</time>
+                      <span>{h.text}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              <div className="form-group-adm">
+                <label htmlFor="deskNotes">Add a note</label>
                 <textarea
                   id="deskNotes"
-                  rows={4}
+                  rows={3}
                   value={notesInput}
                   onChange={(e) => setNotesInput(e.target.value)}
-                  placeholder="Record quote references, MTC numbers, site visit dates, or rate discussions..."
+                  placeholder="Call outcome, quote reference, site visit date, rate discussed..."
                 />
               </div>
 
@@ -399,8 +443,9 @@ export default function AdminEnquiriesPage() {
                 type="button"
                 className="btn-primary-adm"
                 onClick={handleSaveNotes}
+                disabled={savingNote}
               >
-                Save Desk Notes
+                {savingNote ? 'Saving…' : 'Save note & assignment'}
               </button>
             </div>
           </div>

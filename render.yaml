@@ -31,3 +31,8 @@ services:
         sync: false
       - key: ADMIN_SECRET
         generateValue: true
+      - key: SUPABASE_URL
+        value: https://rjtuuzehypemfvdaiusi.supabase.co
+      - key: SUPABASE_SERVICE_KEY
+        # Supabase secret key, for admin image uploads. Set in the dashboard.
+        sync: false

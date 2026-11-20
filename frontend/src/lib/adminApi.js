@@ -1,8 +1,10 @@
 // Unified Admin API & Persistent Storage Layer for Aggarwal Steels
-// Connects to Supabase Cloud PostgreSQL with automatic offline/client-side storage fallback
+// Reads public data from Supabase; every change and every enquiry read goes through the
+// FastAPI backend with the admin's login token (see adminRequest.js).
 
 import { supabase } from './supabase.js';
 import { SEED_PRODUCTS, normalizeProduct } from './productsApi';
+import { adminRequest } from './adminRequest';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const STORAGE_KEYS = {
@@ -11,70 +13,6 @@ const STORAGE_KEYS = {
   PRODUCTS: 'aggarwal_admin_products',
   SETTINGS: 'aggarwal_admin_settings',
 };
-
-// Seed initial enquiries if none exist in local storage
-const INITIAL_ENQUIRIES = [
-  {
-    id: 101,
-    name: "Ramesh Kumar / Infra Corp",
-    phone: "+91 98765 43210",
-    email: "ramesh@infracorp.co.in",
-    product: "Multi-Tier Mezzanine Floor Systems",
-    message: "Requirement for 12,000 sq ft industrial mezzanine floor at Greater Noida site. Load requirement 500 kg/sqm.",
-    status: "pending",
-    source: "website_rfq_form",
-    created_at: new Date(Date.now() - 3600000 * 2).toISOString(),
-    notes: "Site visit proposed for Wednesday."
-  },
-  {
-    id: 102,
-    name: "Sunil Verma / Larsen Infrastructure",
-    phone: "+91 98112 34567",
-    email: "s.verma@larseninfra.com",
-    product: "MS TMT Bars (Fe 415 / 500D / 550D)",
-    message: "Urgent quote needed for 120 MT Fe 550D TMT (16mm & 20mm primary mill) for bridge expansion project.",
-    status: "in_review",
-    source: "instant_quote_modal",
-    created_at: new Date(Date.now() - 3600000 * 5).toISOString(),
-    notes: "SAIL / TATA approved make requested."
-  },
-  {
-    id: 103,
-    name: "Vikram Malhotra / Apex Logistics Park",
-    phone: "+91 99887 76655",
-    email: "vikram@apexlogistics.in",
-    product: "Heavy Duty Warehouse Storage Racks",
-    message: "Pallet racking system for 3,400 pallet positions, clear height 9.5 meters. Manesar warehouse.",
-    status: "quoted",
-    source: "website_rfq_form",
-    created_at: new Date(Date.now() - 3600000 * 24).toISOString(),
-    notes: "Quotation ref AS-Q-2026-089 sent via WhatsApp & email. Awaiting client review."
-  },
-  {
-    id: 104,
-    name: "Amit Singhania / Singhania Fabrication",
-    phone: "+91 97123 45678",
-    email: "amit@singhaniafab.com",
-    product: "HR Plates & Coils (IS 2062)",
-    message: "45 MT IS 2062 E250 HR plates (12mm and 16mm thickness) delivered to Bhiwadi factory.",
-    status: "closed",
-    source: "direct_contact",
-    created_at: new Date(Date.now() - 3600000 * 48).toISOString(),
-    notes: "PO Confirmed and dispatched on Vehicle HR 38 AB 4912."
-  },
-  {
-    id: 105,
-    name: "Deepak Choudhary / Metro Precast Ltd",
-    phone: "+91 98223 34455",
-    email: "d.choudhary@metroprecast.com",
-    product: "MS Channels (ISMC 75 to 400)",
-    message: "ISMC 150 & 200 channels 30 MT with test certificates.",
-    status: "pending",
-    source: "website_rfq_form",
-    created_at: new Date(Date.now() - 3600000 * 72).toISOString(),
-    notes: "Follow up required regarding delivery schedule."
-  }
-];
 
 const INITIAL_PRODUCTS = SEED_PRODUCTS;
 
@@ -119,15 +57,7 @@ export const adminApi = {
   // Check whether Supabase or backend is online
   async checkBackendHealth() {
     try {
-      const { error } = await supabase.from('enquiries').select('id').limit(1);
-      if (!error) return true;
-    } catch {}
-
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/health`, {
-        method: 'GET',
-        signal: AbortSignal.timeout(1500),
-      });
+      const res = await fetch(`${API_BASE}/api/v1/health`, { signal: AbortSignal.timeout(8000) });
       return res.ok;
     } catch {
       return false;
@@ -167,7 +97,8 @@ export const adminApi = {
         user: {
           username: data.user?.username || identifier.split('@')[0],
           email: data.user?.email || identifier,
-          role: data.user?.role || 'Super Admin',
+          role: data.user?.role || 'Owner',
+          role_key: data.user?.role_key || 'owner',
           desk: data.user?.desk || 'Corporate Faridabad Desk',
         },
         loginTime: Date.now(),
@@ -224,146 +155,48 @@ export const adminApi = {
   // -------------------------------------------------------------
   // ENQUIRIES / RFQ DESK
   // -------------------------------------------------------------
+  // Enquiries hold customer contact details, so they are only readable through
+  // the backend with the admin token. On failure these return null / false and
+  // the admin message bar explains why.
   async getEnquiries(filters = {}) {
-    let list = [];
-
-    // 1. Try Supabase Cloud DB
-    try {
-      let query = supabase.from('enquiries').select('*').order('created_at', { ascending: false });
-      if (filters.status && filters.status !== 'all') {
-        query = query.eq('status', filters.status);
-      }
-      if (filters.search) {
-        query = query.or(`name.ilike.%${filters.search}%,phone.ilike.%${filters.search}%,product.ilike.%${filters.search}%,message.ilike.%${filters.search}%`);
-      }
-
-      const { data, error } = await query;
-      if (!error && Array.isArray(data)) {
-        list = data;
-        setLocal(STORAGE_KEYS.ENQUIRIES, list);
-        return list;
-      }
-    } catch (e) {
-      console.warn('Supabase enquiries fetch failed, trying local fallback:', e);
-    }
-
-    // 2. Fallback: LocalStorage
-    list = getLocal(STORAGE_KEYS.ENQUIRIES, INITIAL_ENQUIRIES);
-
-    if (filters.status && filters.status !== 'all') {
-      list = list.filter((item) => item.status === filters.status);
-    }
-    if (filters.search) {
-      const s = filters.search.toLowerCase();
-      list = list.filter(
-        (i) =>
-          i.name?.toLowerCase().includes(s) ||
-          i.phone?.toLowerCase().includes(s) ||
-          i.email?.toLowerCase().includes(s) ||
-          i.product?.toLowerCase().includes(s) ||
-          i.message?.toLowerCase().includes(s)
-      );
-    }
-
-    return list.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+    const params = new URLSearchParams({ limit: '500' });
+    if (filters.status && filters.status !== 'all') params.set('status', filters.status);
+    if (filters.search) params.set('search', filters.search);
+    const res = await adminRequest(`/enquiries?${params.toString()}`);
+    return res.ok && Array.isArray(res.data) ? res.data : null;
   },
 
   async createEnquiry(enquiryData) {
-    const payload = {
-      name: enquiryData.name,
-      phone: enquiryData.phone,
-      email: enquiryData.email || null,
-      product: enquiryData.product || 'General Steel Inquiry',
-      message: enquiryData.message || null,
-      status: enquiryData.status || 'pending',
-      source: enquiryData.source || 'website_rfq_form',
-      notes: enquiryData.notes || '',
-    };
-
-    try {
-      const { data, error } = await supabase.from('enquiries').insert([payload]).select().single();
-      if (!error && data) {
-        const all = getLocal(STORAGE_KEYS.ENQUIRIES, INITIAL_ENQUIRIES);
-        setLocal(STORAGE_KEYS.ENQUIRIES, [data, ...all]);
-        return data;
-      }
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ENQUIRIES, INITIAL_ENQUIRIES);
-    const fallback = {
-      id: Date.now(),
-      ...payload,
-      created_at: new Date().toISOString(),
-    };
-    setLocal(STORAGE_KEYS.ENQUIRIES, [fallback, ...all]);
-    return fallback;
+    const res = await adminRequest('/enquiries', {
+      method: 'POST',
+      body: {
+        name: enquiryData.name,
+        phone: enquiryData.phone,
+        email: enquiryData.email || null,
+        product: enquiryData.product || 'General Steel Inquiry',
+        message: enquiryData.message || null,
+        source: enquiryData.source || 'admin_manual',
+        notes: enquiryData.notes || '',
+      },
+    });
+    return res.ok ? res.data : null;
   },
 
   async updateEnquiryStatus(id, newStatus) {
-    try {
-      await supabase
-        .from('enquiries')
-        .update({ status: newStatus, updated_at: new Date().toISOString() })
-        .eq('id', id);
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ENQUIRIES, INITIAL_ENQUIRIES);
-    const updated = all.map((item) =>
-      item.id === Number(id) ? { ...item, status: newStatus, updated_at: new Date().toISOString() } : item
-    );
-    setLocal(STORAGE_KEYS.ENQUIRIES, updated);
-    return true;
+    return (await adminRequest(`/enquiries/${id}/status`, { method: 'PATCH', body: { status: newStatus } })).ok;
   },
 
   async updateEnquiry(id, data) {
-    try {
-      await supabase
-        .from('enquiries')
-        .update({ ...data, updated_at: new Date().toISOString() })
-        .eq('id', id);
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ENQUIRIES, INITIAL_ENQUIRIES);
-    const updated = all.map((item) =>
-      item.id === Number(id) ? { ...item, ...data, updated_at: new Date().toISOString() } : item
-    );
-    setLocal(STORAGE_KEYS.ENQUIRIES, updated);
-    return true;
+    return (await adminRequest(`/enquiries/${id}`, { method: 'PUT', body: data })).ok;
   },
 
   async deleteEnquiry(id) {
-    try {
-      await supabase.from('enquiries').delete().eq('id', id);
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ENQUIRIES, INITIAL_ENQUIRIES);
-    const filtered = all.filter((item) => item.id !== Number(id));
-    setLocal(STORAGE_KEYS.ENQUIRIES, filtered);
-    return true;
+    return (await adminRequest(`/enquiries/${id}`, { method: 'DELETE' })).ok;
   },
 
-  async getEnquiryStats() {
-    try {
-      const { data, error } = await supabase.from('enquiries').select('status');
-      if (!error && Array.isArray(data)) {
-        return {
-          total: data.length,
-          pending: data.filter((i) => i.status === 'pending').length,
-          in_review: data.filter((i) => i.status === 'in_review').length,
-          quoted: data.filter((i) => i.status === 'quoted').length,
-          closed: data.filter((i) => i.status === 'closed').length,
-        };
-      }
-    } catch {}
-
-    const all = getLocal(STORAGE_KEYS.ENQUIRIES, INITIAL_ENQUIRIES);
-    return {
-      total: all.length,
-      pending: all.filter((i) => i.status === 'pending').length,
-      in_review: all.filter((i) => i.status === 'in_review').length,
-      quoted: all.filter((i) => i.status === 'quoted').length,
-      closed: all.filter((i) => i.status === 'closed').length,
-    };
+  async getEnquiryStats({ quiet = false } = {}) {
+    const res = await adminRequest('/enquiries/stats', { quiet });
+    return res.ok ? res.data : null;
   },
 
   // -------------------------------------------------------------
@@ -448,71 +281,24 @@ export const adminApi = {
     return list.sort((a, b) => a.sort_order - b.sort_order || (Number(a.id) || 0) - (Number(b.id) || 0));
   },
 
+  // Product changes: backend only, with the admin token. Return the saved row / true,
+  // or null / false when the server refused or could not be reached.
   async createProduct(productData) {
-    const payload = this._productPayload(productData);
-
-    try {
-      const { data, error } = await supabase.from('products').insert([payload]).select().single();
-      if (!error && data) {
-        setLocal(STORAGE_KEYS.PRODUCTS, [normalizeProduct(data), ...this._productsLocal()]);
-        return data;
-      }
-    } catch {}
-
-    const created = await apiJson('/products', { method: 'POST', body: JSON.stringify(payload) });
-    if (created && created.id) {
-      setLocal(STORAGE_KEYS.PRODUCTS, [normalizeProduct(created), ...this._productsLocal()]);
-      return created;
-    }
-
-    const newRecord = normalizeProduct({ id: Date.now(), ...payload, created_at: new Date().toISOString() });
-    setLocal(STORAGE_KEYS.PRODUCTS, [newRecord, ...this._productsLocal()]);
-    return newRecord;
+    const res = await adminRequest('/products', { method: 'POST', body: this._productPayload(productData) });
+    return res.ok ? res.data : null;
   },
 
   async updateProduct(id, productData) {
     const payload = this._productPayload({ ...this._productsLocal().find((p) => String(p.id) === String(id)), ...productData });
-
-    let saved = false;
-    try {
-      const { error } = await supabase.from('products').update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id);
-      saved = !error;
-    } catch {}
-    if (!saved) saved = Boolean(await apiJson(`/products/${id}`, { method: 'PUT', body: JSON.stringify(payload) }));
-
-    setLocal(
-      STORAGE_KEYS.PRODUCTS,
-      this._productsLocal().map((item) => (String(item.id) === String(id) ? normalizeProduct({ ...item, ...payload }) : item))
-    );
-    return true;
+    return (await adminRequest(`/products/${id}`, { method: 'PUT', body: payload })).ok;
   },
 
   async toggleProductActive(id) {
-    const all = this._productsLocal();
-    const existing = all.find((item) => String(item.id) === String(id));
-    const nextState = existing ? !existing.is_active : false;
-
-    let saved = false;
-    try {
-      const { error } = await supabase.from('products').update({ is_active: nextState }).eq('id', id);
-      saved = !error;
-    } catch {}
-    if (!saved) await apiJson(`/products/${id}/toggle-active`, { method: 'PATCH' });
-
-    setLocal(STORAGE_KEYS.PRODUCTS, all.map((item) => (String(item.id) === String(id) ? { ...item, is_active: nextState } : item)));
-    return true;
+    return (await adminRequest(`/products/${id}/toggle-active`, { method: 'PATCH' })).ok;
   },
 
   async deleteProduct(id) {
-    let saved = false;
-    try {
-      const { error } = await supabase.from('products').delete().eq('id', id);
-      saved = !error;
-    } catch {}
-    if (!saved) await apiJson(`/products/${id}`, { method: 'DELETE' });
-
-    setLocal(STORAGE_KEYS.PRODUCTS, this._productsLocal().filter((item) => String(item.id) !== String(id)));
-    return true;
+    return (await adminRequest(`/products/${id}`, { method: 'DELETE' })).ok;
   },
 
   // -------------------------------------------------------------

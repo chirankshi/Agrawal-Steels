@@ -6,6 +6,8 @@
  */
 import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
+import { adminRequest } from './adminRequest';
+import { MACHINE_PHOTOS } from '../data/catalogueImages';
 import { CATEGORY_DESCRIPTION_SEED, ITEM_DETAILS_SEED, SUBCATEGORY_DESCRIPTION_SEED, TAGLINE_SEED, parseDetails } from './segments';
 import {
   CATEGORY_SEED,
@@ -28,7 +30,7 @@ const normSubcategory = (s) => {
   const details = parseDetails(s.item_details);
   return { ...s, description: s.description || SUBCATEGORY_DESCRIPTION_SEED[s.slug] || '', items: toList(s.items), item_details: Object.keys(details).length || 'item_details' in s ? details : ITEM_DETAILS_SEED[s.slug] || {}, sort_order: Number(s.sort_order) || 0, is_active: s.is_active !== false };
 };
-const normMachine = (m) => ({ ...m, stages: toList(m.stages), qty: m.qty === '' || m.qty == null ? null : Number(m.qty), sort_order: Number(m.sort_order) || 0, is_active: m.is_active !== false });
+const normMachine = (m) => ({ ...m, image_url: m.image_url || MACHINE_PHOTOS[m.slug] || '', stages: toList(m.stages), qty: m.qty === '' || m.qty == null ? null : Number(m.qty), sort_order: Number(m.sort_order) || 0, is_active: m.is_active !== false });
 
 /** Bundled seed in the flat-row shape (ids are the slugs). */
 export const SEED_FLAT = {
@@ -117,73 +119,37 @@ export function useCatalogue() {
 }
 
 // -------------------------------------------------------------------
-// ADMIN WRITES (Supabase -> FastAPI -> localStorage), one generic helper per table
+// ADMIN WRITES: backend only, with the admin login token (see adminRequest.js)
 // -------------------------------------------------------------------
 const TABLES = {
-  categories: { api: '/categories', norm: normCategory, key: 'categories' },
-  subcategories: { api: '/subcategories', norm: normSubcategory, key: 'subcategories' },
-  machines: { api: '/machines', norm: normMachine, key: 'machines' },
+  categories: { api: '/categories', norm: normCategory },
+  subcategories: { api: '/subcategories', norm: normSubcategory },
+  machines: { api: '/machines', norm: normMachine },
 };
 
-async function apiJson(path, options = {}) {
-  try {
-    const res = await fetch(`${API_BASE}/api/v1${path}`, { headers: { 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(4000), ...options });
-    if (!res.ok) return null;
-    return res.status === 204 ? true : await res.json();
-  } catch { return null; }
-}
-
-const stripMeta = ({ id, created_at, updated_at, ...rest }) => rest; // eslint-disable-line no-unused-vars
+// Fields the API accepts; anything else (nested subcategories, ids, timestamps) is dropped.
+const FIELDS = {
+  categories: ['slug', 'name', 'company', 'tagline', 'description', 'partners', 'capacity', 'catalogue_page', 'image_url', 'sort_order', 'is_active'],
+  subcategories: ['category_slug', 'slug', 'name', 'description', 'items', 'item_details', 'catalogue_page', 'image_url', 'sort_order', 'is_active'],
+  machines: ['group_name', 'slug', 'name', 'spec', 'qty', 'stages', 'image_url', 'catalogue_page', 'sort_order', 'is_active'],
+};
+const pick = (row, keys) => Object.fromEntries(keys.filter((k) => row[k] !== undefined).map((k) => [k, row[k]]));
+const isDbId = (id) => id != null && /^\d+$/.test(String(id));
 
 async function saveRow(table, row) {
-  const { api, norm, key } = TABLES[table];
-  const payload = stripMeta(norm(row));
-  const isUpdate = row.id != null && String(row.id).match(/^\d+$/);
+  const { api, norm } = TABLES[table];
+  const payload = pick(norm(row), FIELDS[table]);
   cached = null;
-
-  try {
-    const q = isUpdate
-      ? supabase.from(table).update({ ...payload, updated_at: new Date().toISOString() }).eq('id', row.id).select().single()
-      : supabase.from(table).insert([payload]).select().single();
-    const { data, error } = await q;
-    if (!error && data) return { ok: true, row: norm(data), storage: 'supabase' };
-    if (error) return { ok: false, error: error.message };
-  } catch { /* unreachable */ }
-
-  const saved = isUpdate
-    ? await apiJson(`${api}/${row.id}`, { method: 'PUT', body: JSON.stringify(payload) })
-    : await apiJson(api, { method: 'POST', body: JSON.stringify(payload) });
-  if (saved && saved.id) return { ok: true, row: norm(saved), storage: 'api' };
-
-  // Browser-only fallback
-  const local = readLocal() || JSON.parse(JSON.stringify(SEED_FLAT));
-  const list = local[key] || [];
-  const id = row.id ?? Date.now();
-  const next = norm({ ...payload, id });
-  local[key] = list.some((r) => String(r.id) === String(id)) ? list.map((r) => (String(r.id) === String(id) ? next : r)) : [...list, next];
-  writeLocal(local);
-  return { ok: true, row: next, storage: 'local' };
+  const res = isDbId(row.id)
+    ? await adminRequest(`${api}/${row.id}`, { method: 'PUT', body: payload })
+    : await adminRequest(api, { method: 'POST', body: payload });
+  return res.ok ? { ok: true, row: norm(res.data), storage: 'api' } : { ok: false, error: res.error };
 }
 
 async function deleteRow(table, id) {
-  const { api, key } = TABLES[table];
   cached = null;
-  let done = false;
-  try {
-    const { error } = await supabase.from(table).delete().eq('id', id);
-    done = !error;
-  } catch { /* unreachable */ }
-  if (!done) done = Boolean(await apiJson(`${api}/${id}`, { method: 'DELETE' }));
-  const local = readLocal();
-  if (local) {
-    local[key] = (local[key] || []).filter((r) => String(r.id) !== String(id));
-    if (table === 'categories') {
-      const slug = (readLocal()?.categories || []).find((c) => String(c.id) === String(id))?.slug;
-      if (slug) local.subcategories = (local.subcategories || []).filter((s) => s.category_slug !== slug);
-    }
-    writeLocal(local);
-  }
-  return done;
+  if (!isDbId(id)) return false;
+  return (await adminRequest(`${TABLES[table].api}/${id}`, { method: 'DELETE' })).ok;
 }
 
 export const catalogueAdmin = {

@@ -6,14 +6,19 @@ import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
 import CountUp from '../../components/CountUp';
 import Certificates from '../../components/Certificates';
+import Journey from '../../components/Journey';
+import Presence from '../../components/Presence';
+import { useSiteSettings, num } from '../../lib/siteSettings';
 import {
   IconAward,
   IconCheckCircle,
   IconPhone,
-  IconDownload
+  IconDownload,
+  IconArrowRight
 } from '../../components/Icons';
 
 export default function AboutPage() {
+  const { settings: k } = useSiteSettings();
   return (
     <>
       <ScrollAnimations />
@@ -25,7 +30,7 @@ export default function AboutPage() {
           <div className="section-container">
             <div className="dedicated-hero-badge">
               <IconAward size={14} />
-              <span>CORPORATE LEGACY • ESTABLISHED 2015</span>
+              <span>CORPORATE LEGACY • ESTABLISHED {k.founded_year}</span>
             </div>
             <h1 className="dedicated-hero-title">
               Strong Foundations, <span className="text-gradient">Stronger Relations</span>
@@ -42,13 +47,13 @@ export default function AboutPage() {
                 <span>Connect With Leadership</span>
               </Link>
               <a
-                href="/Aggarwal_Steels_Catalogue_2026.pdf"
-                download="Aggarwal_Steels_Catalogue_2026.pdf"
+                href="/Aggarwal_Steels_Company_Profile_2026.pdf"
+                download="Aggarwal_Steels_Company_Profile_2026.pdf"
                 className="btn-secondary"
                 id="btnDownloadProfile"
               >
                 <IconDownload size={16} />
-                <span>Download Corporate Profile (PDF)</span>
+                <span>Download Company Profile (PDF)</span>
               </a>
             </div>
           </div>
@@ -88,7 +93,7 @@ export default function AboutPage() {
                 
                 <blockquote className="founder-quote-highlight">
                   &ldquo;In industrial steel supply, precision and timing are paramount. When a construction site or 
-                  a heavy fabrication shop stops for lack of steel, time and money are lost. Our commitment since 2015 
+                  a heavy fabrication shop stops for lack of steel, time and money are lost. Our commitment since {k.founded_year} 
                   has been steadfast: 100% genuine mill-certified steel, complete transparency in weighment, and 
                   unflinching dispatch discipline.&rdquo;
                 </blockquote>
@@ -104,32 +109,32 @@ export default function AboutPage() {
                 <p className="founder-body-text">
                   Today, the group operates across <strong>5 strategic units</strong> (including state-of-the-art 
                   manufacturing plants in Bhiwadi and warehousing hubs in Delhi NCR), managing over 
-                  <strong> ₹230 Crores</strong> in annual turnover (FY 2025-26) and supporting 250+ dedicated engineers, 
+                  <strong> ₹{(num(k, 'turnover_cr') * 10).toLocaleString('en-IN')} Million</strong> in annual turnover ({k.turnover_year}) and supporting {k.staff_count}+ dedicated engineers, 
                   fabrication experts, and logistics personnel.
                 </p>
 
                 <div className="about-stats-strip">
                   <div className="stat-box stagger-stat-1">
                     <span className="stat-val">
-                      <CountUp target={230} prefix="₹" suffix=" Cr" duration={2000} unitClassName="stat-unit-about" />
+                      <CountUp target={num(k, 'turnover_cr') * 10} prefix="₹" suffix=" Mn" duration={2000} unitClassName="stat-unit-about" />
                     </span>
                     <span className="stat-lbl">Annual Turnover</span>
                   </div>
                   <div className="stat-box stagger-stat-2">
                     <span className="stat-val">
-                      <CountUp target={11} suffix="+ Yrs" duration={1800} unitClassName="stat-unit-about" />
+                      <CountUp target={num(k, 'trading_years')} suffix="+ Yrs" duration={1800} unitClassName="stat-unit-about" />
                     </span>
                     <span className="stat-lbl">Industry Trust</span>
                   </div>
                   <div className="stat-box stagger-stat-3">
                     <span className="stat-val">
-                      <CountUp target={250} suffix="+" duration={2200} unitClassName="stat-unit-about" />
+                      <CountUp target={num(k, 'staff_count')} suffix="+" duration={2200} unitClassName="stat-unit-about" />
                     </span>
                     <span className="stat-lbl">Technical Workforce</span>
                   </div>
                   <div className="stat-box stagger-stat-4">
                     <span className="stat-val">
-                      <CountUp target={5} suffix=" Units" duration={1600} unitClassName="stat-unit-about" />
+                      <CountUp target={num(k, 'units_count')} suffix=" Units" duration={1600} unitClassName="stat-unit-about" />
                     </span>
                     <span className="stat-lbl">Plants &amp; Hubs</span>
                   </div>
@@ -187,6 +192,11 @@ export default function AboutPage() {
         </section>
 
         {/* Accredited ISO Certifications */}
+        <Journey />
+        <Presence />
+        <section className="section-container about-quality-link">
+          <Link href="/quality" className="btn-secondary">See how we check quality, safety &amp; delivery <IconArrowRight size={14} /></Link>
+        </section>
         <Certificates />
 
         {/* Mission, Vision & Core Values */}

@@ -78,69 +78,38 @@ export default function Certificates() {
         {/* Certificates Grid */}
         <div className="cert-cards-grid">
           {certs.map((c) => (
-            <div className="cert-compact-card" key={c.id} id={c.id}>
-              {/* Certificate Preview Image */}
-              <div
-                className="cert-card-preview"
-                onClick={() => setActiveModalCert(c)}
-                title={`Click to inspect ${c.code}`}
-              >
+            <div className="cert-compact-card cert-mini" key={c.id} id={c.id}>
+              {/* Certificate image; Preview and PDF appear on hover (always shown on touch screens) */}
+              <div className="cert-card-preview">
                 <img
                   src={c.previewImg}
                   alt={`${c.code} - ${c.name} Certificate for Aggarwal Steels`}
                   className="cert-img-thumb"
                   loading="lazy"
                 />
-                <div className="cert-preview-overlay">
-                  <span className="cert-inspect-badge">
-                    <IconLayers size={14} /> Click to Inspect
-                  </span>
-                </div>
                 <span className="cert-code-pill" style={{ borderColor: c.color }}>
                   {c.code}
                 </span>
+                <div className="cert-hover-actions">
+                  <button type="button" className="btn-cert-preview" onClick={() => setActiveModalCert(c)}>
+                    <IconLayers size={14} />
+                    <span>Preview</span>
+                  </button>
+                  <a href={c.pdfUrl} target="_blank" rel="noopener noreferrer" className="btn-cert-download" title="Open the official PDF certificate">
+                    <IconDownload size={14} />
+                    <span>PDF</span>
+                  </a>
+                </div>
               </div>
 
-              {/* Certificate Content */}
               <div className="cert-card-body">
-                <div className="cert-meta-row">
-                  <span className="cert-badge-body">{c.body}</span>
-                  <span className="cert-valid-tag">{c.validity}</span>
-                </div>
-
                 <h3 className="cert-card-title">{c.name}</h3>
                 <p className="cert-card-category">{c.category}</p>
-
-                <p className="cert-card-scope" title={c.scope}>
-                  {c.scope}
-                </p>
-
-                <div className="cert-card-footer">
-                  <div className="cert-no-box">
-                    <span className="cert-no-label">Certificate No:</span>
-                    <code className="cert-no-val">{c.certNo}</code>
-                  </div>
-
-                  <div className="cert-actions-btns">
-                    <button
-                      type="button"
-                      className="btn-cert-preview"
-                      onClick={() => setActiveModalCert(c)}
-                    >
-                      <span>Preview</span>
-                    </button>
-                    <a
-                      href={c.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-cert-download"
-                      title="Open Official PDF Certificate"
-                    >
-                      <IconDownload size={14} />
-                      <span>PDF</span>
-                    </a>
-                  </div>
+                <div className="cert-mini-meta">
+                  <span>{c.body.split('/')[0].trim()}</span>
+                  <span className="cert-valid-tag">{c.validity.replace(/^Valid:\s*/i, 'Valid ')}</span>
                 </div>
+                <code className="cert-no-val" title="Certificate number">{c.certNo}</code>
               </div>
             </div>
           ))}

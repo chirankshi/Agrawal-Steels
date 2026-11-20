@@ -11,10 +11,19 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Aggarwal Steels & Majestic AR Technology – Strong Foundations, Stronger Relations',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://aggarwalsteel.com'),
+  title: {
+    default: 'Aggarwal Steels & Majestic AR Technology – Strong Foundations, Stronger Relations',
+    template: '%s | Aggarwal Steels',
+  },
   description:
     'Aggarwal Steels & Majestic AR Technology – Primary Steel Distribution (SAIL, TATA, JSPL, AMNS), Heavy Warehouse Pallet Racking, Mezzanine Floors & 520ft Automated Powder Coating. ISO 9001:2015 Certified. Since 2015.',
   keywords: 'Aggarwal Steels, Majestic AR Technology, Aakash Goyal, TMT Bars, HR Plates, Warehouse Pallet Racks, Mezzanine Floors, Powder Coating Plant, Bhiwadi, Manesar',
+  openGraph: {
+    type: 'website',
+    siteName: 'Aggarwal Steels & Majestic AR Technology',
+    images: ['/images/catalogue/racking.jpg'],
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },

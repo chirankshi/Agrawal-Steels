@@ -2,15 +2,13 @@
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import TickerStrip from '../components/TickerStrip';
+import TrustStrip from '../components/TrustStrip';
 import Products from '../components/Products';
 import Manufacturing from '../components/Manufacturing';
-import PartnersStrip from '../components/PartnersStrip';
 import About from '../components/About';
+import Journey from '../components/Journey';
 import Certificates from '../components/Certificates';
 import WhyUs from '../components/WhyUs';
-import Journey from '../components/Journey';
-import Presence from '../components/Presence';
 import OrderProcess from '../components/OrderProcess';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
@@ -24,17 +22,15 @@ export default function Home() {
     <>
       <ScrollAnimations />
       <Navbar />
-      <main>
+      <main className="home-main">
         <Hero />
-        <TickerStrip />
+        <TrustStrip />
+        <Products onSelectProduct={(prod) => setSelectedProduct(prod)} />
+        <Manufacturing />
+        <WhyUs />
+        <Certificates />
         <About />
         <Journey />
-        <WhyUs />
-        <Manufacturing />
-        <Products onSelectProduct={(prod) => setSelectedProduct(prod)} />
-        <Certificates />
-        <PartnersStrip />
-        <Presence />
         <OrderProcess />
         <ContactSection selectedProduct={selectedProduct} />
       </main>

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, EmailStr, Field
 from app.models.enquiry import EnquiryStatus
 
@@ -26,6 +26,8 @@ class EnquiryUpdate(BaseModel):
     message: Optional[str] = None
     status: Optional[EnquiryStatus] = None
     notes: Optional[str] = None
+    assigned_to: Optional[str] = Field(None, max_length=120)
+    add_note: Optional[str] = Field(None, max_length=2000, description="Appended to the history with time and author")
 
 
 class EnquiryResponse(BaseModel):
@@ -38,6 +40,9 @@ class EnquiryResponse(BaseModel):
     status: EnquiryStatus
     source: Optional[str] = None
     notes: Optional[str] = None
+    assigned_to: Optional[str] = None
+    history: Optional[List[Dict[str, Any]]] = None
+    notified_at: Optional[datetime] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
 

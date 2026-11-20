@@ -1,5 +1,6 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from app.routers.auth import require_admin
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.product import Product
@@ -101,8 +102,8 @@ def get_product_by_slug_or_id(slug_or_id: str, db: Session = Depends(get_db)):
     return format_product_response(product)
 
 
-@router.post("", response_model=ProductResponse, status_code=status.HTTP_201_CREATED, include_in_schema=False)
-@router.post("/", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=ProductResponse, status_code=status.HTTP_201_CREATED, include_in_schema=False, dependencies=[Depends(require_admin)])
+@router.post("/", response_model=ProductResponse, status_code=status.HTTP_201_CREATED, dependencies=[Depends(require_admin)])
 def create_product(product_in: ProductCreate, db: Session = Depends(get_db)):
     """Add a new product to the catalogue."""
     if db.query(Product).filter(Product.slug == product_in.slug).first():
@@ -115,7 +116,7 @@ def create_product(product_in: ProductCreate, db: Session = Depends(get_db)):
     return format_product_response(product)
 
 
-@router.put("/{product_id}", response_model=ProductResponse)
+@router.put("/{product_id}", response_model=ProductResponse, dependencies=[Depends(require_admin)])
 def update_product(product_id: int, product_in: ProductUpdate, db: Session = Depends(get_db)):
     """Update an existing product."""
     product = db.query(Product).filter(Product.id == product_id).first()
@@ -130,7 +131,7 @@ def update_product(product_id: int, product_in: ProductUpdate, db: Session = Dep
     return format_product_response(product)
 
 
-@router.patch("/{product_id}/toggle-active", response_model=ProductResponse)
+@router.patch("/{product_id}/toggle-active", response_model=ProductResponse, dependencies=[Depends(require_admin)])
 def toggle_product_active(product_id: int, db: Session = Depends(get_db)):
     """Toggle whether a product is visible on the public website."""
     product = db.query(Product).filter(Product.id == product_id).first()
@@ -143,7 +144,7 @@ def toggle_product_active(product_id: int, db: Session = Depends(get_db)):
     return format_product_response(product)
 
 
-@router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT, dependencies=[Depends(require_admin)])
 def delete_product(product_id: int, db: Session = Depends(get_db)):
     """Delete a product from the catalogue."""
     product = db.query(Product).filter(Product.id == product_id).first()

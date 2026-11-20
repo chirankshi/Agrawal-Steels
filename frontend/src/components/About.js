@@ -1,7 +1,10 @@
+'use client';
 import Link from 'next/link';
+import { useSiteSettings, num } from '../lib/siteSettings';
 import { IconShieldCheck, IconAward, IconZap, IconGlobe, IconTarget, IconCompass, IconArrowRight, IconLayers } from './Icons';
 
 export default function About() {
+  const { settings: k } = useSiteSettings();
   const values = [
     { title: 'Quality Integrity', desc: 'ISO 9001:2015 Certified & BIS Compliant', icon: <IconShieldCheck size={18} /> },
     { title: '24-Hour Dispatch', desc: 'Fast turnaround across primary steel lines', icon: <IconZap size={18} /> },
@@ -16,17 +19,17 @@ export default function About() {
           {/* Left Column: Narrative */}
           <div className="about-modern-content">
             <div className="section-label label-amber">
-              <IconAward size={15} /> CORPORATE OVERVIEW &bull; SINCE 2015
+              <IconAward size={15} /> CORPORATE OVERVIEW &bull; SINCE {k.founded_year}
             </div>
             <h2 className="section-title text-white">
               Strong Foundations.<br />
               <span className="text-gradient">Stronger Relations.</span>
             </h2>
             <p className="about-lead">
-              Established in <strong>2015</strong>, <strong>Aggarwal Steels</strong> alongside manufacturing sister arm <strong>Majestic AR Technology Pvt. Ltd.</strong> has grown into an integrated steel supply and industrial fabrication powerhouse.
+              Established in <strong>{k.founded_year}</strong>, <strong>Aggarwal Steels</strong> alongside manufacturing sister arm <strong>Majestic AR Technology Pvt. Ltd.</strong> has grown into an integrated steel supply and industrial fabrication powerhouse.
             </p>
             <p className="about-sub">
-              With over <strong>11+ years of trading experience</strong> and <strong>4+ years of advanced manufacturing</strong>, we operate <strong>2 manufacturing plants</strong> and <strong>3 trading units</strong> with a consolidated group turnover of <strong>₹230 Crore (FY 2025-26)</strong> and a 250+ dedicated workforce. From primary steel distribution (SAIL, TATA, JSPL, AMNS) to heavy warehouse racking and automated powder-coating lines, we power India's mega infrastructure and manufacturing sectors.
+              With over <strong>{k.trading_years}+ years of trading experience</strong> and <strong>{k.manufacturing_years}+ years of advanced manufacturing</strong>, we operate <strong>2 manufacturing plants</strong> and <strong>3 trading units</strong> with a consolidated group turnover of <strong>₹{(num(k, 'turnover_cr') * 10).toLocaleString('en-IN')} Million ({k.turnover_year})</strong> and a {k.staff_count}+ dedicated workforce. From primary steel distribution (SAIL, TATA, JSPL, AMNS) to heavy warehouse racking and automated powder-coating lines, we power India's mega infrastructure and manufacturing sectors.
             </p>
 
             {/* Core Values Bento Grid */}
@@ -57,10 +60,10 @@ export default function About() {
           <div className="about-modern-cards">
             {/* Leadership Statement Card */}
             <div className="founder-modern-card">
-              <div className="founder-header">
+              <div className="founder-header founder-header--portrait">
                 <div className="founder-photo-wrap">
                   <img
-                    src="/images/aakash_goyal.jpg"
+                    src="/images/aakash_goyal_portrait.jpg"
                     alt="Mr. Aakash Goyal - Founder & Director, Aggarwal Steels"
                     className="founder-photo-img"
                   />
@@ -69,7 +72,7 @@ export default function About() {
                 <div>
                   <h3 className="founder-name">Mr. Aakash Goyal</h3>
                   <span className="founder-role">Founder &amp; Director &bull; Aggarwal Steels &amp; Majestic AR Technology</span>
-                  <div className="founder-exp-tag">11+ Years Trading &bull; 4+ Years Manufacturing</div>
+                  <div className="founder-exp-tag">{k.trading_years}+ Years Trading &bull; {k.manufacturing_years}+ Years Manufacturing</div>
                 </div>
               </div>
               <blockquote className="founder-quote-text">
@@ -84,7 +87,7 @@ export default function About() {
                   height={50}
                 />
                 <div className="founder-meta">
-                  <span>ESTABLISHED 2015 &bull; ₹230 CR TURNOVER FY 2025-26</span>
+                  <span>ESTABLISHED {k.founded_year} &bull; ₹{(num(k, 'turnover_cr') * 10).toLocaleString('en-IN')} MN TURNOVER {k.turnover_year}</span>
                 </div>
               </div>
             </div>

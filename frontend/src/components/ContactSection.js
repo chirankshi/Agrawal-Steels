@@ -1,28 +1,10 @@
 'use client';
 import { useState } from 'react';
 import { submitEnquiry } from '../lib/enquiries';
+import ProductOptions from './ProductOptions';
 import { useSiteSettings, telHref, waHref } from '../lib/siteSettings';
 import { IconMapPin, IconPhone, IconMail, IconClock, IconMessageSquare, IconCheck, IconShieldCheck, IconArrowRight } from './Icons';
 
-const PRODUCTS_LIST = [
-  'MS TMT Bars (Fe 415 / 500D / 550D)',
-  'HR Plates & Coils (IS 2062)',
-  'MS Structural Angles (Equal & Unequal)',
-  'MS Channels (ISMC 75 to 400)',
-  'MS Beams & Joists (ISMB / NPB / WPB)',
-  'MS Chequered Plates & Flooring Sheets',
-  'Hollow Sections & MS Pipes (IS 4923 / 1161)',
-  'CR Coils & Precision Slit Coils',
-  'GP Coils & Galvanized Sheets',
-  'Stainless Steel Sheets (304 / 202 / 316)',
-  'Heavy Duty Warehouse Storage Racks',
-  'Multi-Tier Mezzanine Floor Systems',
-  'Slotted Angle & Bin Storage Racks',
-  'Supermarket & Retail Display Racks',
-  'Commercial Stainless Steel Kitchen Equipment',
-  'Electrical & Control Panel Enclosures',
-  'PEB Structures & Heavy Industrial Sheds',
-];
 
 export default function ContactSection({ selectedProduct }) {
   const { settings } = useSiteSettings();
@@ -149,10 +131,7 @@ export default function ContactSection({ selectedProduct }) {
                     value={formData.product || selectedProduct || ''}
                     onChange={handleChange}
                   >
-                    <option value="">Select product category...</option>
-                    {PRODUCTS_LIST.map((prod) => (
-                      <option key={prod} value={prod}>{prod}</option>
-                    ))}
+                    <ProductOptions current={formData.product || selectedProduct || ''} />
                   </select>
                 </div>
 
@@ -192,9 +171,9 @@ export default function ContactSection({ selectedProduct }) {
                 </div>
                 <div>
                   <strong>Head Office &amp; Main Manufacturing Plant</strong>
-                  <p>Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan</p>
+                  <p>{settings.address_head_office}</p>
                   <p style={{ marginTop: '4px', fontSize: '0.8rem', color: '#64748b' }}>
-                    Unit 02: G1-385, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan
+                    Unit 02: {settings.address_unit_02}
                   </p>
                 </div>
               </div>

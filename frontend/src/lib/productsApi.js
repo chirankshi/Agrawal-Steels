@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
+import { adminMessage, adminRequest } from './adminRequest';
 import { PRODUCTS } from '../data/products';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -123,38 +124,37 @@ export function compressImage(file, { maxEdge = 1400, quality = 0.82 } = {}) {
 const extFor = (blob, file) => (blob.type === 'image/png' ? 'png' : blob.type === 'image/webp' ? 'webp' : file.name.split('.').pop()?.toLowerCase() === 'png' ? 'png' : 'jpg');
 
 /**
- * Stores a product image and returns a URL that the public site can render.
- * Supabase Storage -> FastAPI /uploads -> inline data URL (last resort, works offline).
- * @returns {Promise<{url: string, storage: 'supabase'|'api'|'inline'}>}
+ * Stores an admin image and returns its public URL.
+ * 1. Backend /uploads with the admin token (uses the server-side Supabase secret key).
+ * 2. Only if the server has no storage key yet (503): direct upload to the public
+ *    bucket, which the database allows as insert-only, images up to 5 MB.
+ * Throws with a readable message when neither works.
+ * @returns {Promise<{url: string, storage: 'supabase'|'api'|'direct'}>}
  */
 export async function uploadProductImage(file, slug = 'product') {
   const blob = await compressImage(file);
   const ext = extFor(blob, file);
-  const safeSlug = (slug || 'product').toLowerCase().replace(/[^a-z0-9-]+/g, '-');
-  const path = `${safeSlug}/${Date.now()}.${ext}`;
+  const safeSlug = (slug || 'product').toLowerCase().replace(/[^a-z0-9-/]+/g, '-');
 
-  try {
-    const { error } = await supabase.storage.from(BUCKET).upload(path, blob, { upsert: true, contentType: blob.type });
+  const form = new FormData();
+  form.append('file', blob, `${safeSlug.split('/').pop() || 'image'}.${ext}`);
+  form.append('folder', safeSlug);
+  const res = await adminRequest('/uploads', { method: 'POST', form, quiet: true });
+  if (res.ok && res.data?.url) {
+    const url = res.data.url.startsWith('http') ? res.data.url : `${API_BASE}${res.data.url}`;
+    return { url, storage: res.data.storage === 'supabase' ? 'supabase' : 'api' };
+  }
+
+  if (res.status === 503) {
+    const path = `${safeSlug}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+    const { error } = await supabase.storage.from(BUCKET).upload(path, blob, { upsert: false, contentType: blob.type });
     if (!error) {
       const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
-      if (data?.publicUrl) return { url: data.publicUrl, storage: 'supabase' };
+      if (data?.publicUrl) return { url: data.publicUrl, storage: 'direct' };
     }
-  } catch { /* bucket missing or offline */ }
+  }
 
-  try {
-    const form = new FormData();
-    form.append('file', blob, `${safeSlug}.${ext}`);
-    const res = await fetch(`${API_BASE}/api/v1/uploads`, { method: 'POST', body: form, signal: AbortSignal.timeout(15000) });
-    if (res.ok) {
-      const data = await res.json();
-      if (data?.url) return { url: data.url.startsWith('http') ? data.url : `${API_BASE}${data.url}`, storage: 'api' };
-    }
-  } catch { /* backend offline */ }
-
-  const dataUrl = await new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsDataURL(blob);
-  });
-  return { url: dataUrl, storage: 'inline' };
+  const message = res.error || 'Image upload failed. Please try again.';
+  adminMessage(message);
+  throw new Error(message);
 }

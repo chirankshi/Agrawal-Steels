@@ -162,8 +162,8 @@ export default function AdminProductsPage() {
       catalogue_page: formData.catalogue_page === '' ? null : Number(formData.catalogue_page),
     };
     try {
-      if (editingProduct) await adminApi.updateProduct(editingProduct.id, payload);
-      else await adminApi.createProduct(payload);
+      const saved = editingProduct ? await adminApi.updateProduct(editingProduct.id, payload) : await adminApi.createProduct(payload);
+      if (!saved) return; // the message bar explains why; keep the form open
       setModalOpen(false);
       loadProducts();
     } finally {

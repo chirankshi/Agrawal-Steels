@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { adminApi } from '../../lib/adminApi';
+import { ADMIN_MESSAGE_EVENT } from '../../lib/adminRequest';
 import './admin.css';
 
 export default function AdminShell({ children }) {
@@ -13,8 +14,81 @@ export default function AdminShell({ children }) {
   const [backendOnline, setBackendOnline] = useState(false);
   const [user, setUser] = useState(null);
   const [pendingCount, setPendingCount] = useState(0);
+  const [message, setMessage] = useState(null);
+
+  // Errors and confirmations raised anywhere in the admin data layer
+  useEffect(() => {
+    const onMessage = (e) => setMessage(e.detail);
+    window.addEventListener(ADMIN_MESSAGE_EVENT, onMessage);
+    return () => window.removeEventListener(ADMIN_MESSAGE_EVENT, onMessage);
+  }, []);
+  useEffect(() => {
+    if (!message) return undefined;
+    const t = setTimeout(() => setMessage(null), message.kind === 'error' ? 9000 : 4000);
+    return () => clearTimeout(t);
+  }, [message]);
 
   const isLoginPage = pathname === '/admin/login';
+
+  // New-enquiry alerts: while admin is open, check every 45 s. A new enquiry plays a
+  // chime, shows a desktop notification (if allowed) and updates the badge.
+  const [notifyPermission, setNotifyPermission] = useState('unsupported');
+  useEffect(() => {
+    if (typeof Notification !== 'undefined') setNotifyPermission(Notification.permission);
+  }, []);
+  useEffect(() => {
+    if (isLoginPage) return undefined;
+    // Remembered for the browser session so moving between admin pages doesn't reset it.
+    const KEY = 'aggarwal_admin_seen_enquiries';
+    const readSeen = () => { try { const v = sessionStorage.getItem(KEY); return v === null ? null : Number(v); } catch { return null; } };
+    const writeSeen = (v) => { try { sessionStorage.setItem(KEY, String(v)); } catch { /* ignore */ } };
+    let lastTotal = readSeen();
+    let alive = true;
+    const chime = () => {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [880, 1320].forEach((f, i) => {
+          const o = ctx.createOscillator();
+          const g = ctx.createGain();
+          o.frequency.value = f;
+          g.gain.setValueAtTime(0.0001, ctx.currentTime + i * 0.18);
+          g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + i * 0.18 + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.18 + 0.35);
+          o.connect(g).connect(ctx.destination);
+          o.start(ctx.currentTime + i * 0.18);
+          o.stop(ctx.currentTime + i * 0.18 + 0.4);
+        });
+      } catch { /* sound is optional */ }
+    };
+    const check = async () => {
+      const stats = await adminApi.getEnquiryStats({ quiet: true });
+      if (!alive || !stats) return;
+      setPendingCount(stats.pending);
+      if (lastTotal !== null && stats.total > lastTotal) {
+        const n = stats.total - lastTotal;
+        const text = n === 1 ? 'New enquiry received' : `${n} new enquiries received`;
+        chime();
+        setMessage({ text: `${text}. Open Form Enquiries to reply.`, kind: 'success', at: Date.now() });
+        document.title = `(${stats.pending}) ${text} – Admin`;
+        if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+          const note = new Notification('Aggarwal Steels: ' + text, { body: 'Click to open Form Enquiries.', icon: '/images/brand/aggarwal_logo_circle.png', tag: 'new-enquiry' });
+          note.onclick = () => { window.focus(); router.push('/admin/enquiries'); note.close(); };
+        }
+      }
+      lastTotal = stats.total;
+      writeSeen(stats.total);
+    };
+    check();
+    const timer = setInterval(check, 45000);
+    return () => { alive = false; clearInterval(timer); };
+  }, [isLoginPage, router]);
+
+  const enableAlerts = async () => {
+    if (typeof Notification === 'undefined') return;
+    const p = await Notification.requestPermission();
+    setNotifyPermission(p);
+    if (p === 'granted') new Notification('Enquiry alerts are on', { body: 'You will be notified while the admin panel is open.', icon: '/images/brand/aggarwal_logo_circle.png' });
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -42,12 +116,6 @@ export default function AdminShell({ children }) {
       setBackendOnline(isOnline);
     });
 
-    // Check pending enquiries count for badge
-    adminApi.getEnquiryStats().then((stats) => {
-      if (stats && stats.pending !== undefined) {
-        setPendingCount(stats.pending);
-      }
-    });
   }, [pathname, isLoginPage, router]);
 
   // Close mobile sidebar on route change
@@ -124,6 +192,27 @@ export default function AdminShell({ children }) {
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="3" />
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        </svg>
+      ),
+    },
+    {
+      href: '/admin/clients',
+      label: 'Clients',
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      ),
+    },
+    {
+      href: '/admin/team',
+      label: user?.user?.role_key === 'owner' || !user?.user?.role_key ? 'Team & Logins' : 'My Account',
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
         </svg>
       ),
     },
@@ -233,9 +322,14 @@ export default function AdminShell({ children }) {
             </div>
 
             <div className="admin-header-right">
+              {notifyPermission === 'default' && (
+                <button type="button" className="btn-header-link" onClick={enableAlerts} title="Get a desktop pop-up when a new enquiry arrives">
+                  <span>🔔 Turn on alerts</span>
+                </button>
+              )}
               <div className={`connection-pill ${backendOnline ? 'online' : 'offline'}`}>
                 <span className="status-dot"></span>
-                <span>{backendOnline ? 'Supabase Connected' : 'Local Sync Active'}</span>
+                <span>{backendOnline ? 'Server online' : 'Server offline'}</span>
               </div>
 
               <Link href="/" target="_blank" className="btn-header-link">
@@ -250,6 +344,15 @@ export default function AdminShell({ children }) {
           </header>
 
           {/* Page Content */}
+          {message && (
+            <div className={`admin-message ${message.kind}`} role={message.kind === 'error' ? 'alert' : 'status'}>
+              <span>{message.text}</span>
+              {/session has ended/i.test(message.text) && (
+                <button type="button" className="admin-message-action" onClick={handleLogout}>Sign in again</button>
+              )}
+              <button type="button" className="admin-message-close" onClick={() => setMessage(null)} aria-label="Dismiss">×</button>
+            </div>
+          )}
           <main className="admin-content">{children}</main>
         </div>
       </div>

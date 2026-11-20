@@ -48,14 +48,14 @@ export default function CountUp({
             const currentVal = Math.round(startVal + ease * (endVal - startVal));
 
             if (numberRef.current) {
-              numberRef.current.textContent = currentVal;
+              numberRef.current.textContent = currentVal.toLocaleString('en-IN');
             }
 
             if (progress < 1) {
               requestAnimationFrame(step);
             } else {
               if (numberRef.current) {
-                numberRef.current.textContent = endVal;
+                numberRef.current.textContent = endVal.toLocaleString('en-IN');
               }
             }
           };
@@ -81,7 +81,7 @@ export default function CountUp({
     <span ref={containerRef} className={`counter-number ${className}`}>
       {prefix}
       <span ref={numberRef} className="counter-val">
-        {target}
+        {(Number(target) || 0).toLocaleString('en-IN')}
       </span>
       {suffix && <span className={unitClassName}>{suffix}</span>}
     </span>
