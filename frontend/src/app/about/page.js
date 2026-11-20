@@ -8,7 +8,7 @@ import CountUp from '../../components/CountUp';
 import Certificates from '../../components/Certificates';
 import Journey from '../../components/Journey';
 import Presence from '../../components/Presence';
-import { useSiteSettings, num } from '../../lib/siteSettings';
+import { useSiteSettings, num, turnoverBillion, turnoverBillionText } from '../../lib/siteSettings';
 import {
   IconAward,
   IconCheckCircle,
@@ -109,14 +109,14 @@ export default function AboutPage() {
                 <p className="founder-body-text">
                   Today, the group operates across <strong>5 strategic units</strong> (including state-of-the-art 
                   manufacturing plants in Bhiwadi and warehousing hubs in Delhi NCR), managing over 
-                  <strong> ₹{(num(k, 'turnover_cr') * 10).toLocaleString('en-IN')} Million</strong> in annual turnover ({k.turnover_year}) and supporting {k.staff_count}+ dedicated engineers, 
+                  <strong> ₹{turnoverBillionText(k)} Billion</strong> in annual turnover ({k.turnover_year}) and supporting {k.staff_count}+ dedicated engineers, 
                   fabrication experts, and logistics personnel.
                 </p>
 
                 <div className="about-stats-strip">
                   <div className="stat-box stagger-stat-1">
                     <span className="stat-val">
-                      <CountUp target={num(k, 'turnover_cr') * 10} prefix="₹" suffix=" Mn" duration={2000} unitClassName="stat-unit-about" />
+                      <CountUp target={turnoverBillion(k)} decimals={1} prefix="₹" suffix=" Billion" duration={2000} unitClassName="stat-unit-about" />
                     </span>
                     <span className="stat-lbl">Annual Turnover</span>
                   </div>

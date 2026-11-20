@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useSiteSettings, num } from '../lib/siteSettings';
+import { useSiteSettings, num, turnoverBillionText } from '../lib/siteSettings';
 import { IconShieldCheck, IconAward, IconZap, IconGlobe, IconTarget, IconCompass, IconArrowRight, IconLayers } from './Icons';
 
 export default function About() {
@@ -29,7 +29,7 @@ export default function About() {
               Established in <strong>{k.founded_year}</strong>, <strong>Aggarwal Steels</strong> alongside manufacturing sister arm <strong>Majestic AR Technology Pvt. Ltd.</strong> has grown into an integrated steel supply and industrial fabrication powerhouse.
             </p>
             <p className="about-sub">
-              With over <strong>{k.trading_years}+ years of trading experience</strong> and <strong>{k.manufacturing_years}+ years of advanced manufacturing</strong>, we operate <strong>2 manufacturing plants</strong> and <strong>3 trading units</strong> with a consolidated group turnover of <strong>₹{(num(k, 'turnover_cr') * 10).toLocaleString('en-IN')} Million ({k.turnover_year})</strong> and a {k.staff_count}+ dedicated workforce. From primary steel distribution (SAIL, TATA, JSPL, AMNS) to heavy warehouse racking and automated powder-coating lines, we power India's mega infrastructure and manufacturing sectors.
+              With over <strong>{k.trading_years}+ years of trading experience</strong> and <strong>{k.manufacturing_years}+ years of advanced manufacturing</strong>, we operate <strong>2 manufacturing plants</strong> and <strong>3 trading units</strong> with a consolidated group turnover of <strong>₹{turnoverBillionText(k)} Billion ({k.turnover_year})</strong> and a {k.staff_count}+ dedicated workforce. From primary steel distribution (SAIL, TATA, JSPL, AMNS) to heavy warehouse racking and automated powder-coating lines, we power India's mega infrastructure and manufacturing sectors.
             </p>
 
             {/* Core Values Bento Grid */}
@@ -87,7 +87,7 @@ export default function About() {
                   height={50}
                 />
                 <div className="founder-meta">
-                  <span>ESTABLISHED {k.founded_year} &bull; ₹{(num(k, 'turnover_cr') * 10).toLocaleString('en-IN')} MN TURNOVER {k.turnover_year}</span>
+                  <span>ESTABLISHED {k.founded_year} &bull; ₹{turnoverBillionText(k)} BILLION TURNOVER {k.turnover_year}</span>
                 </div>
               </div>
             </div>

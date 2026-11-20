@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { IconTruck, IconArrowRight, IconAward } from './Icons';
 import CountUp from './CountUp';
-import { useSiteSettings, num } from '../lib/siteSettings';
+import { useSiteSettings, num, turnoverBillion } from '../lib/siteSettings';
 
 export default function Hero() {
   const { settings } = useSiteSettings();
@@ -82,7 +82,7 @@ export default function Hero() {
                 <div className="telemetry-stat-box stagger-stat-1">
                   <span className="stat-label-modern">Annual Turnover</span>
                   <div className="stat-value-modern">
-                    <CountUp target={num(settings, 'turnover_cr') * 10} prefix="₹" suffix="Mn" duration={2000} />
+                    <CountUp target={turnoverBillion(settings)} decimals={1} prefix="₹" suffix=" Billion" duration={2000} />
                   </div>
                   <span className="stat-note-modern">Group turnover {settings.turnover_year}</span>
                 </div>

@@ -2,6 +2,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '../../components/Navbar';
+import { PageSkeleton } from '../../components/Skeletons';
 import Footer from '../../components/Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import ScrollAnimations from '../../components/ScrollAnimations';
@@ -355,7 +356,7 @@ export default function ContactPage() {
     <>
       <ScrollAnimations />
       <Navbar />
-      <Suspense fallback={<div style={{ padding: '100px 0', textAlign: 'center' }}>Loading Contact Desk...</div>}>
+      <Suspense fallback={<PageSkeleton withChrome={false} label="Loading contact desk" />}>
         <ContactContent />
       </Suspense>
       <Footer />

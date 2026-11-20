@@ -27,12 +27,14 @@ function ProductsDirectory() {
       <Navbar />
       <main className="dedicated-page-container">
         <section className="products-landing-hero">
-          <div className="section-container">
-            <h1>Our Products</h1>
-            <p>Choose a segment to see every product line we supply and manufacture.</p>
+          <div className="section-container products-landing-head">
+            <div className="products-landing-text">
+              <h1>Our Products</h1>
+              <p>Choose a segment to see every product line we supply and manufacture.</p>
+            </div>
             <div className="products-landing-actions">
               <a href="/Aggarwal_Steels_Catalogue_2026.pdf" download className="btn-primary" id="btnDownloadCatalogProducts">
-                <IconDownload size={16} /> <span>Download Catalogue (PDF)</span>
+                <IconDownload size={16} /> <span>Download Catalogue<span className="hide-sm"> (PDF)</span></span>
               </a>
               <Link href="/contact" className="btn-secondary" id="btnRequestQuoteProducts">
                 <IconPhone size={16} /> <span>Get a Quote</span>

@@ -45,7 +45,7 @@ export const SETTING_FIELDS = [
   { key: 'working_hours', label: 'Working hours line', type: 'text' },
   { section: 'Company figures (home page hero and About page)' },
   { key: 'founded_year', label: 'Year established', type: 'number' },
-  { key: 'turnover_cr', label: 'Group turnover (₹ crore, shown on site in million ×10)', type: 'number' },
+  { key: 'turnover_cr', label: 'Group turnover (₹ crore; shown on site as ₹ billion, e.g. 230 → 2.3 Billion)', type: 'number' },
   { key: 'turnover_year', label: 'Turnover year label', type: 'text' },
   { key: 'staff_count', label: 'Workforce (number of people)', type: 'number' },
   { key: 'trading_years', label: 'Years of trading experience', type: 'number' },
@@ -61,6 +61,12 @@ export const SETTING_FIELDS = [
 
 /** Number setting with a safe fallback, for CountUp targets. */
 export const num = (settings, key) => Number(settings?.[key]) || Number(DEFAULT_SETTINGS[key]) || 0;
+
+// Group turnover is stored in ₹ crore (as in the catalogue's admin field) but
+// displayed in ₹ billion, matching catalogue page 4 (230 Cr -> 2.3 Billion).
+export const turnoverBillion = (settings) => num(settings, 'turnover_cr') / 100;
+export const turnoverBillionText = (settings) =>
+  turnoverBillion(settings).toLocaleString('en-IN', { minimumFractionDigits: 1, maximumFractionDigits: 2 });
 
 const digits = (phone) => String(phone || '').replace(/[^\d]/g, '');
 /** "+91 73000 70778" -> "tel:+917300070778" */

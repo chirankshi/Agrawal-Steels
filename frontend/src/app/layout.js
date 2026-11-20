@@ -1,5 +1,8 @@
 import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
+import SiteMotion from '../components/SiteMotion';
+import BootSkeleton from '../components/BootSkeleton';
+import BootSkeletonHider from '../components/BootSkeletonHider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' });
@@ -57,7 +60,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body>{children}</body>
+      <body><noscript><style>{`.boot-splash{display:none!important}html *{animation-play-state:running!important}`}</style></noscript><BootSkeleton />{children}<SiteMotion /><BootSkeletonHider /></body>
     </html>
   );
 }

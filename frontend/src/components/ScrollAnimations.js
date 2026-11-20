@@ -18,61 +18,10 @@ export default function ScrollAnimations() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
 
-    // 2. IntersectionObserver for Reveal Animations on Scroll
-    const selectors = [
-      '.section-header',
-      '.product-modern-card',
-      '.cap-modern-card',
-      '.why-modern-card',
-      '.milestone-modern-card',
-      '.client-modern-logo-wrap',
-      '.about-modern-story',
-      '.about-profile-card',
-      '.story-stats-grid',
-      '.order-step-card',
-      '.subsidiary-modern-banner',
-      '.contact-modern-card',
-      '.presence-stat-item',
-      '.about-stats-strip .stat-box',
-      '.telemetry-stat-box'
-    ];
-
-    const elements = document.querySelectorAll(selectors.join(', '));
-
-    elements.forEach((el, index) => {
-      // Mark as revealable
-      el.classList.add('scroll-reveal-item');
-      // Assign subtle stagger delay for siblings inside the same grid
-      const parent = el.parentElement;
-      if (parent) {
-        const siblingIndex = Array.from(parent.children).indexOf(el);
-        if (siblingIndex >= 0) {
-          el.style.setProperty('--reveal-delay', `${(siblingIndex % 6) * 70}ms`);
-        }
-      }
-    });
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('scroll-revealed');
-            // Once revealed, we can keep it revealed for smooth user reading
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px',
-      }
-    );
-
-    elements.forEach((el) => observer.observe(el));
+    // Reveal-on-scroll now lives in SiteMotion (root layout).
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      observer.disconnect();
     };
   }, []);
 

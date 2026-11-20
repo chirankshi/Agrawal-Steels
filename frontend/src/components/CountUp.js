@@ -11,7 +11,8 @@ export default function CountUp({
   prefix = '',
   suffix = '',
   className = '',
-  unitClassName = 'stat-unit'
+  unitClassName = 'stat-unit',
+  decimals = 0
 }) {
   const containerRef = useRef(null);
   const numberRef = useRef(null);
@@ -19,6 +20,7 @@ export default function CountUp({
 
   useEffect(() => {
     const endVal = Number(target) || 0;
+    const fmt = (v) => v.toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
     
     // Set appropriate duration based on target size to eliminate awkward pauses on small numbers
     let dynamicDuration = 1100;
@@ -45,17 +47,18 @@ export default function CountUp({
 
             // Smooth cubic ease-out curve
             const ease = 1 - Math.pow(1 - progress, 2.5);
-            const currentVal = Math.round(startVal + ease * (endVal - startVal));
+            const factor = Math.pow(10, decimals);
+            const currentVal = Math.round((startVal + ease * (endVal - startVal)) * factor) / factor;
 
             if (numberRef.current) {
-              numberRef.current.textContent = currentVal.toLocaleString('en-IN');
+              numberRef.current.textContent = fmt(currentVal);
             }
 
             if (progress < 1) {
               requestAnimationFrame(step);
             } else {
               if (numberRef.current) {
-                numberRef.current.textContent = endVal.toLocaleString('en-IN');
+                numberRef.current.textContent = fmt(endVal);
               }
             }
           };
@@ -75,13 +78,13 @@ export default function CountUp({
     return () => {
       if (el) observer.unobserve(el);
     };
-  }, [target]);
+  }, [target, decimals]);
 
   return (
     <span ref={containerRef} className={`counter-number ${className}`}>
       {prefix}
       <span ref={numberRef} className="counter-val">
-        {(Number(target) || 0).toLocaleString('en-IN')}
+        {(Number(target) || 0).toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
       </span>
       {suffix && <span className={unitClassName}>{suffix}</span>}
     </span>
