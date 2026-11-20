@@ -42,7 +42,7 @@ export default function Presence() {
             Our Locations &amp; <span className="text-gradient">Key Leadership</span>
           </h2>
           <p className="section-desc text-gray">
-            Head Office and two manufacturing plants in RIICO Industrial Area, Bhiwadi, plus Majestic AR Technology works at IMT Manesar and Bawal, Haryana.
+            Head Office and Unit 02, both in RIICO Industrial Area, Bhiwadi, Rajasthan.
           </p>
         </div>
 

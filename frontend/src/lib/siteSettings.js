@@ -29,8 +29,6 @@ export const DEFAULT_SETTINGS = {
   // Addresses (footer, contact page, home contact section)
   address_head_office: 'Block C, Plot No. E-372, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan',
   address_unit_02: 'G1-385, RIICO Industrial Area, Bhiwadi – 301019, Rajasthan',
-  address_unit_01: '89, Sector 3, IMT Manesar, Gurugram, Haryana',
-  address_unit_03: '81, Phase IV, Sector 15, Bawal, Haryana',
   // Client list (Admin -> Clients). Empty means the built-in list.
   clients: [],
 };
@@ -55,8 +53,6 @@ export const SETTING_FIELDS = [
   { section: 'Addresses' },
   { key: 'address_head_office', label: 'Head office (Bhiwadi)', type: 'text', wide: true },
   { key: 'address_unit_02', label: 'Manufacturing unit 02 (Bhiwadi)', type: 'text', wide: true },
-  { key: 'address_unit_01', label: 'Majestic AR unit 01 (Manesar)', type: 'text', wide: true },
-  { key: 'address_unit_03', label: 'Majestic AR unit 03 (Bawal)', type: 'text', wide: true },
 ];
 
 /** Number setting with a safe fallback, for CountUp targets. */

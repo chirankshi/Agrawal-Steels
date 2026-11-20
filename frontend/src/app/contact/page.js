@@ -73,7 +73,7 @@ function ContactContent() {
         <div className="section-container">
           <div className="dedicated-hero-badge">
             <IconMapPin size={14} />
-            <span>DIRECT CONNECT • 4 UNITS ACROSS RAJASTHAN & HARYANA</span>
+            <span>DIRECT CONNECT • HEAD OFFICE & UNIT 02, BHIWADI (RAJASTHAN)</span>
           </div>
           <h1 className="dedicated-hero-title">
             Request an Instant <span className="text-gradient">Tonnage &amp; Racking Quote</span>
@@ -126,33 +126,6 @@ function ContactContent() {
                   </p>
                 </div>
 
-                <div className="location-card">
-                  <div className="location-header">
-                    <IconMapPin size={20} className="loc-icon" />
-                    <div>
-                      <h4>Majestic AR Technology – Unit 01</h4>
-                      <span className="loc-badge">Unit 01 &bull; IMT Manesar</span>
-                    </div>
-                  </div>
-                  <p className="loc-address">
-                    {settings.address_unit_01}
-                    <br /><strong>Facilities:</strong> Precision Sheet Metal Components, Storage Racking Assembly, Trading Stockyard.
-                  </p>
-                </div>
-
-                <div className="location-card">
-                  <div className="location-header">
-                    <IconMapPin size={20} className="loc-icon" />
-                    <div>
-                      <h4>Majestic AR Technology – Unit 03</h4>
-                      <span className="loc-badge">Unit 03 &bull; Bawal</span>
-                    </div>
-                  </div>
-                  <p className="loc-address">
-                    {settings.address_unit_03}
-                    <br /><strong>Facilities:</strong> Sheet Metal Fabrication, Material Handling Equipment, Trolleys &amp; Conveyors.
-                  </p>
-                </div>
               </div>
 
               {/* Quick Communication Box */}

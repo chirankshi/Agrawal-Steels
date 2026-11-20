@@ -66,7 +66,7 @@ export default function Footer() {
           </Link>
           <p>
             Primary steel supply, warehouse racking, mezzanines and precision fabrication from our plants in
-            Bhiwadi, Manesar and Bawal. Since {settings.founded_year}.
+            RIICO Industrial Area, Bhiwadi, Rajasthan. Since {settings.founded_year}.
           </p>
           <img src="/images/brand/iso_make_in_india.png" alt="ISO 9001:2015 certified and Make in India" className="footer-iso" width={150} height={40} />
           <a href="/Aggarwal_Steels_Catalogue_2026.pdf" download className="footer-catalogue">

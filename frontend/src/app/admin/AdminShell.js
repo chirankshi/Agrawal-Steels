@@ -317,7 +317,7 @@ export default function AdminShell({ children }) {
 
               <div className="admin-page-title">
                 <h2>Plant &amp; Sales Management</h2>
-                <p>Bhiwadi &bull; Manesar &bull; Faridabad Hub</p>
+                <p>Head Office &bull; Unit 02 &bull; Bhiwadi</p>
               </div>
             </div>
 
