@@ -35,7 +35,7 @@ export default function SiteMotion() {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add('in');
+          e.target.setAttribute('data-in', '');
           io.unobserve(e.target);
         }
       });
@@ -47,7 +47,7 @@ export default function SiteMotion() {
     const scan = () => {
       REVEAL.forEach(([sel, variant]) => {
         document.querySelectorAll(sel).forEach((el) => {
-          if (seen.has(el) || el.classList.contains('in') || el.closest('.trust-track')) return;
+          if (seen.has(el) || el.hasAttribute('data-in') || el.closest('.trust-track')) return;
           seen.add(el);
           if (!el.dataset.reveal) el.dataset.reveal = variant;
           const sibs = el.parentElement ? [...el.parentElement.children].filter((c) => c.matches(sel)) : [];
