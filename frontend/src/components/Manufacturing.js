@@ -31,7 +31,7 @@ export default function Manufacturing() {
         </div>
 
         <div className="capabilities-bento mach-groups">
-          {machineGroups.map((g) => {
+          {machineGroups.slice(0, 3).map((g) => {
             const meta = groupMeta(g);
             const shown = g.items.slice(0, 4);
             const more = g.items.length - shown.length;

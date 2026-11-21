@@ -8000,3 +8000,24 @@ html:not(.booted) .products-landing-head > * { animation-play-state: paused; }
   .mach-groups > .mach-group-card:nth-child(5):last-child { grid-column: span 1; }
 }
 .mach-groups .cap-img-wrapper { height: 170px !important; aspect-ratio: auto !important; }
+
+/* ===== Pointer cursor on everything clickable ===== */
+button, [role="button"], select, summary, label[for],
+input[type="checkbox"], input[type="radio"], input[type="file"], input[type="range"], input[type="color"],
+input[type="submit"], input[type="button"], input[type="reset"],
+a[href], .is-clickable, .segment-card, .cap-card, .mach-group-card { cursor: pointer; }
+button:disabled, [aria-disabled="true"], input:disabled, select:disabled { cursor: not-allowed; }
+.cert-mini .cert-card-preview { cursor: pointer; }
+
+/* Whole card is clickable: the card's main link stretches over it */
+.prod-tile, .prod-spec, .dedicated-product-card { position: relative; cursor: pointer; }
+.prod-tile .prod-tile-cta::before, .prod-spec .prod-tile-cta::before, .dedicated-product-card .btn-card-enquire::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit;
+}
+/* Keep any other links/buttons inside those cards on top of the stretched link */
+.prod-tile a:not(.prod-tile-cta), .prod-spec a:not(.prod-tile-cta), .dedicated-product-card a:not(.btn-card-enquire),
+.prod-tile button, .prod-spec button, .dedicated-product-card button { position: relative; z-index: 2; }
+/* Home shows 3 machinery groups; on tablets the 3rd spans the row */
+@media (max-width: 900px) and (min-width: 601px) {
+  .mach-groups > .mach-group-card:nth-child(3):last-child { grid-column: span 2; }
+}

@@ -78,7 +78,12 @@ export default function Certificates() {
         {/* Certificates Grid */}
         <div className="cert-cards-grid">
           {certs.map((c) => (
-            <div className="cert-compact-card cert-mini" key={c.id} id={c.id}>
+            <div
+              className="cert-compact-card cert-mini is-clickable"
+              key={c.id}
+              id={c.id}
+              onClick={(e) => { if (!e.target.closest('a, button')) setActiveModalCert(c); }}
+            >
               {/* Certificate image; Preview and PDF appear on hover (always shown on touch screens) */}
               <div className="cert-card-preview">
                 <img

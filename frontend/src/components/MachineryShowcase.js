@@ -25,6 +25,9 @@ function MachineCard({ m, index }) {
           {m.stages.map((s, i) => <li key={s}><IconCheckCircle size={14} /> {i + 1}. {s}</li>)}
         </ul>
       )}
+      <Link href={`/contact?product=${encodeURIComponent(`Job work: ${m.name}`)}`} className="prod-tile-cta">
+        Enquire now <IconArrowRight size={13} />
+      </Link>
     </>
   );
   if (!photo) {
